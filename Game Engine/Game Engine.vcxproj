@@ -18,6 +18,38 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Main\Main.cpp" />
+    <ClCompile Include="Main\System\Camera\Camera.cpp" />
+    <ClCompile Include="Main\System\Entity\Entity.cpp" />
+    <ClCompile Include="Main\System\Entity\Model\Model.cpp" />
+    <ClCompile Include="Main\System\Graphics\ColorShader\ColorShader.cpp" />
+    <ClCompile Include="Main\System\Graphics\DirectX\DirectX11.cpp" />
+    <ClCompile Include="Main\System\Graphics\Graphics.cpp" />
+    <ClCompile Include="Main\System\Input\Input.cpp" />
+    <ClCompile Include="Main\System\System.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Main\System\Camera\Camera.h" />
+    <ClInclude Include="Main\System\Entity\Entity.h" />
+    <ClInclude Include="Main\System\Entity\Model\Model.h" />
+    <ClInclude Include="Main\System\Entity\Model\ModelInfo.h" />
+    <ClInclude Include="Main\System\Graphics\ColorShader\ColorShader.h" />
+    <ClInclude Include="Main\System\Graphics\DirectX\DirectX11.h" />
+    <ClInclude Include="Main\System\Graphics\Graphics.h" />
+    <ClInclude Include="Main\System\Input\Input.h" />
+    <ClInclude Include="Main\System\System.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="Main\System\Graphics\ColorShader\ColorShader_ps.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">5.0</ShaderModel>
+    </FxCompile>
+    <FxCompile Include="Main\System\Graphics\ColorShader\ColorShader_vs.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">5.0</ShaderModel>
+    </FxCompile>
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
     <ProjectGuid>{2ACAFE6E-E219-47AC-9B07-DBBEE83DB137}</ProjectGuid>
@@ -114,8 +146,6 @@
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
   </ItemDefinitionGroup>
-  <ItemGroup>
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
