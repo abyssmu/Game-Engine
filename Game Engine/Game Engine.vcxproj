@@ -23,6 +23,10 @@
     <ClCompile Include="Main\System\Camera\Camera.cpp" />
     <ClCompile Include="Main\System\Entity\Entity.cpp" />
     <ClCompile Include="Main\System\Entity\Model\Model.cpp" />
+    <ClCompile Include="Main\System\Entity\Physics\Physics.cpp" />
+    <ClCompile Include="Main\System\Entity\Physics\Vector\Vector2D.cpp" />
+    <ClCompile Include="Main\System\Entity\Physics\Vector\Vector3D.cpp" />
+    <ClCompile Include="Main\System\Entity\Physics\Vector\Vector4D.cpp" />
     <ClCompile Include="Main\System\Graphics\ColorShader\ColorShader.cpp" />
     <ClCompile Include="Main\System\Graphics\DirectX\DirectX11.cpp" />
     <ClCompile Include="Main\System\Graphics\Graphics.cpp" />
@@ -34,6 +38,9 @@
     <ClInclude Include="Main\System\Entity\Entity.h" />
     <ClInclude Include="Main\System\Entity\Model\Model.h" />
     <ClInclude Include="Main\System\Entity\Model\ModelInfo.h" />
+    <ClInclude Include="Main\System\Entity\Physics\Math\Math.h" />
+    <ClInclude Include="Main\System\Entity\Physics\Physics.h" />
+    <ClInclude Include="Main\System\Entity\Physics\Vector\Vector.h" />
     <ClInclude Include="Main\System\Graphics\ColorShader\ColorShader.h" />
     <ClInclude Include="Main\System\Graphics\DirectX\DirectX11.h" />
     <ClInclude Include="Main\System\Graphics\Graphics.h" />

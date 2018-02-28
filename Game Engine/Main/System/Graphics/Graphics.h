@@ -28,7 +28,7 @@ public:
 	//Main Functions
 	bool Initialize(int, int, HWND);
 	void Shutdown();
-	bool XM_CALLCONV Frame(float*,
+	bool Frame(float*,
 		DirectX::XMMATRIX, ModelInfo*);
 
 	//Utility Functions
@@ -36,7 +36,7 @@ public:
 
 private:
 	//Main Functions
-	bool XM_CALLCONV Render(float*,
+	bool Render(float*,
 		DirectX::XMMATRIX, ModelInfo*);
 	void RenderModel(ModelInfo*);
 

@@ -2,6 +2,7 @@
 
 Graphics::Graphics()
 {
+	//Initialize pointers
 	m_dX11 = 0;
 
 	m_colorShader = 0;
@@ -71,11 +72,12 @@ void Graphics::Shutdown()
 	}
 }
 
-bool XM_CALLCONV Graphics::Frame(float* bgcolor,
+bool Graphics::Frame(float* bgcolor,
 	DirectX::XMMATRIX viewMatrix, ModelInfo* modelInfo)
 {
 	bool result = false;
 
+	//Render the scene
 	result = Render(bgcolor, viewMatrix, modelInfo);
 	if (!result)
 	{
@@ -94,7 +96,7 @@ ID3D11Device* Graphics::GetDevice()
 //Private
 /////////////////////////////////////////////////////////
 
-bool XM_CALLCONV Graphics::Render(float* bgcolor,
+bool Graphics::Render(float* bgcolor,
 	DirectX::XMMATRIX viewMatrix, ModelInfo* modelInfo)
 {
 	bool result = false;

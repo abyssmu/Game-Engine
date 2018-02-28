@@ -2,6 +2,7 @@
 
 Entity::Entity()
 {
+	//Initialize pointers
 	m_model = 0;
 }
 
@@ -11,7 +12,7 @@ Entity::Entity(const Entity& other)
 Entity::~Entity()
 {}
 
-bool Entity::Initialize(ID3D11Device* device)
+bool Entity::Initialize(ID3D11Device* device, float* position, float* rotation)
 {
 	bool result;
 
@@ -27,6 +28,10 @@ bool Entity::Initialize(ID3D11Device* device)
 	{
 		return false;
 	}
+
+	//Set physics variables
+	SetPosition(position);
+	SetRotation(rotation);
 
 	return true;
 }

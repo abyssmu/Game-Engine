@@ -2,6 +2,7 @@
 
 Model::Model()
 {
+	//Initialize pointers
 	m_indexBuffer = 0;
 	m_vertexBuffer = 0;
 
@@ -215,6 +216,8 @@ bool Model::LoadModel()
 	m_indexCount = 6;
 
 	m_indices = new unsigned long[m_indexCount];
+	
+	//Front
 	m_indices[0] = 0;
 	m_indices[1] = 2;
 	m_indices[2] = 3;

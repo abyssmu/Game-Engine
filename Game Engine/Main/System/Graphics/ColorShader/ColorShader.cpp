@@ -2,6 +2,7 @@
 
 ColorShader::ColorShader()
 {
+	//Initialize pointers
 	m_layout = 0;
 	m_matrixBuffer = 0;
 	m_pixelShader = 0;
@@ -19,7 +20,7 @@ ColorShader::~ColorShader()
 
 bool ColorShader::Initialize(ID3D11Device* device, HWND hwnd)
 {
-	bool result;
+	bool result = false;
 
 	LPCWSTR vs = L"Main/System/Graphics/ColorShader/ColorShader_vs.hlsl";
 	LPCWSTR ps = L"Main/System/Graphics/ColorShader/ColorShader_ps.hlsl";
@@ -34,11 +35,11 @@ bool ColorShader::Initialize(ID3D11Device* device, HWND hwnd)
 	return true;
 }
 
-bool XM_CALLCONV ColorShader::Render(ID3D11DeviceContext* deviceContext,
+bool ColorShader::Render(ID3D11DeviceContext* deviceContext,
 	int indexCount, DirectX::XMMATRIX worldMatrix,
 	DirectX::XMMATRIX viewMatrix, DirectX::XMMATRIX projectionMatrix)
 {
-	bool result;
+	bool result = false;
 
 	//Set shader parameters
 	result = SetShaderParameters(deviceContext, worldMatrix, viewMatrix,
@@ -139,6 +140,7 @@ bool ColorShader::CreateLayout(ID3D11Device* device)
 
 	unsigned int numElements;
 
+	//Layout description
 	//Matches VertexType struct
 	polygonLayout[0].SemanticName = "POSITION";
 	polygonLayout[0].SemanticIndex = 0;
@@ -168,6 +170,13 @@ bool ColorShader::CreateLayout(ID3D11Device* device)
 		return false;
 	}
 
+	//Release shader buffers
+	vertexShaderBuffer->Release();
+	vertexShaderBuffer = 0;
+
+	pixelShaderBuffer->Release();
+	pixelShaderBuffer = 0;
+
 	return true;
 }
 
@@ -177,6 +186,7 @@ bool ColorShader::CreateMatrixCB(ID3D11Device* device)
 
 	D3D11_BUFFER_DESC matrixBufferDesc;
 
+	//Matrix buffer description
 	matrixBufferDesc.Usage = D3D11_USAGE_DYNAMIC;
 	matrixBufferDesc.ByteWidth = sizeof(MatrixBufferType);
 	matrixBufferDesc.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
@@ -196,8 +206,6 @@ bool ColorShader::CreateMatrixCB(ID3D11Device* device)
 bool ColorShader::InitializeShader(ID3D11Device* device, HWND hwnd,
 	LPCWSTR vsFilename, LPCWSTR psFilename)
 {
-	HRESULT result;
-
 	//Compile shaders
 	if (!CompilerShaders(device, hwnd, vsFilename, psFilename))
 	{
@@ -209,13 +217,6 @@ bool ColorShader::InitializeShader(ID3D11Device* device, HWND hwnd,
 	{
 		return false;
 	}
-
-	//Release shader buffers
-	vertexShaderBuffer->Release();
-	vertexShaderBuffer = 0;
-
-	pixelShaderBuffer->Release();
-	pixelShaderBuffer = 0;
 
 	//Setup matrix constant buffer
 	if (!CreateMatrixCB(device))
@@ -229,8 +230,8 @@ bool ColorShader::InitializeShader(ID3D11Device* device, HWND hwnd,
 void ColorShader::OutputShaderErrorMessage(ID3D10Blob* errorMessage,
 	HWND hwnd, LPCWSTR shaderFile)
 {
-	char* compilerErrors;
-	unsigned long bufferSize;
+	char* compilerErrors = 0;
+	unsigned long bufferSize = 0;
 	std::ofstream fout;
 
 	//Get pointer to error message text buffer
@@ -274,14 +275,14 @@ void ColorShader::RenderShader(ID3D11DeviceContext* deviceContext,
 	deviceContext->DrawIndexed(indexCount, 0, 0);
 }
 
-bool XM_CALLCONV ColorShader::SetShaderParameters(ID3D11DeviceContext* deviceContext,
+bool ColorShader::SetShaderParameters(ID3D11DeviceContext* deviceContext,
 	DirectX::XMMATRIX worldMatrix, DirectX::XMMATRIX viewMatrix,
 	DirectX::XMMATRIX projectionMatrix)
 {
 	HRESULT result;
 	D3D11_MAPPED_SUBRESOURCE mappedResource;
 	MatrixBufferType* dataPtr;
-	unsigned int bufferNumber;
+	unsigned int bufferNumber = 0;
 
 	//Transpose matrices
 	worldMatrix = DirectX::XMMatrixTranspose(worldMatrix);

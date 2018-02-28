@@ -1,15 +1,21 @@
 #include "Camera.h"
 
 Camera::Camera()
-{
-	m_position = m_rotation = DirectX::XMFLOAT3(0.0f, 0.0f, 0.0f);
-}
+{}
 
 Camera::Camera(const Camera& other)
 {}
 
 Camera::~Camera()
 {}
+
+bool Camera::Initialize(float* pos, float* rot)
+{
+	SetPosition(pos);
+	SetRotation(rot);
+
+	return true;
+}
 
 void Camera::Render()
 {
@@ -21,17 +27,17 @@ void Camera::Render()
 	//Set up vector
 	up = DirectX::XMVectorSet(0.0f, 1.0f, 0.0f, 1.0f);
 
-	//Set look at
+	//Set look at default
 	lookAt = DirectX::XMVectorSet(0.0f, 0.0f, 1.0f, 1.0f);
 
 	//Set position
-	position = DirectX::XMVectorSet(m_position.x, m_position.y,
-		m_position.z, 1.0f);
+	position = DirectX::XMVectorSet(GetPosition()[0], GetPosition()[1],
+		GetPosition()[2], 1.0f);
 
 	//Set rotation
-	pitch = m_rotation.x * 0.0174532925f;
-	yaw = m_rotation.y * 0.0174532925f;
-	roll = m_rotation.z * 0.0174532925f;
+	pitch = GetRotation()[0] * 0.0174532925f;
+	yaw = GetRotation()[1] * 0.0174532925f;
+	roll = GetRotation()[2] * 0.0174532925f;
 
 	//Create rotation matrix
 	rotationMatrix = DirectX::XMMatrixRotationRollPitchYaw(pitch,
@@ -49,44 +55,6 @@ void Camera::Render()
 
 	//Create view matrix
 	m_viewMatrix = DirectX::XMMatrixLookAtLH(position, lookAt, up);
-}
-
-void Camera::SetPosition(float* position)
-{
-	m_position.x = position[0];
-	m_position.y = position[1];
-	m_position.z = position[2];
-}
-
-void Camera::SetRotation(float* rotation)
-{
-	m_rotation.x = rotation[0];
-	m_rotation.y = rotation[1];
-	m_rotation.z = rotation[2];
-}
-
-void Camera::UpdatePosition(float* position)
-{
-	m_position.x += position[0];
-	m_position.y += position[1];
-	m_position.z += position[2];
-}
-
-void Camera::UpdateRotation(float* rotation)
-{
-	m_rotation.x += rotation[0];
-	m_rotation.y += rotation[1];
-	m_rotation.z += rotation[2];
-}
-
-DirectX::XMFLOAT3 Camera::GetPosition()
-{
-	return m_position;
-}
-
-DirectX::XMFLOAT3 Camera::GetRotation()
-{
-	return m_position;
 }
 
 DirectX::XMMATRIX Camera::GetViewMatrix()

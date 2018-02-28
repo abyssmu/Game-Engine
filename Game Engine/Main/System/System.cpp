@@ -8,6 +8,7 @@
 
 SystemClass::SystemClass()
 {
+	//Initialize pointers
 	m_camera = 0;
 	m_entities = 0;
 	m_graphics = 0;
@@ -49,7 +50,10 @@ bool SystemClass::Initialize()
 	}
 
 	float pos[3] = { 0.0f, 0.0f, -10.0f };
-	m_camera->SetPosition(pos);
+	float rot[3] = { 0.0f, 0.0f, 0.0f };
+	m_camera->Initialize(pos, rot);
+
+	//Create initial view matrix
 	m_camera->Render();
 
 	//Create and initialize entities
@@ -59,7 +63,9 @@ bool SystemClass::Initialize()
 		return false;
 	}
 
-	result = m_entities->Initialize(m_graphics->GetDevice());
+	float ePos[3] = { 0.0f, 0.0f, 0.0f };
+	result = m_entities->Initialize(m_graphics->GetDevice(),
+		ePos, rot);
 	if (!result)
 	{
 		return false;
@@ -117,10 +123,12 @@ void SystemClass::Run()
 			DispatchMessage(&msg);
 		}
 
+		//If message is quit
 		if (msg.message == WM_QUIT)
 		{
 			done = true;
 		}
+		//Run frame
 		else
 		{
 			result = Frame();
@@ -139,25 +147,37 @@ void SystemClass::Run()
 bool SystemClass::Frame()
 {
 	bool result = false;
-	Entity* entities = 0;
 	float bgcolor[4] = { 0.0f, 0.0f, 0.0f, 1.0f };
 
+	//Process if quit button pressed
 	result = m_input->ProcessQuit();
 	if (!result)
 	{
 		return false;
 	}
 
+	//Process movement
+	float rot[3] = { 0 };
+	float forw, lR, uD;
+	forw = lR = uD = 0.0f;
+
+	//Process mouse
+	m_input->ProcessMouse(rot);
+
+	//Process keys
+	m_input->ProcessMovement(forw, lR, uD);
+
+	//Set camera current view matrix
+	m_camera->UpdatePosRot(forw, lR, uD, rot);
 	m_camera->Render();
 
+	//Process and render scene
 	result = m_graphics->Frame(bgcolor, m_camera->GetViewMatrix(),
 		m_entities->GetModelInfo());
 	if (!result)
 	{
 		return false;
 	}
-
-	delete entities;
 
 	return true;
 }

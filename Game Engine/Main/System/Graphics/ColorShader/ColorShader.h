@@ -21,7 +21,7 @@ public:
 
 	//Main Functions
 	bool Initialize(ID3D11Device*, HWND);
-	bool XM_CALLCONV Render(ID3D11DeviceContext*, int,
+	bool Render(ID3D11DeviceContext*, int,
 		DirectX::XMMATRIX, DirectX::XMMATRIX,
 		DirectX::XMMATRIX);
 	void Shutdown();
@@ -37,7 +37,7 @@ private:
 	void OutputShaderErrorMessage(ID3D10Blob*, HWND,
 		LPCWSTR);
 	void RenderShader(ID3D11DeviceContext*, int);
-	bool XM_CALLCONV SetShaderParameters(ID3D11DeviceContext*,
+	bool SetShaderParameters(ID3D11DeviceContext*,
 		DirectX::XMMATRIX, DirectX::XMMATRIX,
 		DirectX::XMMATRIX);
 	void ShutdownShader();

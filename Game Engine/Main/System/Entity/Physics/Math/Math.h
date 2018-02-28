@@ -1,0 +1,3 @@
+//Define Constants
+#define M_PI 3.141592653589793
+#define M_PI_OVER_180 3.141592653589793 / 180

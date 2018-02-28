@@ -17,23 +17,14 @@ public:
 	~Camera();
 
 	//Main Functions
+	bool Initialize(float*, float*);
 	void Render();
 
-	//Utility Functions
-	void SetPosition(float*);
-	void SetRotation(float*);
-	void UpdatePosition(float*);
-	void UpdateRotation(float*);
-
 	//Class Functions
-	DirectX::XMFLOAT3 GetPosition();
-	DirectX::XMFLOAT3 GetRotation();
 	DirectX::XMMATRIX GetViewMatrix();
 
 private:
 	//Main Variables
-	DirectX::XMFLOAT3 m_position;
-	DirectX::XMFLOAT3 m_rotation;
 	DirectX::XMMATRIX m_viewMatrix;
 };
 

@@ -32,6 +32,15 @@
     <Filter Include="Main\System\Camera">
       <UniqueIdentifier>{8a8f4c5a-83b2-4da8-8ebe-e4165748f243}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Main\System\Entity\Physics">
+      <UniqueIdentifier>{e9ea41ae-23ef-4ae8-b469-e079261422b2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Main\System\Entity\Physics\Vector">
+      <UniqueIdentifier>{bc6e366e-14e8-4e58-a301-0d65a7cde80c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Main\System\Entity\Physics\Math">
+      <UniqueIdentifier>{2ecd999e-f2fa-4301-9713-e3e7c9065276}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main\Main.cpp">
@@ -61,6 +70,18 @@
     <ClCompile Include="Main\System\Camera\Camera.cpp">
       <Filter>Main\System\Camera</Filter>
     </ClCompile>
+    <ClCompile Include="Main\System\Entity\Physics\Physics.cpp">
+      <Filter>Main\System\Entity\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="Main\System\Entity\Physics\Vector\Vector2D.cpp">
+      <Filter>Main\System\Entity\Physics\Vector</Filter>
+    </ClCompile>
+    <ClCompile Include="Main\System\Entity\Physics\Vector\Vector3D.cpp">
+      <Filter>Main\System\Entity\Physics\Vector</Filter>
+    </ClCompile>
+    <ClCompile Include="Main\System\Entity\Physics\Vector\Vector4D.cpp">
+      <Filter>Main\System\Entity\Physics\Vector</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Main\System\System.h">
@@ -89,6 +110,15 @@
     </ClInclude>
     <ClInclude Include="Main\System\Entity\Model\ModelInfo.h">
       <Filter>Main\System\Entity\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="Main\System\Entity\Physics\Physics.h">
+      <Filter>Main\System\Entity\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="Main\System\Entity\Physics\Vector\Vector.h">
+      <Filter>Main\System\Entity\Physics\Vector</Filter>
+    </ClInclude>
+    <ClInclude Include="Main\System\Entity\Physics\Math\Math.h">
+      <Filter>Main\System\Entity\Physics\Math</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

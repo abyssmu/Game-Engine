@@ -2,6 +2,7 @@
 
 DirectX11::DirectX11()
 {
+	//Initialize pointers
 	m_depthStencilBuffer = 0;
 	m_depthStencilState = 0;
 	m_depthStencilView = 0;
@@ -60,7 +61,7 @@ bool DirectX11::Initialize(int screenWidth, int screenHeight,
 		return false;
 	}
 
-	//Bind render target view/depth stencil buffer to output render pipeline
+	//Bind render target view/depth stencil buffer to render pipeline
 	m_deviceContext->OMSetRenderTargets(1, &m_renderTargetView, 
 		m_depthStencilView);
 
