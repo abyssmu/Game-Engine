@@ -41,6 +41,9 @@
     <Filter Include="Main\System\Entity\Physics\Math">
       <UniqueIdentifier>{2ecd999e-f2fa-4301-9713-e3e7c9065276}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Main\System\Entity\Model\Assimp">
+      <UniqueIdentifier>{b64f7748-9566-4451-bbf0-9e11303b1d96}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main\Main.cpp">
@@ -82,6 +85,9 @@
     <ClCompile Include="Main\System\Entity\Physics\Vector\Vector4D.cpp">
       <Filter>Main\System\Entity\Physics\Vector</Filter>
     </ClCompile>
+    <ClCompile Include="Main\System\Entity\Model\Assimp\Assimp.cpp">
+      <Filter>Main\System\Entity\Model\Assimp</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Main\System\System.h">
@@ -119,6 +125,9 @@
     </ClInclude>
     <ClInclude Include="Main\System\Entity\Physics\Math\Math.h">
       <Filter>Main\System\Entity\Physics\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Main\System\Entity\Model\Assimp\Assimp.h">
+      <Filter>Main\System\Entity\Model\Assimp</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
