@@ -7,8 +7,11 @@
 #include <DirectXMath.h>
 #include <d3d11.h>
 #include <fstream>
+#include <vector>
 
 //Class Includes
+#include "AssimpLoader\AssimpLoader.h"
+#include "Mesh\Mesh.h"
 
 //Globals
 #include "ModelInfo.h"
@@ -21,49 +24,25 @@ public:
 	~Model();
 
 	//Main Functions
-	bool Initialize(ID3D11Device*);
+	bool Initialize(ID3D11Device*, char*);
 	void Shutdown();
 
 	//Utility Functions
+	int GetNumMeshes();
 
 	//Class Functions
-	ModelInfo* GetModelInfo();
+	ModelInfo* GetModelInfo(int);
 
 private:
-	//Main Functions
-	bool InitializeBuffers(ID3D11Device*);
-	void SetModelInfo();
-	void ShutdownBuffers();
-
 	//Utility Functions
-	bool CreateIndexBuffer(ID3D11Device*);
-	bool CreateVertexBuffer(ID3D11Device*);
-	bool LoadModel();
-	void ReleaseModel();
-
-	//Main Variables
-	int m_vertexCount, m_indexCount;
-	unsigned long* m_indices;
+	bool LoadModel(ID3D11Device*, char*);
+	void ReleaseModel(int);
 
 	//Utility Variables
-	ID3D11Buffer* m_vertexBuffer, * m_indexBuffer;
+	int m_numMeshes;
 
-	//Structs
-	struct VertexTypeColor
-	{
-		DirectX::XMFLOAT3 position;
-		DirectX::XMFLOAT4 color;
-	};
-
-	struct ModelTypeColor
-	{
-		float position[3];
-		float color[4];
-	};
-
-	//Struct Variables
-	ModelTypeColor* m_modelColor;
-	ModelInfo* m_modelInfo;	
+	//Class Variables
+	std::vector<Mesh*> m_meshes;
 };
 
 #endif

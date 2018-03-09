@@ -1,11 +1,16 @@
+//Vector3D class
+//Container for 3D behavior
+
 #include "Vector.h"
 
+//Constructor
 Vector3D::Vector3D()
 {
 	//Initialize variables
 	x = y = z = 0;
 }
 
+//Constructor with input
 Vector3D::Vector3D(float x, float y, float z)
 {
 	this->x = x;
@@ -13,6 +18,7 @@ Vector3D::Vector3D(float x, float y, float z)
 	this->z = z;
 }
 
+//Copy constructor
 Vector3D::Vector3D(const Vector3D& other)
 {
 	x = other.x;
@@ -20,9 +26,11 @@ Vector3D::Vector3D(const Vector3D& other)
 	z = other.z;
 }
 
+//Default destructor
 Vector3D::~Vector3D()
 {}
 
+//+ operator override
 Vector3D Vector3D::operator+(const Vector3D& b)
 {
 	Vector3D result;
@@ -34,6 +42,7 @@ Vector3D Vector3D::operator+(const Vector3D& b)
 	return result;
 }
 
+//+= operator override
 Vector3D Vector3D::operator+=(const Vector3D& b)
 {
 	this->x += b.x;
@@ -43,6 +52,7 @@ Vector3D Vector3D::operator+=(const Vector3D& b)
 	return *this;
 }
 
+//- operator override
 Vector3D Vector3D::operator-(const Vector3D& b)
 {
 	Vector3D result;
@@ -54,6 +64,7 @@ Vector3D Vector3D::operator-(const Vector3D& b)
 	return result;
 }
 
+//-= operator override
 Vector3D Vector3D::operator-=(const Vector3D& b)
 {
 	this->x -= b.x;
@@ -63,6 +74,7 @@ Vector3D Vector3D::operator-=(const Vector3D& b)
 	return *this;
 }
 
+//= operator override
 Vector3D Vector3D::operator=(const Vector3D& b)
 {
 	this->x = b.x;
@@ -72,6 +84,7 @@ Vector3D Vector3D::operator=(const Vector3D& b)
 	return *this;
 }
 
+//Get X unit vector
 Vector3D Vector3D::UnitX()
 {
 	Vector3D result;
@@ -83,6 +96,7 @@ Vector3D Vector3D::UnitX()
 	return result;
 }
 
+//Get Y unit vector
 Vector3D Vector3D::UnitY()
 {
 	Vector3D result;
@@ -94,6 +108,7 @@ Vector3D Vector3D::UnitY()
 	return result;
 }
 
+//Get Z unit vector
 Vector3D Vector3D::UnitZ()
 {
 	Vector3D result;
@@ -105,6 +120,7 @@ Vector3D Vector3D::UnitZ()
 	return result;
 }
 
+//Calculate cross product (a x b)
 Vector3D Vector3D::Cross(Vector3D a, Vector3D b)
 {
 	Vector3D result;
@@ -116,6 +132,7 @@ Vector3D Vector3D::Cross(Vector3D a, Vector3D b)
 	return result;
 }
 
+//Calculate dot product
 float Vector3D::Dot(Vector3D a, Vector3D b)
 {
 	float result = 0;
@@ -127,6 +144,7 @@ float Vector3D::Dot(Vector3D a, Vector3D b)
 	return result;
 }
 
+//Calculate vector length
 float Vector3D::Length()
 {
 	float result = 0;
@@ -137,6 +155,7 @@ float Vector3D::Length()
 	return result;
 }
 
+//Normalize vector
 void Vector3D::Normalize()
 {
 	float mag = Length();
@@ -146,6 +165,7 @@ void Vector3D::Normalize()
 	z /= mag;
 }
 
+//Scale vector
 void Vector3D::Scale(float val)
 {
 	x *= val;

@@ -17,11 +17,15 @@ public:
 	~Entity();
 
 	//Main Functions
-	bool Initialize(ID3D11Device*, float*, float*);
+	bool Initialize(ID3D11Device*, float*,
+		float*, char*);
 	void Shutdown();
 
 	//Utility Functions
-	ModelInfo* GetModelInfo();
+	int GetNumMeshes();
+
+	//Class Functions
+	ModelInfo* GetModelInfo(int);
 
 private:
 	//Main Variables

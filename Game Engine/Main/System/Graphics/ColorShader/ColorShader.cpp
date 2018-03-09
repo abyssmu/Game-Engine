@@ -1,5 +1,10 @@
+//ColorShader class
+//Compiles color vertex and pixel shaders
+//and acts as interface for compiled shaders
+
 #include "ColorShader.h"
 
+//Constructor
 ColorShader::ColorShader()
 {
 	//Initialize pointers
@@ -12,12 +17,15 @@ ColorShader::ColorShader()
 	pixelShaderBuffer = 0;
 }
 
+//Default copy constructor
 ColorShader::ColorShader(const ColorShader& other)
 {}
 
+//Default destructor
 ColorShader::~ColorShader()
 {}
 
+//Initialize shader filenames and create shaders
 bool ColorShader::Initialize(ID3D11Device* device, HWND hwnd)
 {
 	bool result = false;
@@ -35,6 +43,7 @@ bool ColorShader::Initialize(ID3D11Device* device, HWND hwnd)
 	return true;
 }
 
+//Render model with color shader
 bool ColorShader::Render(ID3D11DeviceContext* deviceContext,
 	int indexCount, DirectX::XMMATRIX worldMatrix,
 	DirectX::XMMATRIX viewMatrix, DirectX::XMMATRIX projectionMatrix)
@@ -55,6 +64,7 @@ bool ColorShader::Render(ID3D11DeviceContext* deviceContext,
 	return true;
 }
 
+//Shutdown shader
 void ColorShader::Shutdown()
 {
 	//Shutdown shaders
@@ -65,6 +75,7 @@ void ColorShader::Shutdown()
 //Private
 /////////////////////////////////////////////////////////
 
+//Compile shaders from file
 bool ColorShader::CompilerShaders(ID3D11Device* device, HWND hwnd, 
 	LPCWSTR vsFilename, LPCWSTR psFilename)
 {
@@ -132,6 +143,7 @@ bool ColorShader::CompilerShaders(ID3D11Device* device, HWND hwnd,
 	return true;
 }
 
+//Create polygon layout
 bool ColorShader::CreateLayout(ID3D11Device* device)
 {
 	HRESULT result;
@@ -180,6 +192,7 @@ bool ColorShader::CreateLayout(ID3D11Device* device)
 	return true;
 }
 
+//Create constant buffer matrix
 bool ColorShader::CreateMatrixCB(ID3D11Device* device)
 {
 	HRESULT result;
@@ -203,6 +216,7 @@ bool ColorShader::CreateMatrixCB(ID3D11Device* device)
 	}
 }
 
+//Initialize shaders
 bool ColorShader::InitializeShader(ID3D11Device* device, HWND hwnd,
 	LPCWSTR vsFilename, LPCWSTR psFilename)
 {
@@ -227,6 +241,7 @@ bool ColorShader::InitializeShader(ID3D11Device* device, HWND hwnd,
 	return true;
 }
 
+//Output error messages from shader compiler
 void ColorShader::OutputShaderErrorMessage(ID3D10Blob* errorMessage,
 	HWND hwnd, LPCWSTR shaderFile)
 {
@@ -261,6 +276,7 @@ void ColorShader::OutputShaderErrorMessage(ID3D10Blob* errorMessage,
 		(LPCSTR)shaderFile, MB_OK);
 }
 
+//Render model with shader
 void ColorShader::RenderShader(ID3D11DeviceContext* deviceContext,
 	int indexCount)
 {
@@ -275,6 +291,7 @@ void ColorShader::RenderShader(ID3D11DeviceContext* deviceContext,
 	deviceContext->DrawIndexed(indexCount, 0, 0);
 }
 
+//Set shader parameters
 bool ColorShader::SetShaderParameters(ID3D11DeviceContext* deviceContext,
 	DirectX::XMMATRIX worldMatrix, DirectX::XMMATRIX viewMatrix,
 	DirectX::XMMATRIX projectionMatrix)
@@ -318,6 +335,7 @@ bool ColorShader::SetShaderParameters(ID3D11DeviceContext* deviceContext,
 	return true;
 }
 
+//Shutdown shaders
 void ColorShader::ShutdownShader()
 {
 	//Shutdown matrix constant buffer

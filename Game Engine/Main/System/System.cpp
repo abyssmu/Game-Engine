@@ -1,3 +1,6 @@
+//System class
+//Holds the cores of the game engine
+
 //Includes
 #include <vector>
 #include <string>
@@ -6,6 +9,7 @@
 //Class Includes
 #include "System.h"
 
+//Constructor
 SystemClass::SystemClass()
 {
 	//Initialize pointers
@@ -15,12 +19,15 @@ SystemClass::SystemClass()
 	m_input = 0;
 }
 
+//Default copy constructor
 SystemClass::SystemClass(const SystemClass& other)
 {}
 
+//Default destructor
 SystemClass::~SystemClass()
 {}
 
+//Initialize all cores and utilities
 bool SystemClass::Initialize()
 {
 	bool result = false;
@@ -65,7 +72,7 @@ bool SystemClass::Initialize()
 
 	float ePos[3] = { 0.0f, 0.0f, 0.0f };
 	result = m_entities->Initialize(m_graphics->GetDevice(),
-		ePos, rot);
+		ePos, rot, (char*)"human.dae");
 	if (!result)
 	{
 		return false;
@@ -83,6 +90,7 @@ bool SystemClass::Initialize()
 	return true;
 }
 
+//Shutdown all cores and utilities
 void SystemClass::Shutdown()
 {
 	//Shutdown graphics
@@ -91,6 +99,14 @@ void SystemClass::Shutdown()
 		m_graphics->Shutdown();
 		delete m_graphics;
 		m_graphics = 0;
+	}
+
+	//Shutdown entities
+	if (m_entities)
+	{
+		m_entities->Shutdown();
+		delete m_entities;
+		m_entities = 0;
 	}
 
 	//Shutdown input
@@ -104,6 +120,7 @@ void SystemClass::Shutdown()
 	ShutdownWindows();
 }
 
+//Main game loop
 void SystemClass::Run()
 {
 	MSG msg;
@@ -144,6 +161,7 @@ void SystemClass::Run()
 //Private
 /////////////////////////////////////////////////////////
 
+//Start of each frame processing
 bool SystemClass::Frame()
 {
 	bool result = false;
@@ -172,16 +190,20 @@ bool SystemClass::Frame()
 	m_camera->Render();
 
 	//Process and render scene
-	result = m_graphics->Frame(bgcolor, m_camera->GetViewMatrix(),
-		m_entities->GetModelInfo());
-	if (!result)
+	for (int i = 0; i < m_entities->GetNumMeshes(); ++i)
 	{
-		return false;
+		result = m_graphics->Frame(bgcolor, m_camera->GetViewMatrix(),
+			m_entities->GetModelInfo(i));
+		if (!result)
+		{
+			return false;
+		}
 	}
 
 	return true;
 }
 
+//Windows message handling
 LRESULT CALLBACK SystemClass::MessageHandler(HWND hwnd, UINT umsg,
 	WPARAM wparam, LPARAM lparam)
 {
@@ -200,6 +222,7 @@ LRESULT CALLBACK SystemClass::MessageHandler(HWND hwnd, UINT umsg,
 	}
 }
 
+//Initialize windows handle to screen
 void SystemClass::InitializeWindows(int& screenWidth, int& screenHeight)
 {
 	WNDCLASSEX wc;
@@ -274,6 +297,7 @@ void SystemClass::InitializeWindows(int& screenWidth, int& screenHeight)
 	SetFocus(m_hWnd);
 }
 
+//Shutdown windows
 void SystemClass::ShutdownWindows()
 {
 	//Fix display settings if in full screen
@@ -298,6 +322,7 @@ void SystemClass::ShutdownWindows()
 //Global
 /////////////////////////////////////////////////////////
 
+//Global windows message delivery
 LRESULT CALLBACK WndProc(HWND hwnd, UINT umessage,
 	WPARAM wparam, LPARAM lparam)
 {

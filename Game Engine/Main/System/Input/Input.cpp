@@ -1,14 +1,21 @@
+//Input handler class
+//Captures input process from windows messages
+
 #include "Input.h"
 
+//Default constructor
 Input::Input()
 {}
 
+//Default copy constructor
 Input::Input(const Input& other)
 {}
 
+//Default destructor
 Input::~Input()
 {}
 
+//Initialize all key states
 void Input::Initialize()
 {
 	//Initialize key states to false
@@ -18,24 +25,28 @@ void Input::Initialize()
 	}
 }
 
+//Query current state of key
 bool Input::IsKeyDown(int key)
 {
 	//Return what state key is in
 	return m_keys[key];
 }
 
+//Capture down state of key
 void Input::KeyDown(int input)
 {
 	//If a key is down, save state
 	m_keys[input] = true;
 }
 
+//Capture up state of key
 void Input::KeyUp(int input)
 {
 	//If a key is released, save state
 	m_keys[input] = false;
 }
 
+//Capture mouse input
 void Input::ProcessMouse(float* rot)
 {
 	//Check cursor position
@@ -60,6 +71,7 @@ void Input::ProcessMouse(float* rot)
 	GetCursorPos(&mouseP);
 }
 
+//Capture movement keys
 void Input::ProcessMovement(float& forw, float& lR, float& uD)
 {
 	float speed = 0.2f;
@@ -95,6 +107,7 @@ void Input::ProcessMovement(float& forw, float& lR, float& uD)
 	}
 }
 
+//Capture quit button
 bool Input::ProcessQuit()
 {
 	if (IsKeyDown(ESC))

@@ -1,18 +1,27 @@
+//Entity class
+//Acts as an interface for all components of
+//world objects
+
 #include "Entity.h"
 
+//Constructor
 Entity::Entity()
 {
 	//Initialize pointers
 	m_model = 0;
 }
 
+//Default copy constructor
 Entity::Entity(const Entity& other)
 {}
 
+//Default destructor
 Entity::~Entity()
 {}
 
-bool Entity::Initialize(ID3D11Device* device, float* position, float* rotation)
+//Initialize components
+bool Entity::Initialize(ID3D11Device* device, float* position,
+	float* rotation, char* filename)
 {
 	bool result;
 
@@ -23,7 +32,7 @@ bool Entity::Initialize(ID3D11Device* device, float* position, float* rotation)
 		return false;
 	}
 
-	result = m_model->Initialize(device);
+	result = m_model->Initialize(device, filename);
 	if (!result)
 	{
 		return false;
@@ -36,6 +45,7 @@ bool Entity::Initialize(ID3D11Device* device, float* position, float* rotation)
 	return true;
 }
 
+//Shutdown components
 void Entity::Shutdown()
 {
 	//Shutdown model
@@ -47,7 +57,14 @@ void Entity::Shutdown()
 	}
 }
 
-ModelInfo* Entity::GetModelInfo()
+//Get number of meshes
+int Entity::GetNumMeshes()
 {
-	return m_model->GetModelInfo();
+	return m_model->GetNumMeshes();
+}
+
+//Get model info
+ModelInfo* Entity::GetModelInfo(int i)
+{
+	return m_model->GetModelInfo(i);
 }

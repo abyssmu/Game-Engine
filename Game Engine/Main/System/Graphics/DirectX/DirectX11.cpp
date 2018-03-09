@@ -1,5 +1,9 @@
+//DirectX Class
+//Creates DirectX utilities
+
 #include "DirectX11.h"
 
+//Constructor
 DirectX11::DirectX11()
 {
 	//Initialize pointers
@@ -13,12 +17,15 @@ DirectX11::DirectX11()
 	m_swapChain = 0;
 }
 
+//Default copy constructor
 DirectX11::DirectX11(const DirectX11& other)
 {}
 
+//Default destructor
 DirectX11::~DirectX11()
 {}
 
+//Initialize utilities
 bool DirectX11::Initialize(int screenWidth, int screenHeight,
 	bool vsync, HWND hwnd, bool fullscreen, float screenDepth,
 	float screenNear)
@@ -88,6 +95,7 @@ bool DirectX11::Initialize(int screenWidth, int screenHeight,
 	return true;
 }
 
+//Shutdown utilities
 void DirectX11::Shutdown()
 {
 	//Check if fullscreen
@@ -153,6 +161,7 @@ void DirectX11::Shutdown()
 	}
 }
 
+//Clear render target to begin scene
 void DirectX11::BeginScene(float bgcolor[])
 {
 	//Clear back buffer
@@ -163,6 +172,7 @@ void DirectX11::BeginScene(float bgcolor[])
 		D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0F, 0);
 }
 
+//Present scene to screen
 void DirectX11::EndScene()
 {
 	//Present back buffer to screen
@@ -178,32 +188,38 @@ void DirectX11::EndScene()
 	}
 }
 
+//Get orthogonal matrix
 DirectX::XMMATRIX DirectX11::GetOrthoMatrix()
 {
 	return m_orthoMatrix;
 }
 
+//Get projection matrix
 DirectX::XMMATRIX DirectX11::GetProjectionMatrix()
 {
 	return m_projectionMatrix;
 }
 
+//Get video card information
 void DirectX11::GetVideoCardInfo(char* cardName, int& memory)
 {
 	strcpy_s(cardName, 128, m_videoCardDescription);
 	memory = m_videoCardMemory;
 }
 
+//Get world matrix
 DirectX::XMMATRIX DirectX11::GetWorldMatrix()
 {
 	return m_worldMatrix;
 }
 
+//Get DirectX device
 ID3D11Device* DirectX11::GetDevice()
 {
 	return m_device;
 }
 
+//Get DirectX device context
 ID3D11DeviceContext* DirectX11::GetDeviceContext()
 {
 	return m_deviceContext;
@@ -213,6 +229,8 @@ ID3D11DeviceContext* DirectX11::GetDeviceContext()
 //Private
 /////////////////////////////////////////////////////////
 
+//Create adapter and factory to get video card information
+//and display monitor information
 bool DirectX11::CreateAdapterDesc(int screenWidth, int screenHeight, 
 	unsigned int& numerator, unsigned int& denominator)
 {
@@ -322,6 +340,7 @@ bool DirectX11::CreateAdapterDesc(int screenWidth, int screenHeight,
 	return true;
 }
 
+//Create depth buffer
 bool DirectX11::CreateDepthBuffer(int screenWidth, int screenHeight)
 {
 	HRESULT result;
@@ -355,6 +374,7 @@ bool DirectX11::CreateDepthBuffer(int screenWidth, int screenHeight)
 	return true;
 }
 
+//Create depth stencil state
 bool DirectX11::CreateDepthStencilState()
 {
 	HRESULT result;
@@ -399,6 +419,7 @@ bool DirectX11::CreateDepthStencilState()
 	return true;
 }
 
+//Create depth stencil view
 bool DirectX11::CreateDepthStencilView()
 {
 	HRESULT result;
@@ -424,6 +445,7 @@ bool DirectX11::CreateDepthStencilView()
 	return true;
 }
 
+//Create all matrices
 bool DirectX11::CreateMatrices(int screenWidth, int screenHeight,
 	float fieldOfView, float screenAspect, float screenDepth,
 	float screenNear)
@@ -442,6 +464,7 @@ bool DirectX11::CreateMatrices(int screenWidth, int screenHeight,
 	return true;
 }
 
+//Create rasterizer description
 bool DirectX11::CreateRasterDesc()
 {
 	HRESULT result;
@@ -473,6 +496,7 @@ bool DirectX11::CreateRasterDesc()
 	return true;
 }
 
+//Create swap chain
 bool DirectX11::CreateSwapChain(int screenWidth, int screenHeight,
 	unsigned int numerator, unsigned int denominator, HWND hwnd,
 	bool fullscreen)
@@ -573,6 +597,7 @@ bool DirectX11::CreateSwapChain(int screenWidth, int screenHeight,
 	return true;
 }
 
+//Create viewport
 bool DirectX11::CreateViewport(int screenWidth, int screenHeight,
 	float& fieldOfView, float& screenAspect)
 {

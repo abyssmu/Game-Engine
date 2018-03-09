@@ -1,3 +1,6 @@
+//ColorShader pixel shader
+//Simple shader that returns the color of the pixel
+
 struct PixelInputType
 {
 	float4 position : SV_POSITION;

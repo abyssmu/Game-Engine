@@ -1,16 +1,23 @@
+//Physics class
+//Calculates position and rotation of object
+
 #include "Physics.h"
 
+//Constructor
 Physics::Physics()
 {
 	CalculateLocals();
 }
 
+//Default copy constructor
 Physics::Physics(const Physics& other)
 {}
 
+//Default destructor
 Physics::~Physics()
 {}
 
+//Set object position
 void Physics::SetPosition(float* position)
 {
 	m_position.x = position[0];
@@ -18,6 +25,7 @@ void Physics::SetPosition(float* position)
 	m_position.z = position[2];
 }
 
+//Set object rotation
 void Physics::SetRotation(float* rotation)
 {
 	m_rotation.x = rotation[0];
@@ -25,6 +33,7 @@ void Physics::SetRotation(float* rotation)
 	m_rotation.z = rotation[2];
 }
 
+//Get object position
 float* Physics::GetPosition()
 {
 	float pos[3] = { m_position.x,
@@ -34,6 +43,7 @@ float* Physics::GetPosition()
 	return pos;
 }
 
+//Get object rotation
 float* Physics::GetRotation()
 {
 	float rot[3] = { m_rotation.x,
@@ -43,6 +53,7 @@ float* Physics::GetRotation()
 	return rot;
 }
 
+//Update object position and rotation
 void Physics::UpdatePosRot(float forw, float lR, float uD, float* rotation)
 {
 	Vector3D move(0.0f, 0.0f, 0.0f);
@@ -75,6 +86,11 @@ void Physics::UpdatePosRot(float forw, float lR, float uD, float* rotation)
 	}
 }
 
+/////////////////////////////////////////////////////////
+//Private
+/////////////////////////////////////////////////////////
+
+//Calculate local axes
 void Physics::CalculateLocals()
 {
 	CalculateLocalX();
@@ -82,6 +98,7 @@ void Physics::CalculateLocals()
 	CalculateLocalZ();
 }
 
+//Calculate local X axis
 void Physics::CalculateLocalX()
 {
 	//Calculate local X with Eulerian rotation
@@ -93,6 +110,7 @@ void Physics::CalculateLocalX()
 	m_localX = unit;
 }
 
+//Calculate local Y axis
 void Physics::CalculateLocalY()
 {
 	//Calculate local Y with Eulerian rotation
@@ -104,6 +122,7 @@ void Physics::CalculateLocalY()
 	m_localY = unit;
 }
 
+//Calculate local Z axis
 void Physics::CalculateLocalZ()
 {
 	//Calculate local Z with Eulerian rotation

@@ -1,3 +1,7 @@
+//ColorShader vertex shader
+//Simple shader that calculates world position of output
+//and assigns color;
+
 cbuffer MatrixBuffer
 {
 	matrix worldMatrix;

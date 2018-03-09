@@ -1,5 +1,13 @@
+//Graphics class
+//Used as an interface to DirectX
+//Combines components of DirectX to render objects
+
+//Current Shaders
+	//ColorShader
+
 #include "Graphics.h"
 
+//Constructor
 Graphics::Graphics()
 {
 	//Initialize pointers
@@ -8,12 +16,15 @@ Graphics::Graphics()
 	m_colorShader = 0;
 }
 
+//Default copy constructor
 Graphics::Graphics(const Graphics& other)
 {}
 
+//Default destructor
 Graphics::~Graphics()
 {}
 
+//Initialize DirectX components
 bool Graphics::Initialize(int screenWidth, int screenHeight,
 	HWND hwnd)
 {
@@ -53,6 +64,7 @@ bool Graphics::Initialize(int screenWidth, int screenHeight,
 	return true;
 }
 
+//Shutdown components
 void Graphics::Shutdown()
 {
 	//Shutdown color shader
@@ -72,6 +84,7 @@ void Graphics::Shutdown()
 	}
 }
 
+//Graphical frame processing
 bool Graphics::Frame(float* bgcolor,
 	DirectX::XMMATRIX viewMatrix, ModelInfo* modelInfo)
 {
@@ -87,6 +100,7 @@ bool Graphics::Frame(float* bgcolor,
 	return true;
 }
 
+//Get DirectX device
 ID3D11Device* Graphics::GetDevice()
 {
 	return m_dX11->GetDevice();
@@ -96,6 +110,7 @@ ID3D11Device* Graphics::GetDevice()
 //Private
 /////////////////////////////////////////////////////////
 
+//Render model to scene and present scene
 bool Graphics::Render(float* bgcolor,
 	DirectX::XMMATRIX viewMatrix, ModelInfo* modelInfo)
 {
@@ -122,6 +137,7 @@ bool Graphics::Render(float* bgcolor,
 	return true;
 }
 
+//Put model information on pipeline
 void Graphics::RenderModel(ModelInfo* modelInfo)
 {
 	//Set vertex buffer to active

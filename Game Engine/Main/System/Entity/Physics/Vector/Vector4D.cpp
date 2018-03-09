@@ -1,11 +1,16 @@
+//Vector4D class
+//Operates as a quaternion class
+
 #include "Vector.h"
 
+//Constructor
 Vector4D::Vector4D()
 {
 	//Initialize variables
 	x = y = z = w = 0;
 }
 
+//Constructor with input
 Vector4D::Vector4D(float x, float y, float z, float w)
 {
 	this->x = x;
@@ -14,6 +19,7 @@ Vector4D::Vector4D(float x, float y, float z, float w)
 	this->w = w;
 }
 
+//Copy constructor
 Vector4D::Vector4D(const Vector4D& other)
 {
 	x = other.x;
@@ -22,9 +28,11 @@ Vector4D::Vector4D(const Vector4D& other)
 	w = other.w;
 }
 
+//Default destructor
 Vector4D::~Vector4D()
 {}
 
+//Rotate vector v around X axis by r radians
 Vector3D Vector4D::rotateEulerX(Vector3D v, float r)
 {
 	//Rotation matrix for roll
@@ -41,6 +49,7 @@ Vector3D Vector4D::rotateEulerX(Vector3D v, float r)
 	return result;
 }
 
+//Rotate vector v around Y axis by r radians
 Vector3D Vector4D::rotateEulerY(Vector3D v, float r)
 {
 	//Rotation matrix for pitch
@@ -57,6 +66,7 @@ Vector3D Vector4D::rotateEulerY(Vector3D v, float r)
 	return result;
 }
 
+//Rotate vector v around Z axis by r radians
 Vector3D Vector4D::rotateEulerZ(Vector3D v, float r)
 {
 	//Rotation matrix for yaw
@@ -73,6 +83,7 @@ Vector3D Vector4D::rotateEulerZ(Vector3D v, float r)
 	return result;
 }
 
+//Rotate vector v by quaternion q
 Vector3D Vector4D::rotateVbyQ(Vector4D q, Vector3D v)
 {
 	//Rotate vector by quaternion
@@ -92,6 +103,7 @@ Vector3D Vector4D::rotateVbyQ(Vector4D q, Vector3D v)
 	return result;
 }
 
+//* operator override
 Vector4D Vector4D::operator*(const Vector4D& qR)
 {
 	//Quaternion multiplication
@@ -121,6 +133,7 @@ Vector4D Vector4D::operator*(const Vector4D& qR)
 	return result;
 }
 
+//Calculate vector length
 float Vector4D::Length()
 {
 	float result = 0;
@@ -132,6 +145,7 @@ float Vector4D::Length()
 	return result;
 }
 
+//Normalize vector
 void Vector4D::Normalize()
 {
 	float mag = Length();

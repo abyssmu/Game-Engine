@@ -1,14 +1,21 @@
+//Camera class
+//Sets up viewport
+
 #include "Camera.h"
 
+//Default constructor
 Camera::Camera()
 {}
 
+//Default copy constructor
 Camera::Camera(const Camera& other)
 {}
 
+//Default destructor
 Camera::~Camera()
 {}
 
+//Initialize camera settings
 bool Camera::Initialize(float* pos, float* rot)
 {
 	SetPosition(pos);
@@ -17,6 +24,8 @@ bool Camera::Initialize(float* pos, float* rot)
 	return true;
 }
 
+//Render camera
+//Calculate view matrix
 void Camera::Render()
 {
 	DirectX::XMVECTOR up, position, lookAt;
@@ -57,6 +66,7 @@ void Camera::Render()
 	m_viewMatrix = DirectX::XMMatrixLookAtLH(position, lookAt, up);
 }
 
+//Get view matrix
 DirectX::XMMATRIX Camera::GetViewMatrix()
 {
 	return m_viewMatrix;

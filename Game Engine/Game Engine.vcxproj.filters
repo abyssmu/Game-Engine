@@ -41,8 +41,11 @@
     <Filter Include="Main\System\Entity\Physics\Math">
       <UniqueIdentifier>{2ecd999e-f2fa-4301-9713-e3e7c9065276}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Main\System\Entity\Model\Assimp">
+    <Filter Include="Main\System\Entity\Model\AssimpLoader">
       <UniqueIdentifier>{b64f7748-9566-4451-bbf0-9e11303b1d96}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Main\System\Entity\Model\Mesh">
+      <UniqueIdentifier>{2f17465b-f786-43d4-a430-a2534da710df}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -85,8 +88,11 @@
     <ClCompile Include="Main\System\Entity\Physics\Vector\Vector4D.cpp">
       <Filter>Main\System\Entity\Physics\Vector</Filter>
     </ClCompile>
-    <ClCompile Include="Main\System\Entity\Model\Assimp\Assimp.cpp">
-      <Filter>Main\System\Entity\Model\Assimp</Filter>
+    <ClCompile Include="Main\System\Entity\Model\AssimpLoader\AssimpLoader.cpp">
+      <Filter>Main\System\Entity\Model\AssimpLoader</Filter>
+    </ClCompile>
+    <ClCompile Include="Main\System\Entity\Model\Mesh\Mesh.cpp">
+      <Filter>Main\System\Entity\Model\Mesh</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -126,8 +132,11 @@
     <ClInclude Include="Main\System\Entity\Physics\Math\Math.h">
       <Filter>Main\System\Entity\Physics\Math</Filter>
     </ClInclude>
-    <ClInclude Include="Main\System\Entity\Model\Assimp\Assimp.h">
-      <Filter>Main\System\Entity\Model\Assimp</Filter>
+    <ClInclude Include="Main\System\Entity\Model\AssimpLoader\AssimpLoader.h">
+      <Filter>Main\System\Entity\Model\AssimpLoader</Filter>
+    </ClInclude>
+    <ClInclude Include="Main\System\Entity\Model\Mesh\Mesh.h">
+      <Filter>Main\System\Entity\Model\Mesh</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

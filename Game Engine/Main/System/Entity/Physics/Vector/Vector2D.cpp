@@ -1,26 +1,34 @@
+//Vector2D class
+//Operates as container for 2D behavior
+
 #include "Vector.h"
 
+//Constructor
 Vector2D::Vector2D()
 {
 	//Initialize variables
 	x = y = 0;
 }
 
+//Constructor with input
 Vector2D::Vector2D(float x, float y)
 {
 	this->x = x;
 	this->y = y;
 }
 
+//Copy constructor
 Vector2D::Vector2D(const Vector2D& other)
 {
 	x = other.x;
 	y = other.y;
 }
 
+//Default destructor
 Vector2D::~Vector2D()
 {}
 
+//+ operator override
 Vector2D Vector2D::operator+(const Vector2D& b)
 {
 	Vector2D result;
@@ -31,6 +39,7 @@ Vector2D Vector2D::operator+(const Vector2D& b)
 	return result;
 }
 
+//+= operator override
 Vector2D Vector2D::operator+=(const Vector2D& b)
 {
 	this->x += b.x;
@@ -39,6 +48,7 @@ Vector2D Vector2D::operator+=(const Vector2D& b)
 	return *this;
 }
 
+//- operator override
 Vector2D Vector2D::operator-(const Vector2D& b)
 {
 	Vector2D result;
@@ -49,6 +59,7 @@ Vector2D Vector2D::operator-(const Vector2D& b)
 	return result;
 }
 
+//-= operator override
 Vector2D Vector2D::operator-=(const Vector2D& b)
 {
 	this->x -= b.x;
@@ -57,6 +68,7 @@ Vector2D Vector2D::operator-=(const Vector2D& b)
 	return *this;
 }
 
+//= operator override
 Vector2D Vector2D::operator=(const Vector2D& b)
 {
 	this->x = b.x;
@@ -65,6 +77,7 @@ Vector2D Vector2D::operator=(const Vector2D& b)
 	return *this;
 }
 
+//Get X unit vector
 Vector2D Vector2D::UnitX()
 {
 	Vector2D result;
@@ -75,6 +88,7 @@ Vector2D Vector2D::UnitX()
 	return result;
 }
 
+//Get Y unit vector
 Vector2D Vector2D::UnitY()
 {
 	Vector2D result;
@@ -85,6 +99,7 @@ Vector2D Vector2D::UnitY()
 	return result;
 }
 
+//Calculate dot product
 float Vector2D::Dot(Vector2D* a, Vector2D* b)
 {
 	float result = 0;
@@ -95,6 +110,7 @@ float Vector2D::Dot(Vector2D* a, Vector2D* b)
 	return result;
 }
 
+//Calculate vector length
 float Vector2D::Length()
 {
 	float result = 0;
@@ -105,6 +121,7 @@ float Vector2D::Length()
 	return result;
 }
 
+//Normalize vector
 void Vector2D::Normalize()
 {
 	float mag = Length();
@@ -113,6 +130,7 @@ void Vector2D::Normalize()
 	y /= mag;
 }
 
+//Scale vector
 void Vector2D::Scale(float val)
 {
 	x *= val;

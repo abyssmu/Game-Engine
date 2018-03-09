@@ -1,4 +1,5 @@
-//Includes
+//Windows main function
+//Creates system root object that is basis for entire program
 
 //Class Includes
 #include "System\System.h"
@@ -6,10 +7,8 @@
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 	PSTR pScmdline, int iCmdshow)
 {
-	ShowCursor(true);
-
 	SystemClass* System;
-	bool result;
+	bool result = true;
 
 	//Create system object
 	System = new SystemClass;
@@ -29,8 +28,6 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 	System->Shutdown();
 	delete System;
 	System = 0;
-
-	ShowCursor(true);
 
 	return 0;
 }
