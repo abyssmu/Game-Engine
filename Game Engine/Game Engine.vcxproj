@@ -26,13 +26,11 @@
     <ClCompile Include="Main\System\Entity\Model\Mesh\Mesh.cpp" />
     <ClCompile Include="Main\System\Entity\Model\Model.cpp" />
     <ClCompile Include="Main\System\Entity\Physics\Physics.cpp" />
-    <ClCompile Include="Main\System\Entity\Physics\Vector\Vector2D.cpp" />
-    <ClCompile Include="Main\System\Entity\Physics\Vector\Vector3D.cpp" />
-    <ClCompile Include="Main\System\Entity\Physics\Vector\Vector4D.cpp" />
     <ClCompile Include="Main\System\Graphics\ColorShader\ColorShader.cpp" />
     <ClCompile Include="Main\System\Graphics\DirectX\DirectX11.cpp" />
     <ClCompile Include="Main\System\Graphics\Graphics.cpp" />
     <ClCompile Include="Main\System\Input\Input.cpp" />
+    <ClCompile Include="Main\System\Math\MathLib.cpp" />
     <ClCompile Include="Main\System\System.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -42,13 +40,12 @@
     <ClInclude Include="Main\System\Entity\Model\Mesh\Mesh.h" />
     <ClInclude Include="Main\System\Entity\Model\Model.h" />
     <ClInclude Include="Main\System\Entity\Model\ModelInfo.h" />
-    <ClInclude Include="Main\System\Entity\Physics\Math\Math.h" />
     <ClInclude Include="Main\System\Entity\Physics\Physics.h" />
-    <ClInclude Include="Main\System\Entity\Physics\Vector\Vector.h" />
     <ClInclude Include="Main\System\Graphics\ColorShader\ColorShader.h" />
     <ClInclude Include="Main\System\Graphics\DirectX\DirectX11.h" />
     <ClInclude Include="Main\System\Graphics\Graphics.h" />
     <ClInclude Include="Main\System\Input\Input.h" />
+    <ClInclude Include="Main\System\Math\MathLib.h" />
     <ClInclude Include="Main\System\System.h" />
   </ItemGroup>
   <ItemGroup>
@@ -123,12 +120,12 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>C:\Users\Alex\Desktop\Game Engine\Game Engine\Main\System\Entity\Model\AssimpLoader\Directories\include;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\Users\Alex\Desktop\Game Engine\Game Engine\Main\System\Entity\Model\AssimpLoader\Directories\lib64;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(ProjectDir)\Main\System\Entity\Model\AssimpLoader\Directories\include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(ProjectDir)\Main\System\Entity\Model\AssimpLoader\Directories\lib64;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <IncludePath>C:\Users\Alex\Desktop\Game Engine\Game Engine\Main\System\Entity\Model\AssimpLoader\Directories\include;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\Users\Alex\Desktop\Game Engine\Game Engine\Main\System\Entity\Model\AssimpLoader\Directories\lib64;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(ProjectDir)\Main\System\Entity\Model\AssimpLoader\Directories\include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(ProjectDir)\Main\System\Entity\Model\AssimpLoader\Directories\lib64;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>

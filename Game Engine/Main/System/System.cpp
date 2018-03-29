@@ -36,7 +36,7 @@ bool SystemClass::Initialize()
 	screenWidth = 0;
 	screenHeight = 0;
 
-	//Initialize windows API
+	//Initialize window api
 	InitializeWindows(screenWidth, screenHeight);
 
 	//Create and initialize graphics
@@ -120,7 +120,7 @@ void SystemClass::Shutdown()
 	ShutdownWindows();
 }
 
-//Main game loop
+//Main program loop
 void SystemClass::Run()
 {
 	MSG msg;
@@ -154,6 +154,25 @@ void SystemClass::Run()
 				done = true;
 			}
 		}
+	}
+}
+
+//Windows message handling
+LRESULT CALLBACK SystemClass::MessageHandler(HWND hwnd, UINT umsg,
+	WPARAM wparam, LPARAM lparam)
+{
+	switch (umsg)
+	{
+		//Check if a key is down
+	case WM_KEYDOWN:
+		m_input->KeyDown((unsigned int)wparam);
+		return 0;
+		//Check if a key is released
+	case WM_KEYUP:
+		m_input->KeyUp((unsigned int)wparam);
+		//Any other messages send default
+	default:
+		return DefWindowProc(hwnd, umsg, wparam, lparam);
 	}
 }
 
@@ -201,25 +220,6 @@ bool SystemClass::Frame()
 	}
 
 	return true;
-}
-
-//Windows message handling
-LRESULT CALLBACK SystemClass::MessageHandler(HWND hwnd, UINT umsg,
-	WPARAM wparam, LPARAM lparam)
-{
-	switch (umsg)
-	{
-	//Check if a key is down
-	case WM_KEYDOWN:
-		m_input->KeyDown((unsigned int)wparam);
-		return 0;
-	//Check if a key is released
-	case WM_KEYUP:
-		m_input->KeyUp((unsigned int)wparam);
-	//Any other messages send default
-	default:
-		return DefWindowProc(hwnd, umsg, wparam, lparam);
-	}
 }
 
 //Initialize windows handle to screen

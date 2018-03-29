@@ -35,17 +35,14 @@
     <Filter Include="Main\System\Entity\Physics">
       <UniqueIdentifier>{e9ea41ae-23ef-4ae8-b469-e079261422b2}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Main\System\Entity\Physics\Vector">
-      <UniqueIdentifier>{bc6e366e-14e8-4e58-a301-0d65a7cde80c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Main\System\Entity\Physics\Math">
-      <UniqueIdentifier>{2ecd999e-f2fa-4301-9713-e3e7c9065276}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Main\System\Entity\Model\AssimpLoader">
       <UniqueIdentifier>{b64f7748-9566-4451-bbf0-9e11303b1d96}</UniqueIdentifier>
     </Filter>
     <Filter Include="Main\System\Entity\Model\Mesh">
       <UniqueIdentifier>{2f17465b-f786-43d4-a430-a2534da710df}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Main\System\Math">
+      <UniqueIdentifier>{7831e6f2-2725-460e-8388-40df0d74d41d}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -79,20 +76,14 @@
     <ClCompile Include="Main\System\Entity\Physics\Physics.cpp">
       <Filter>Main\System\Entity\Physics</Filter>
     </ClCompile>
-    <ClCompile Include="Main\System\Entity\Physics\Vector\Vector2D.cpp">
-      <Filter>Main\System\Entity\Physics\Vector</Filter>
-    </ClCompile>
-    <ClCompile Include="Main\System\Entity\Physics\Vector\Vector3D.cpp">
-      <Filter>Main\System\Entity\Physics\Vector</Filter>
-    </ClCompile>
-    <ClCompile Include="Main\System\Entity\Physics\Vector\Vector4D.cpp">
-      <Filter>Main\System\Entity\Physics\Vector</Filter>
-    </ClCompile>
     <ClCompile Include="Main\System\Entity\Model\AssimpLoader\AssimpLoader.cpp">
       <Filter>Main\System\Entity\Model\AssimpLoader</Filter>
     </ClCompile>
     <ClCompile Include="Main\System\Entity\Model\Mesh\Mesh.cpp">
       <Filter>Main\System\Entity\Model\Mesh</Filter>
+    </ClCompile>
+    <ClCompile Include="Main\System\Math\MathLib.cpp">
+      <Filter>Main\System\Math</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -126,17 +117,14 @@
     <ClInclude Include="Main\System\Entity\Physics\Physics.h">
       <Filter>Main\System\Entity\Physics</Filter>
     </ClInclude>
-    <ClInclude Include="Main\System\Entity\Physics\Vector\Vector.h">
-      <Filter>Main\System\Entity\Physics\Vector</Filter>
-    </ClInclude>
-    <ClInclude Include="Main\System\Entity\Physics\Math\Math.h">
-      <Filter>Main\System\Entity\Physics\Math</Filter>
-    </ClInclude>
     <ClInclude Include="Main\System\Entity\Model\AssimpLoader\AssimpLoader.h">
       <Filter>Main\System\Entity\Model\AssimpLoader</Filter>
     </ClInclude>
     <ClInclude Include="Main\System\Entity\Model\Mesh\Mesh.h">
       <Filter>Main\System\Entity\Model\Mesh</Filter>
+    </ClInclude>
+    <ClInclude Include="Main\System\Math\MathLib.h">
+      <Filter>Main\System\Math</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -21,42 +21,54 @@ class SystemClass
 {
 public:
 	SystemClass();
-	SystemClass(const SystemClass&);
+	SystemClass(const SystemClass& other);
 	~SystemClass();
 
-	//Main Functions
+	////////Main Functions
+	//Initialize class
 	bool Initialize();
+
+	//Shutdown class
 	void Shutdown();
+
+	//Main program loop
 	void Run();
 
-	//Utility Functions
-	LRESULT CALLBACK MessageHandler(HWND, UINT,
-		WPARAM, LPARAM);
+	////////Utility Functions
+	//Windows message handler
+	LRESULT CALLBACK MessageHandler(HWND hwnd, UINT umsg,
+		WPARAM wparam, LPARAM lparam);
 
 private:
-	//Main Functions
+	////////Main Functions
+	//Process all per frame changes
 	bool Frame();
-	void InitializeWindows(int&, int&);
+
+	//Intialize window
+	void InitializeWindows(int& screenHeight, int& screenWidth);
+
+	//Shutdown window
 	void ShutdownWindows();
 	
-	//Main Variables
+	////////Main Variables
 	LPCWSTR m_applicationName;
 	HINSTANCE m_hInstance;
 	HWND m_hWnd;
 
-	//Class Variabes
+	////////Class Variabes
 	Camera* m_camera;
 	Entity* m_entities;
 	Graphics* m_graphics;
 	Input* m_input;
 	
-	//Utility Variables
+	////////Utility Variables
 	int screenWidth, screenHeight;
 };
 
 //Function Prototype
-static LRESULT CALLBACK WndProc(HWND, UINT,
-	WPARAM, LPARAM);
+//Check window exit
+static LRESULT CALLBACK WndProc(HWND hwnd, UINT umsg,
+	WPARAM wparam, LPARAM lparam);
 
 //Globals
 static SystemClass* ApplicationHandle = 0;

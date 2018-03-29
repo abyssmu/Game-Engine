@@ -46,7 +46,7 @@ int Model::GetNumMeshes()
 	return m_numMeshes;
 }
 
-//Get model info
+//Get model information
 ModelInfo* Model::GetModelInfo(int i)
 {
 	return m_meshes[i]->GetModelInfo();
@@ -56,7 +56,7 @@ ModelInfo* Model::GetModelInfo(int i)
 //Private
 /////////////////////////////////////////////////////////
 
-//Load model with Assimp class
+//Load model with assimp class
 bool Model::LoadModel(ID3D11Device* device, char* filename)
 {
 	AssimpLoader* assimpLoader = new AssimpLoader;

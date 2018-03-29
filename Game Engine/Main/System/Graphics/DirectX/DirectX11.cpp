@@ -25,10 +25,10 @@ DirectX11::DirectX11(const DirectX11& other)
 DirectX11::~DirectX11()
 {}
 
-//Initialize utilities
+//Initialize components
 bool DirectX11::Initialize(int screenWidth, int screenHeight,
-	bool vsync, HWND hwnd, bool fullscreen, float screenDepth,
-	float screenNear)
+							bool vsync, HWND hwnd, bool fullscreen,
+							float screenDepth, float screenNear)
 {
 	float fieldOfView, screenAspect;
 	unsigned int denominator, numerator;
@@ -95,7 +95,7 @@ bool DirectX11::Initialize(int screenWidth, int screenHeight,
 	return true;
 }
 
-//Shutdown utilities
+//Shutdown components
 void DirectX11::Shutdown()
 {
 	//Check if fullscreen
@@ -232,7 +232,7 @@ ID3D11DeviceContext* DirectX11::GetDeviceContext()
 //Create adapter and factory to get video card information
 //and display monitor information
 bool DirectX11::CreateAdapterDesc(int screenWidth, int screenHeight, 
-	unsigned int& numerator, unsigned int& denominator)
+								unsigned int& numerator, unsigned int& denominator)
 {
 	HRESULT result;
 	size_t stringLength;
@@ -447,8 +447,8 @@ bool DirectX11::CreateDepthStencilView()
 
 //Create all matrices
 bool DirectX11::CreateMatrices(int screenWidth, int screenHeight,
-	float fieldOfView, float screenAspect, float screenDepth,
-	float screenNear)
+								float fieldOfView, float screenAspect,
+								float screenDepth, float screenNear)
 {
 	//Create projection matrix for 3D rendering
 	m_projectionMatrix = DirectX::XMMatrixPerspectiveFovLH(fieldOfView,
@@ -498,8 +498,8 @@ bool DirectX11::CreateRasterDesc()
 
 //Create swap chain
 bool DirectX11::CreateSwapChain(int screenWidth, int screenHeight,
-	unsigned int numerator, unsigned int denominator, HWND hwnd,
-	bool fullscreen)
+								unsigned int numerator, unsigned int denominator,
+								HWND hwnd, bool fullscreen)
 {
 	HRESULT result;
 

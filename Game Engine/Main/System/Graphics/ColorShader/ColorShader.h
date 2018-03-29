@@ -15,44 +15,70 @@
 class ColorShader
 {
 public:
+	//Constructor
 	ColorShader();
-	ColorShader(const ColorShader&);
+
+	//Default copy constructor
+	ColorShader(const ColorShader& other);
+
+	//Default destructor
 	~ColorShader();
 
-	//Main Functions
-	bool Initialize(ID3D11Device*, HWND);
-	bool Render(ID3D11DeviceContext*, int,
-		DirectX::XMMATRIX, DirectX::XMMATRIX,
-		DirectX::XMMATRIX);
+	////////Main Functions
+	//Initialize shader filenames and create shaders
+	bool Initialize(ID3D11Device* device, HWND hwnd);
+
+	//Render model with color shader
+	bool Render(ID3D11DeviceContext* deviceContext, int indexCount,
+				DirectX::XMMATRIX worldMatrix, DirectX::XMMATRIX viewMatrix,
+				DirectX::XMMATRIX projectionMatrix);
+
+	//Shutdown shaders
 	void Shutdown();
 
 private:
-	//Main Functions
-	bool CompilerShaders(ID3D11Device*, HWND, LPCWSTR,
-		LPCWSTR);
-	bool CreateLayout(ID3D11Device*);
-	bool CreateMatrixCB(ID3D11Device*);
-	bool InitializeShader(ID3D11Device*, HWND, LPCWSTR,
-		LPCWSTR);
-	void OutputShaderErrorMessage(ID3D10Blob*, HWND,
-		LPCWSTR);
-	void RenderShader(ID3D11DeviceContext*, int);
-	bool SetShaderParameters(ID3D11DeviceContext*,
-		DirectX::XMMATRIX, DirectX::XMMATRIX,
-		DirectX::XMMATRIX);
+	////////Main Functions
+	//Compile shaders from file
+	bool CompilerShaders(ID3D11Device* device, HWND hwnd,
+						LPCWSTR vsFilename, LPCWSTR psFilename);
+
+	//Create polygon layout
+	bool CreateLayout(ID3D11Device* device);
+
+	//Create constant buffer matrix
+	bool CreateMatrixCB(ID3D11Device* device);
+
+	//Initialize shaders
+	bool InitializeShader(ID3D11Device* device, HWND hwnd,
+		LPCWSTR vsFilename, LPCWSTR psFilename);
+
+	//Output error messages from shader compiler
+	void OutputShaderErrorMessage(ID3D10Blob* errorMessage,
+		HWND hwnd, LPCWSTR shaderFile);
+
+	//Render model with shader
+	void RenderShader(ID3D11DeviceContext* device, int indexCount);
+
+	//Set shader parameters
+	bool SetShaderParameters(ID3D11DeviceContext* deviceContext, 
+							DirectX::XMMATRIX worldMatrix,
+							DirectX::XMMATRIX viewMatrix,
+							DirectX::XMMATRIX projectionMatrix);
+	
+	//Shutdown shaders
 	void ShutdownShader();
 
-	//Main Variables
+	////////Main Variables
 	ID3D11InputLayout* m_layout;
 	ID3D11Buffer* m_matrixBuffer;
 	ID3D11PixelShader* m_pixelShader;
 	ID3D11VertexShader* m_vertexShader;
 
-	//Utility Variables
+	////////Utility Variables
 	ID3D10Blob* vertexShaderBuffer;
 	ID3D10Blob* pixelShaderBuffer;
 
-	//Buffers
+	////////Buffers
 	struct MatrixBufferType
 	{
 		DirectX::XMMATRIX world;

@@ -12,23 +12,33 @@
 class Entity : public Physics
 {
 public:
+	//Constructor
 	Entity();
-	Entity(const Entity&);
+
+	//Default copy constructor
+	Entity(const Entity& other);
+
+	//Default destructor
 	~Entity();
 
-	//Main Functions
-	bool Initialize(ID3D11Device*, float*,
-		float*, char*);
+	////////Main Functions
+	//Initialize components
+	bool Initialize(ID3D11Device* device, float* position,
+					float* rotation, char* filename);
+
+	//Shutdown components
 	void Shutdown();
 
-	//Utility Functions
+	////////Utility Functions
+	//Get number of meshes
 	int GetNumMeshes();
 
-	//Class Functions
-	ModelInfo* GetModelInfo(int);
+	////////Class Functions
+	//Get model information
+	ModelInfo* GetModelInfo(int i);
 
 private:
-	//Main Variables
+	////////Main Variables
 	Model* m_model;
 };
 

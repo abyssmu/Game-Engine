@@ -4,10 +4,11 @@
 //Class Includes
 #include "System\System.h"
 
+//Entry point of program
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 	PSTR pScmdline, int iCmdshow)
 {
-	SystemClass* System;
+	SystemClass* System = NULL;
 	bool result = true;
 
 	//Create system object

@@ -54,34 +54,38 @@ float* Physics::GetRotation()
 }
 
 //Update object position and rotation
-void Physics::UpdatePosRot(float forw, float lR, float uD, float* rotation)
+void Physics::UpdatePosRot(float forw, float lR, float uD,
+						float* rotation)
 {
-	Vector3D move(0.0f, 0.0f, 0.0f);
-	Vector3D rot(rotation[0], rotation[1], rotation[2]);
+	MathLib::Vectors::Vector3D move(0.0f, 0.0f, 0.0f);
+	MathLib::Vectors::Vector3D rot(rotation[0], rotation[1],
+								rotation[2]);
 
 	//Capture local axis
-	Vector3D moveX(m_localX);
-	Vector3D moveY(m_localY);
-	Vector3D moveZ(m_localZ);
+	MathLib::Vectors::Vector3D moveX(m_localX);
+	MathLib::Vectors::Vector3D moveY(m_localY);
+	MathLib::Vectors::Vector3D moveZ(m_localZ);
 
 	//Scale movement
-	moveX.Scale(lR);
-	moveY.Scale(uD);
-	moveZ.Scale(forw);
+	MathLib::Vectors::Scale(&moveX, lR);
+	MathLib::Vectors::Scale(&moveY, uD);
+	MathLib::Vectors::Scale(&moveZ, forw);
 
 	//Add all axial movement
-	move += moveX + moveY + moveZ;
+	MathLib::Vectors::Add(moveY, moveZ);
+	MathLib::Vectors::Add(moveX, moveY);
+	MathLib::Vectors::Add(move, moveX);
 
 	//Update position if move length > 0
-	if (move.Length() > 0)
+	if (MathLib::Vectors::Length(&move) > 0)
 	{
-		m_position += move;
+		MathLib::Vectors::Add(m_position, move);
 	}
 
 	//Update rotation if rot length > 0
-	if (rot.Length() > 0)
+	if (MathLib::Vectors::Length(&rot) > 0)
 	{
-		m_rotation += rot;
+		MathLib::Vectors::Add(m_rotation, rot);
 		CalculateLocals();
 	}
 }
@@ -98,38 +102,33 @@ void Physics::CalculateLocals()
 	CalculateLocalZ();
 }
 
-//Calculate local X axis
+//Calculate local x axis
 void Physics::CalculateLocalX()
 {
-	//Calculate local X with Eulerian rotation
-	Vector3D unit = unit.UnitX();
-	Vector4D rot;
+	//Calculate local x with Eulerian rotation
+	MathLib::Vectors::Vector3D unitX = unitX.UnitX();
 
-	unit = rot.rotateEulerY(unit, (m_rotation.y * M_PI_OVER_180));
+	unitX = MathLib::RotateEulerY(unitX, -m_rotation.y * MathLib::RADIAN);
 
-	m_localX = unit;
+	m_localX = unitX;
 }
 
-//Calculate local Y axis
+//Calculate local y axis
 void Physics::CalculateLocalY()
 {
-	//Calculate local Y with Eulerian rotation
-	Vector3D unit = unit.UnitY();
-	Vector4D rot;
+	//Calculate local y with Eulerian rotation
+	MathLib::Vectors::Vector3D unitY = unitY.UnitY();
 
-	unit = rot.rotateEulerY(unit, (m_rotation.y * M_PI_OVER_180));
-
-	m_localY = unit;
+	m_localY = unitY;
 }
 
-//Calculate local Z axis
+//Calculate local z axis
 void Physics::CalculateLocalZ()
 {
-	//Calculate local Z with Eulerian rotation
-	Vector3D unit = unit.UnitZ();
-	Vector4D rot;
+	//Calculate local z with Eulerian rotation
+	MathLib::Vectors::Vector3D unitZ = unitZ.UnitZ();
 
-	unit = rot.rotateEulerY(unit, (m_rotation.y * M_PI_OVER_180));
+	unitZ = MathLib::RotateEulerY(unitZ, -m_rotation.y * MathLib::RADIAN);
 
-	m_localZ = unit;
+	m_localZ = unitZ;
 }

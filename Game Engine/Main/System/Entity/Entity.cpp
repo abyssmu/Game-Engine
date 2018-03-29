@@ -21,7 +21,7 @@ Entity::~Entity()
 
 //Initialize components
 bool Entity::Initialize(ID3D11Device* device, float* position,
-	float* rotation, char* filename)
+						float* rotation, char* filename)
 {
 	bool result;
 
@@ -63,7 +63,7 @@ int Entity::GetNumMeshes()
 	return m_model->GetNumMeshes();
 }
 
-//Get model info
+//Get model information
 ModelInfo* Entity::GetModelInfo(int i)
 {
 	return m_model->GetModelInfo(i);

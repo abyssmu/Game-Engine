@@ -7,8 +7,7 @@
 #include <math.h>
 
 //Class Includes
-#include "Math\Math.h"
-#include "Vector\Vector.h"
+#include "../../Math/MathLib.h"
 
 //Globals
 const float gravity = 9.8;
@@ -16,32 +15,53 @@ const float gravity = 9.8;
 class Physics
 {
 public:
+	//Constructor
 	Physics();
-	Physics(const Physics&);
+
+	//Default copy constructor
+	Physics(const Physics& other);
+	
+	//Default destructor
 	~Physics();
 
-	//Main Functions
-	void SetPosition(float*);
-	void SetRotation(float*);
+	////////Main Functions
+	//Set object position
+	void SetPosition(float* position);
 
-	//Utility Functions
+	//Set object rotation
+	void SetRotation(float* rotation);
+
+	////////Utility Functions
+	//Get object position
 	float* GetPosition();
+
+	//Get object rotation
 	float* GetRotation();
-	void UpdatePosRot(float, float, float, float*);
+
+	//Update object position and rotation
+	void UpdatePosRot(float forw, float lR, float uD,
+					float* rotation);
 
 private:
-	//Math Functions
+	////////Math Functions
+	//Calculate local axes
 	void CalculateLocals();
+
+	//Calculate local x axis
 	void CalculateLocalX();
+
+	//Calculate local y axis
 	void CalculateLocalY();
+
+	//Calculate local z axis
 	void CalculateLocalZ();
 
-	//Main Variables
-	Vector3D m_localX;
-	Vector3D m_localY;
-	Vector3D m_localZ;
-	Vector3D m_position;
-	Vector3D m_rotation;
+	////////Main Variables
+	MathLib::Vectors::Vector3D m_localX;
+	MathLib::Vectors::Vector3D m_localY;
+	MathLib::Vectors::Vector3D m_localZ;
+	MathLib::Vectors::Vector3D m_position;
+	MathLib::Vectors::Vector3D m_rotation;
 };
 
 #endif

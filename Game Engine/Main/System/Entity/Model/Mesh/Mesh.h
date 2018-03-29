@@ -13,43 +13,71 @@
 class Mesh
 {
 public:
+	//Constructor
 	Mesh();
-	Mesh(const Mesh&);
+
+	//Default copy constructor
+	Mesh(const Mesh& other);
+
+	//Default destructor
 	~Mesh();
 
-	//Main Functions
-	bool Initialize(ID3D11Device*);
+	////////Main Functions
+	//Initialize mesh
+	bool Initialize(ID3D11Device* device);
+
+	//Shutdown mesh
 	void Shutdown();
 
-	//Utility Functions
-	void SetIndexCount(unsigned int);
-	void SetIndices(std::vector<unsigned long>);
-	void SetVertexCount(unsigned int);
-	void SetVertices(std::vector<VertexTypeColor*>);
+	////////Utility Functions
+	//Set index count
+	void SetIndexCount(unsigned int numindices);
 
-	//Struct Functions
+	//Set indices
+	void SetIndices(std::vector<unsigned long> inds);
+
+	//Set vertex count
+	void SetVertexCount(unsigned int numVerts);
+
+	//Set vertices
+	void SetVertices(std::vector<VertexTypeColor*> verts);
+
+	////////Struct Functions
+	//Get model information
 	ModelInfo* GetModelInfo();
+
+	//Get vertices
 	std::vector<VertexTypeColor*>& GetVertices();
 
 private:
-	//Main Functions
-	bool InitializeBuffers(ID3D11Device*);
+	////////Main Functions
+	//Initialize buffers
+	bool InitializeBuffers(ID3D11Device* device);
+
+	//Set model information
 	void SetModelInfo();
+
+	//Shutdown buffers
 	void ShutdownBuffers();
 
-	//Utility Functions
-	bool CreateIndexBuffer(ID3D11Device*);
-	bool CreateVertexBuffer(ID3D11Device*);
+	////////Utility Functions
+	//Create index buffer
+	bool CreateIndexBuffer(ID3D11Device* device);
+
+	//Create vertex buffer
+	bool CreateVertexBuffer(ID3D11Device* device);
+	
+	//Release mesh information
 	void ReleaseMesh();
 
-	//Main Variables
+	////////Main Variables
 	int m_vertexCount, m_indexCount;
 	unsigned long* m_indices;
 
-	//Class Variables
+	////////Class Variables
 	ID3D11Buffer* m_vertexBuffer, * m_indexBuffer;
 
-	//Struct Variables
+	////////Struct Variables
 	std::vector<VertexTypeColor*> m_vertices;
 	ModelInfo* m_modelInfo;
 };

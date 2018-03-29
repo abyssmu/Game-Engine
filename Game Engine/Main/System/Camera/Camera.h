@@ -12,19 +12,29 @@
 class Camera : public Entity
 {
 public:
+	//Default constructor
 	Camera();
-	Camera(const Camera&);
+
+	//Default copy constructor
+	Camera(const Camera& other);
+
+	//Default destructor
 	~Camera();
 
-	//Main Functions
-	bool Initialize(float*, float*);
+	////////Main Functions
+	//Initialize camera settings
+	bool Initialize(float* pos, float* rot);
+
+	//Render camera
+	//Calculate view matrix
 	void Render();
 
-	//Class Functions
+	////////Class Functions
+	//Get view matrix
 	DirectX::XMMATRIX GetViewMatrix();
 
 private:
-	//Main Variables
+	////////Main Variables
 	DirectX::XMMATRIX m_viewMatrix;
 };
 

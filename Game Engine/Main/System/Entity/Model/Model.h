@@ -19,29 +19,42 @@
 class Model
 {
 public:
+	//Default constructor
 	Model();
-	Model(const Model&);
+
+	//Default copy constructor
+	Model(const Model& other);
+
+	//Default destructor
 	~Model();
 
-	//Main Functions
-	bool Initialize(ID3D11Device*, char*);
+	////////Main Functions
+	//Initialize model components
+	bool Initialize(ID3D11Device* device, char* filename);
+
+	//Shutdown model components
 	void Shutdown();
 
-	//Utility Functions
+	////////Utility Functions
+	//Get number of meshes
 	int GetNumMeshes();
 
-	//Class Functions
-	ModelInfo* GetModelInfo(int);
+	////////Class Functions
+	//Get model information
+	ModelInfo* GetModelInfo(int i);
 
 private:
-	//Utility Functions
-	bool LoadModel(ID3D11Device*, char*);
-	void ReleaseModel(int);
+	////////Utility Functions
+	//Load model with assimp class
+	bool LoadModel(ID3D11Device* device, char* filename);
 
-	//Utility Variables
+	//Release model meshes
+	void ReleaseModel(int i);
+
+	////////Utility Variables
 	int m_numMeshes;
 
-	//Class Variables
+	////////Class Variables
 	std::vector<Mesh*> m_meshes;
 };
 

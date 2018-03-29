@@ -24,7 +24,7 @@ Graphics::Graphics(const Graphics& other)
 Graphics::~Graphics()
 {}
 
-//Initialize DirectX components
+//Initialize components
 bool Graphics::Initialize(int screenWidth, int screenHeight,
 	HWND hwnd)
 {
@@ -85,8 +85,8 @@ void Graphics::Shutdown()
 }
 
 //Graphical frame processing
-bool Graphics::Frame(float* bgcolor,
-	DirectX::XMMATRIX viewMatrix, ModelInfo* modelInfo)
+bool Graphics::Frame(float* bgcolor, DirectX::XMMATRIX viewMatrix,
+					ModelInfo* modelInfo)
 {
 	bool result = false;
 
@@ -111,8 +111,8 @@ ID3D11Device* Graphics::GetDevice()
 /////////////////////////////////////////////////////////
 
 //Render model to scene and present scene
-bool Graphics::Render(float* bgcolor,
-	DirectX::XMMATRIX viewMatrix, ModelInfo* modelInfo)
+bool Graphics::Render(float* bgcolor, DirectX::XMMATRIX viewMatrix,
+					ModelInfo* modelInfo)
 {
 	bool result = false;
 

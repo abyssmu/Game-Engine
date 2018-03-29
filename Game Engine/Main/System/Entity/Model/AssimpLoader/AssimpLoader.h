@@ -16,12 +16,19 @@
 class AssimpLoader
 {
 public:
+	//Default constructor
 	AssimpLoader();
-	AssimpLoader(const AssimpLoader&);
+
+	//Default copy constructor
+	AssimpLoader(const AssimpLoader& other);
+
+	//Default destructor
 	~AssimpLoader();
 
-	//Utility Functions
-	bool LoadModel(ID3D11Device*, char*, std::vector<Mesh*>&, int&);
+	////////Utility Functions
+	//Load model from file
+	bool LoadModel(ID3D11Device* device, char* filename,
+					std::vector<Mesh*>& meshes, int& numMeshes);
 };
 
 #endif

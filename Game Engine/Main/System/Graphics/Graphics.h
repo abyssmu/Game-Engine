@@ -21,31 +21,45 @@ const float SCREEN_NEAR = 0.1f;
 class Graphics
 {
 public:
+	//Constructor
 	Graphics();
-	Graphics(const Graphics&);
+
+	//Default copy constructor
+	Graphics(const Graphics& other);
+
+	//Default destructor
 	~Graphics();
 
-	//Main Functions
-	bool Initialize(int, int, HWND);
-	void Shutdown();
-	bool Frame(float*,
-		DirectX::XMMATRIX, ModelInfo*);
+	////////Main Functions
+	//Initialize components
+	bool Initialize(int screenWidth, int screenHeight, HWND hwnd);
 
-	//Utility Functions
+	//Shutdown components
+	void Shutdown();
+
+	//Graphical frame processing
+	bool Frame(float* bgcolor, DirectX::XMMATRIX viewMatrix,
+		ModelInfo* modelInfo);
+
+	////////Utility Functions
+	//Get DirectX device
 	ID3D11Device* GetDevice();
 
 private:
-	//Main Functions
-	bool Render(float*,
-		DirectX::XMMATRIX, ModelInfo*);
-	void RenderModel(ModelInfo*);
+	////////Main Functions
+	//Render model to scene and present scene
+	bool Render(float* bgcolor, DirectX::XMMATRIX viewMatrix,
+		ModelInfo* modelInfo);
+	
+	//Put model information on pipeline
+	void RenderModel(ModelInfo* modelInfo);
 
-	//Main Variables
+	////////Main Variables
 
-	//Class Variables
+	////////Class Variables
 	DirectX11* m_dX11;
 
-	//Shader Variables
+	////////Shader Variables
 	ColorShader* m_colorShader;
 };
 

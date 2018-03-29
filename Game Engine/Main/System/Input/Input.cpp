@@ -25,7 +25,7 @@ void Input::Initialize()
 	}
 }
 
-//Query current state of key
+//Query current key state
 bool Input::IsKeyDown(int key)
 {
 	//Return what state key is in
@@ -33,17 +33,17 @@ bool Input::IsKeyDown(int key)
 }
 
 //Capture down state of key
-void Input::KeyDown(int input)
+void Input::KeyDown(int key)
 {
 	//If a key is down, save state
-	m_keys[input] = true;
+	m_keys[key] = true;
 }
 
 //Capture up state of key
-void Input::KeyUp(int input)
+void Input::KeyUp(int key)
 {
 	//If a key is released, save state
-	m_keys[input] = false;
+	m_keys[key] = false;
 }
 
 //Capture mouse input
@@ -107,7 +107,7 @@ void Input::ProcessMovement(float& forw, float& lR, float& uD)
 	}
 }
 
-//Capture quit button
+//Capture quit key
 bool Input::ProcessQuit()
 {
 	if (IsKeyDown(ESC))

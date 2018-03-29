@@ -45,8 +45,9 @@ bool ColorShader::Initialize(ID3D11Device* device, HWND hwnd)
 
 //Render model with color shader
 bool ColorShader::Render(ID3D11DeviceContext* deviceContext,
-	int indexCount, DirectX::XMMATRIX worldMatrix,
-	DirectX::XMMATRIX viewMatrix, DirectX::XMMATRIX projectionMatrix)
+						int indexCount, DirectX::XMMATRIX worldMatrix, 
+						DirectX::XMMATRIX viewMatrix,
+						DirectX::XMMATRIX projectionMatrix)
 {
 	bool result = false;
 
@@ -64,7 +65,7 @@ bool ColorShader::Render(ID3D11DeviceContext* deviceContext,
 	return true;
 }
 
-//Shutdown shader
+//Shutdown shaders
 void ColorShader::Shutdown()
 {
 	//Shutdown shaders
@@ -77,7 +78,7 @@ void ColorShader::Shutdown()
 
 //Compile shaders from file
 bool ColorShader::CompilerShaders(ID3D11Device* device, HWND hwnd, 
-	LPCWSTR vsFilename, LPCWSTR psFilename)
+								LPCWSTR vsFilename, LPCWSTR psFilename)
 {
 	HRESULT result;
 
@@ -218,7 +219,7 @@ bool ColorShader::CreateMatrixCB(ID3D11Device* device)
 
 //Initialize shaders
 bool ColorShader::InitializeShader(ID3D11Device* device, HWND hwnd,
-	LPCWSTR vsFilename, LPCWSTR psFilename)
+									LPCWSTR vsFilename, LPCWSTR psFilename)
 {
 	//Compile shaders
 	if (!CompilerShaders(device, hwnd, vsFilename, psFilename))
@@ -243,7 +244,7 @@ bool ColorShader::InitializeShader(ID3D11Device* device, HWND hwnd,
 
 //Output error messages from shader compiler
 void ColorShader::OutputShaderErrorMessage(ID3D10Blob* errorMessage,
-	HWND hwnd, LPCWSTR shaderFile)
+											HWND hwnd, LPCWSTR shaderFile)
 {
 	char* compilerErrors = 0;
 	unsigned long bufferSize = 0;

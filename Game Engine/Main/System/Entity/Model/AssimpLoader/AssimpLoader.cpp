@@ -16,7 +16,8 @@ AssimpLoader::~AssimpLoader()
 {}
 
 //Load model from file
-bool AssimpLoader::LoadModel(ID3D11Device* device, char* filename, std::vector<Mesh*>& meshes, int& numMeshes)
+bool AssimpLoader::LoadModel(ID3D11Device* device, char* filename,
+							std::vector<Mesh*>& meshes, int& numMeshes)
 {
 	//Create scene from file
 	//Captures all meshes in scene

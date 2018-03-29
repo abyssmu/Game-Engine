@@ -70,7 +70,7 @@ void Mesh::SetVertices(std::vector<VertexTypeColor*> verts)
 	m_vertices = verts;
 }
 
-//Get model info
+//Get model information
 ModelInfo* Mesh::GetModelInfo()
 {
 	return m_modelInfo;
@@ -104,7 +104,7 @@ bool Mesh::InitializeBuffers(ID3D11Device* device)
 	return true;
 }
 
-//Set model info
+//Set model information
 void Mesh::SetModelInfo()
 {
 	m_modelInfo = new ModelInfo;
@@ -211,7 +211,7 @@ bool Mesh::CreateVertexBuffer(ID3D11Device* device)
 	return true;
 }
 
-//Release mesh data
+//Release mesh information
 void Mesh::ReleaseMesh()
 {
 	for (int i = 0; i < m_vertexCount; ++i)
