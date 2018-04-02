@@ -15,7 +15,7 @@ const float gravity = 9.8;
 class Physics
 {
 public:
-	//Constructor
+	//Default onstructor
 	Physics();
 
 	//Default copy constructor
@@ -39,29 +39,17 @@ public:
 	float* GetRotation();
 
 	//Update object position and rotation
-	void UpdatePosRot(float forw, float lR, float uD,
-					float* rotation);
+	void UpdatePosRot(MathLib::Vectors::Vector3D force,
+		MathLib::Vectors::Vector3D torque);
 
 private:
 	////////Math Functions
-	//Calculate local axes
-	void CalculateLocals();
-
-	//Calculate local x axis
-	void CalculateLocalX();
-
-	//Calculate local y axis
-	void CalculateLocalY();
-
-	//Calculate local z axis
-	void CalculateLocalZ();
+	//Rotate vector V by Euler matrices
+	//Order of rotation x, y, z
+	void RotateEulers(MathLib::Vectors::Vector3D& V);
 
 	////////Main Variables
-	MathLib::Vectors::Vector3D m_localX;
-	MathLib::Vectors::Vector3D m_localY;
-	MathLib::Vectors::Vector3D m_localZ;
-	MathLib::Vectors::Vector3D m_position;
-	MathLib::Vectors::Vector3D m_rotation;
+	MathLib::Vectors::Vector3D m_position, m_rotation;
 };
 
 #endif

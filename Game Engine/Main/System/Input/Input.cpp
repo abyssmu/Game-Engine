@@ -47,7 +47,7 @@ void Input::KeyUp(int key)
 }
 
 //Capture mouse input
-void Input::ProcessMouse(float* rot)
+void Input::ProcessMouse(MathLib::Vectors::Vector3D& torque)
 {
 	//Check cursor position
 	if ((GetKeyState(VK_LBUTTON) & 0x100) != 0)
@@ -57,12 +57,12 @@ void Input::ProcessMouse(float* rot)
 		//Rotate about y axis
 		if (mouseP.x != prevMouseP.x)
 		{
-			rot[1] += (mouseP.x - prevMouseP.x) * speed;
+			torque.y += (mouseP.x - prevMouseP.x) * speed;
 		}
 		//Rotate about x axis
 		if (mouseP.y != prevMouseP.y)
 		{
-			rot[0] += (mouseP.y - prevMouseP.y) * speed;
+			torque.x += (mouseP.y - prevMouseP.y) * speed;
 		}
 	}
 
@@ -72,38 +72,38 @@ void Input::ProcessMouse(float* rot)
 }
 
 //Capture movement keys
-void Input::ProcessMovement(float& forw, float& lR, float& uD)
+void Input::ProcessMovement(MathLib::Vectors::Vector3D& force)
 {
 	float speed = 0.2f;
 
 	//Unit X movement
 	if (IsKeyDown(D))
 	{
-		lR += speed;
+		force.x += speed;
 	}
 	if (IsKeyDown(A))
 	{
-		lR -= speed;
+		force.x -= speed;
 	}
 
 	//Unit Y movement
 	if (IsKeyDown(R))
 	{
-		uD += speed;
+		force.y += speed;
 	}
 	if (IsKeyDown(F))
 	{
-		uD -= speed;
+		force.y -= speed;
 	}
 
 	//Unit Z movement
 	if (IsKeyDown(W))
 	{
-		forw += speed;
+		force.z += speed;
 	}
 	if (IsKeyDown(S))
 	{
-		forw -= speed;
+		force.z -= speed;
 	}
 }
 

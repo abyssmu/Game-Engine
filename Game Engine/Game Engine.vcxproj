@@ -30,7 +30,10 @@
     <ClCompile Include="Main\System\Graphics\DirectX\DirectX11.cpp" />
     <ClCompile Include="Main\System\Graphics\Graphics.cpp" />
     <ClCompile Include="Main\System\Input\Input.cpp" />
-    <ClCompile Include="Main\System\Math\MathLib.cpp" />
+    <ClCompile Include="Main\System\Math\MathOperations.cpp" />
+    <ClCompile Include="Main\System\Math\Matrices.cpp" />
+    <ClCompile Include="Main\System\Math\Quaternions.cpp" />
+    <ClCompile Include="Main\System\Math\Vectors.cpp" />
     <ClCompile Include="Main\System\System.cpp" />
   </ItemGroup>
   <ItemGroup>

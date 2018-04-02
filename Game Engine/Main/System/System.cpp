@@ -72,7 +72,7 @@ bool SystemClass::Initialize()
 
 	float ePos[3] = { 0.0f, 0.0f, 0.0f };
 	result = m_entities->Initialize(m_graphics->GetDevice(),
-		ePos, rot, (char*)"human.dae");
+		ePos, rot, (char*)"./Models/human.dae");
 	if (!result)
 	{
 		return false;
@@ -194,18 +194,16 @@ bool SystemClass::Frame()
 	}
 
 	//Process movement
-	float rot[3] = { 0 };
-	float forw, lR, uD;
-	forw = lR = uD = 0.0f;
+	MathLib::Vectors::Vector3D force, torque;
 
 	//Process mouse
-	m_input->ProcessMouse(rot);
+	m_input->ProcessMouse(torque);
 
 	//Process keys
-	m_input->ProcessMovement(forw, lR, uD);
+	m_input->ProcessMovement(force);
 
 	//Set camera current view matrix
-	m_camera->UpdatePosRot(forw, lR, uD, rot);
+	m_camera->UpdatePosRot(force, torque);
 	m_camera->Render();
 
 	//Process and render scene

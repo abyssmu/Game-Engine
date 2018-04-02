@@ -3,11 +3,9 @@
 
 #include "Physics.h"
 
-//Constructor
+//Default constructor
 Physics::Physics()
-{
-	CalculateLocals();
-}
+{}
 
 //Default copy constructor
 Physics::Physics(const Physics& other)
@@ -54,39 +52,20 @@ float* Physics::GetRotation()
 }
 
 //Update object position and rotation
-void Physics::UpdatePosRot(float forw, float lR, float uD,
-						float* rotation)
+void Physics::UpdatePosRot(MathLib::Vectors::Vector3D force,
+	MathLib::Vectors::Vector3D torque)
 {
-	MathLib::Vectors::Vector3D move(0.0f, 0.0f, 0.0f);
-	MathLib::Vectors::Vector3D rot(rotation[0], rotation[1],
-								rotation[2]);
-
-	//Capture local axis
-	MathLib::Vectors::Vector3D moveX(m_localX);
-	MathLib::Vectors::Vector3D moveY(m_localY);
-	MathLib::Vectors::Vector3D moveZ(m_localZ);
-
-	//Scale movement
-	MathLib::Vectors::Scale(&moveX, lR);
-	MathLib::Vectors::Scale(&moveY, uD);
-	MathLib::Vectors::Scale(&moveZ, forw);
-
-	//Add all axial movement
-	MathLib::Vectors::Add(moveY, moveZ);
-	MathLib::Vectors::Add(moveX, moveY);
-	MathLib::Vectors::Add(move, moveX);
-
-	//Update position if move length > 0
-	if (MathLib::Vectors::Length(&move) > 0)
+	//Update rotation if rot length > 0
+	if (MathLib::Vectors::Length(&torque) > 0)
 	{
-		MathLib::Vectors::Add(m_position, move);
+		MathLib::Vectors::Add(&m_rotation, &torque);
 	}
 
-	//Update rotation if rot length > 0
-	if (MathLib::Vectors::Length(&rot) > 0)
+	//Update position if move length > 0
+	if (MathLib::Vectors::Length(&force) > 0)
 	{
-		MathLib::Vectors::Add(m_rotation, rot);
-		CalculateLocals();
+		RotateEulers(force);
+		MathLib::Vectors::Add(&m_position, &force);
 	}
 }
 
@@ -94,41 +73,11 @@ void Physics::UpdatePosRot(float forw, float lR, float uD,
 //Private
 /////////////////////////////////////////////////////////
 
-//Calculate local axes
-void Physics::CalculateLocals()
+//Rotate vector V by Euler matrices
+//Order of rotation x, y, z
+void Physics::RotateEulers(MathLib::Vectors::Vector3D& V)
 {
-	CalculateLocalX();
-	CalculateLocalY();
-	CalculateLocalZ();
-}
-
-//Calculate local x axis
-void Physics::CalculateLocalX()
-{
-	//Calculate local x with Eulerian rotation
-	MathLib::Vectors::Vector3D unitX = unitX.UnitX();
-
-	unitX = MathLib::RotateEulerY(unitX, -m_rotation.y * MathLib::RADIAN);
-
-	m_localX = unitX;
-}
-
-//Calculate local y axis
-void Physics::CalculateLocalY()
-{
-	//Calculate local y with Eulerian rotation
-	MathLib::Vectors::Vector3D unitY = unitY.UnitY();
-
-	m_localY = unitY;
-}
-
-//Calculate local z axis
-void Physics::CalculateLocalZ()
-{
-	//Calculate local z with Eulerian rotation
-	MathLib::Vectors::Vector3D unitZ = unitZ.UnitZ();
-
-	unitZ = MathLib::RotateEulerY(unitZ, -m_rotation.y * MathLib::RADIAN);
-
-	m_localZ = unitZ;
+	V = MathLib::RotateEulerX(&V, -m_rotation.x * MathLib::RADIAN);
+	V = MathLib::RotateEulerY(&V, -m_rotation.y * MathLib::RADIAN);
+	V = MathLib::RotateEulerZ(&V, -m_rotation.z * MathLib::RADIAN);
 }

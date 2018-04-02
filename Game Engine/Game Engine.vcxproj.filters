@@ -82,7 +82,16 @@
     <ClCompile Include="Main\System\Entity\Model\Mesh\Mesh.cpp">
       <Filter>Main\System\Entity\Model\Mesh</Filter>
     </ClCompile>
-    <ClCompile Include="Main\System\Math\MathLib.cpp">
+    <ClCompile Include="Main\System\Math\MathOperations.cpp">
+      <Filter>Main\System\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="Main\System\Math\Matrices.cpp">
+      <Filter>Main\System\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="Main\System\Math\Quaternions.cpp">
+      <Filter>Main\System\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="Main\System\Math\Vectors.cpp">
       <Filter>Main\System\Math</Filter>
     </ClCompile>
   </ItemGroup>

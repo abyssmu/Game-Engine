@@ -6,6 +6,9 @@
 //Includes
 #include <Windows.h>
 
+//Class Includes
+#include "../Math/MathLib.h"
+
 class Input
 {
 public:
@@ -33,10 +36,10 @@ public:
 	void KeyUp(int key);
 
 	//Capture mouse input
-	void ProcessMouse(float* rot);
+	void ProcessMouse(MathLib::Vectors::Vector3D& torque);
 
 	//Capture movement keys
-	void ProcessMovement(float& forw, float& lR, float& uD);
+	void ProcessMovement(MathLib::Vectors::Vector3D& force);
 	
 	//Capture quit key
 	bool ProcessQuit();
