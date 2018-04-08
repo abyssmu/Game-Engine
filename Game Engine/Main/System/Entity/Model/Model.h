@@ -1,7 +1,9 @@
-#pragma once
+/*
+Model class is used as a container for the mesh information. It initializes the meshes by interfacing with the
+Assimp library via the assimp class. It also creates and returns the model info used by other cores.
+*/
 
-#ifndef _MODELCLASS_H_
-#define _MODELCLASS_H_
+#pragma once
 
 //Includes
 #include <DirectXMath.h>
@@ -41,7 +43,7 @@ public:
 
 	////////Class Functions
 	//Get model information
-	ModelInfo* GetModelInfo(int i);
+	AllModelInfo* GetModelInfo(MathLib::Vectors::Vector3D position, int i);
 
 private:
 	////////Utility Functions
@@ -55,7 +57,6 @@ private:
 	int m_numMeshes;
 
 	////////Class Variables
+	AllModelInfo* m_allModelInfo;
 	std::vector<Mesh*> m_meshes;
 };
-
-#endif

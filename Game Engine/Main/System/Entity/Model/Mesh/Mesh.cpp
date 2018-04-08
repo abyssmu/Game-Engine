@@ -65,19 +65,19 @@ void Mesh::SetVertexCount(unsigned int numVerts)
 }
 
 //Set vertices
-void Mesh::SetVertices(std::vector<VertexTypeColor*> verts)
+void Mesh::SetVertices(std::vector<VertexColor*> verts)
 {
 	m_vertices = verts;
 }
 
 //Get model information
-ModelInfo* Mesh::GetModelInfo()
+SubModelInfo* Mesh::GetModelInfo()
 {
 	return m_modelInfo;
 }
 
 //Get vertices
-std::vector<VertexTypeColor*>& Mesh::GetVertices()
+std::vector<VertexColor*>& Mesh::GetVertices()
 {
 	return m_vertices;
 }
@@ -107,11 +107,11 @@ bool Mesh::InitializeBuffers(ID3D11Device* device)
 //Set model information
 void Mesh::SetModelInfo()
 {
-	m_modelInfo = new ModelInfo;
+	m_modelInfo = new SubModelInfo;
 
 	m_modelInfo->indexBuffer = m_indexBuffer;
 	m_modelInfo->vertexBuffer = m_vertexBuffer;
-	m_modelInfo->stride = sizeof(VertexTypeColor);
+	m_modelInfo->stride = sizeof(VertexColor);
 	m_modelInfo->offset = 0;
 	m_modelInfo->indexCount = m_indexCount;
 }
@@ -163,6 +163,8 @@ bool Mesh::CreateIndexBuffer(ID3D11Device* device)
 
 	delete[] m_indices;
 	m_indices = 0;
+
+	return true;
 }
 
 //Create vertex buffer
@@ -173,7 +175,7 @@ bool Mesh::CreateVertexBuffer(ID3D11Device* device)
 	D3D11_BUFFER_DESC vertexBufferDesc;
 	D3D11_SUBRESOURCE_DATA vertexData;
 
-	VertexTypeColor* vertices = new VertexTypeColor[m_vertexCount];
+	VertexColor* vertices = new VertexColor[m_vertexCount];
 
 	for (int i = 0; i < m_vertexCount; ++i)
 	{
@@ -189,7 +191,7 @@ bool Mesh::CreateVertexBuffer(ID3D11Device* device)
 
 	//Setup desc of static vertex buffer
 	vertexBufferDesc.Usage = D3D11_USAGE_DEFAULT;
-	vertexBufferDesc.ByteWidth = sizeof(VertexTypeColor) * m_vertexCount;
+	vertexBufferDesc.ByteWidth = sizeof(VertexColor) * m_vertexCount;
 	vertexBufferDesc.BindFlags = D3D11_BIND_VERTEX_BUFFER;
 	vertexBufferDesc.CPUAccessFlags = 0;
 	vertexBufferDesc.MiscFlags = 0;

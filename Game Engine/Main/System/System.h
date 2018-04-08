@@ -1,7 +1,9 @@
-#pragma once
+/*
+System class is used as a manager for the whole program.
+It contains the game loop and manages communication between cores.
+*/
 
-#ifndef _SYSTEMCLASS_H_
-#define _SYSTEMCLASS_H_
+#pragma once
 
 //Pre processor
 #define WIN32_LEAN_AND_MEAN
@@ -17,16 +19,16 @@
 #include "Graphics\Graphics.h"
 #include "Input\Input.h"
 
-class SystemClass
+class System
 {
 public:
-	SystemClass();
-	SystemClass(const SystemClass& other);
-	~SystemClass();
+	System();
+	System(const System& other);
+	~System();
 
 	////////Main Functions
 	//Initialize class
-	bool Initialize();
+	bool Initialize(int screenWidth, int screenHeight);
 
 	//Shutdown class
 	void Shutdown();
@@ -41,17 +43,44 @@ public:
 
 private:
 	////////Main Functions
+	//Check for window resolution changes
+	bool CheckResizeWindow();
+
 	//Process all per frame changes
 	bool Frame();
 
+	//Initialize camera
+	bool InitializeCamera();
+
+	//Initialize entities
+	bool InitializeEntity();
+
+	//Initialize graphics
+	bool InitializeGraphics();
+
+	//Initialize input
+	bool InitializeInput();
+
 	//Intialize window
-	void InitializeWindows(int& screenHeight, int& screenWidth);
+	void InitializeWindows();
+
+	//Process graphics
+	bool ProcessGraphics();
+
+	//Process input
+	bool ProcessInput(MathLib::Vectors::Vector3D& force, 
+					MathLib::Vectors::Vector3D& forceC,
+					MathLib::Vectors::Vector3D& torque);
 
 	//Shutdown window
 	void ShutdownWindows();
+
+	//Update camera
+	void UpdateCamera(MathLib::Vectors::Vector3D force,
+					MathLib::Vectors::Vector3D torque);
 	
 	////////Main Variables
-	LPCWSTR m_applicationName;
+	LPCSTR m_applicationName;
 	HINSTANCE m_hInstance;
 	HWND m_hWnd;
 
@@ -62,7 +91,7 @@ private:
 	Input* m_input;
 	
 	////////Utility Variables
-	int screenWidth, screenHeight;
+	int m_screenWidth, m_screenHeight;
 };
 
 //Function Prototype
@@ -71,6 +100,4 @@ static LRESULT CALLBACK WndProc(HWND hwnd, UINT umsg,
 	WPARAM wparam, LPARAM lparam);
 
 //Globals
-static SystemClass* ApplicationHandle = 0;
-
-#endif
+static System* ApplicationHandle = 0;

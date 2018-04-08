@@ -1,16 +1,14 @@
-#pragma once
+/*
+Physics class is used to hold and update the position and rotation of an entity.
+*/
 
-#ifndef _PHYSICSCLASS_H_
-#define _PHYSICSCLASS_H_
+#pragma once
 
 //Includes
 #include <math.h>
 
 //Class Includes
 #include "../../Math/MathLib.h"
-
-//Globals
-const float gravity = 9.8;
 
 class Physics
 {
@@ -26,21 +24,24 @@ public:
 
 	////////Main Functions
 	//Set object position
-	void SetPosition(float* position);
+	void SetPosition(MathLib::Vectors::Vector3D position);
 
 	//Set object rotation
-	void SetRotation(float* rotation);
+	void SetRotation(MathLib::Vectors::Vector3D rotation);
 
 	////////Utility Functions
 	//Get object position
-	float* GetPosition();
+	MathLib::Vectors::Vector3D GetPosition();
 
 	//Get object rotation
-	float* GetRotation();
+	MathLib::Vectors::Vector3D GetRotation();
 
 	//Update object position and rotation
 	void UpdatePosRot(MathLib::Vectors::Vector3D force,
 		MathLib::Vectors::Vector3D torque);
+
+	////////Globals
+	static double gravity;
 
 private:
 	////////Math Functions
@@ -51,5 +52,3 @@ private:
 	////////Main Variables
 	MathLib::Vectors::Vector3D m_position, m_rotation;
 };
-
-#endif

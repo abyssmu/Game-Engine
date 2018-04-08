@@ -16,10 +16,11 @@ Camera::~Camera()
 {}
 
 //Initialize camera settings
-bool Camera::Initialize(float* pos, float* rot)
+bool Camera::Initialize(MathLib::Vectors::Vector3D position,
+						MathLib::Vectors::Vector3D rotation)
 {
-	SetPosition(pos);
-	SetRotation(rot);
+	SetPosition(position);
+	SetRotation(rotation);
 
 	return true;
 }
@@ -31,26 +32,26 @@ void Camera::Render()
 	DirectX::XMVECTOR up, position, lookAt;
 	DirectX::XMMATRIX rotationMatrix;
 	
-	float yaw, pitch, roll;
+	double yaw, pitch, roll;
 
 	//Set up vector
-	up = DirectX::XMVectorSet(0.0f, 1.0f, 0.0f, 1.0f);
+	up = DirectX::XMVectorSet(0.0, 1.0, 0.0, 1.0);
 
 	//Set look at default
-	lookAt = DirectX::XMVectorSet(0.0f, 0.0f, 1.0f, 1.0f);
+	lookAt = DirectX::XMVectorSet(0.0, 0.0, 1.0, 1.0);
 
 	//Set position
-	position = DirectX::XMVectorSet(GetPosition()[0], GetPosition()[1],
-		GetPosition()[2], 1.0f);
+	position = DirectX::XMVectorSet((float)GetPosition().x, (float)GetPosition().y,
+		(float)GetPosition().z, 1.0f);
 
 	//Set rotation
-	pitch = GetRotation()[0] * 0.0174532925f;
-	yaw = GetRotation()[1] * 0.0174532925f;
-	roll = GetRotation()[2] * 0.0174532925f;
+	pitch = GetRotation().x * 0.0174532925;
+	yaw = GetRotation().y * 0.0174532925;
+	roll = GetRotation().z * 0.0174532925;
 
 	//Create rotation matrix
-	rotationMatrix = DirectX::XMMatrixRotationRollPitchYaw(pitch,
-		yaw, roll);
+	rotationMatrix = DirectX::XMMatrixRotationRollPitchYaw((float)pitch,
+		(float)yaw, (float)roll);
 
 	//Transform look at and up by rotation
 	lookAt = DirectX::XMVector3TransformCoord(lookAt, rotationMatrix);

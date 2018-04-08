@@ -1,7 +1,9 @@
-#pragma once
+/*
+Entity class is a manager for an individual object. It is a child of physics and contains the model of the object.
+It is used to initialize the model and physics, update the physics, and obtain the model information for rendering.
+*/
 
-#ifndef _ENTITYCLASS_H_
-#define _ENTITYCLASS_H_
+#pragma once
 
 //Includes
 
@@ -23,8 +25,8 @@ public:
 
 	////////Main Functions
 	//Initialize components
-	bool Initialize(ID3D11Device* device, float* position,
-					float* rotation, char* filename);
+	bool Initialize(ID3D11Device* device, MathLib::Vectors::Vector3D position,
+					MathLib::Vectors::Vector3D rotation, char* filename);
 
 	//Shutdown components
 	void Shutdown();
@@ -35,11 +37,9 @@ public:
 
 	////////Class Functions
 	//Get model information
-	ModelInfo* GetModelInfo(int i);
+	AllModelInfo* GetModelInfo(int i);
 
 private:
 	////////Main Variables
 	Model* m_model;
 };
-
-#endif

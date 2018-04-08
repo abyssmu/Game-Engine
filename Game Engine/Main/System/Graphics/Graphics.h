@@ -1,7 +1,8 @@
-#pragma once
+/*
+Graphics class is a manager for the graphics core. It holds the DirectX class and the shader classes.
+*/
 
-#ifndef _GRAPHICSCLASS_H_
-#define _GRAPHICSCLASS_H_
+#pragma once
 
 //Includes
 #include <Windows.h>
@@ -15,8 +16,8 @@
 
 const bool FULL_SCREEN = false;
 const bool VSYNC_ENABLED = true;
-const float SCREEN_DEPTH = 1000.0f;
-const float SCREEN_NEAR = 0.1f;
+const double SCREEN_DEPTH = 1000.0;
+const double SCREEN_NEAR = 0.1;
 
 class Graphics
 {
@@ -34,12 +35,15 @@ public:
 	//Initialize components
 	bool Initialize(int screenWidth, int screenHeight, HWND hwnd);
 
+	//Reset DirectX if resolution changed
+	bool ResetDX(int& screenWidth, int& screenHeight, HWND hwnd);
+
 	//Shutdown components
 	void Shutdown();
 
 	//Graphical frame processing
-	bool Frame(float* bgcolor, DirectX::XMMATRIX viewMatrix,
-		ModelInfo* modelInfo);
+	bool Frame(double* bgcolor, DirectX::XMMATRIX viewMatrix,
+		AllModelInfo* modelInfo);
 
 	////////Utility Functions
 	//Get DirectX device
@@ -47,14 +51,21 @@ public:
 
 private:
 	////////Main Functions
+	//Calculate world matrix
+	void CalculateWorld(DirectX::XMMATRIX& world, AllModelInfo* modelInfo);
+
+	//Initialize DirectX
+	bool InitializeDirectX(int screenWidth, int screenHeight, HWND hwnd);
+
+	//Initialize shaders
+	bool InitializeShaders(HWND hwnd);
+
 	//Render model to scene and present scene
-	bool Render(float* bgcolor, DirectX::XMMATRIX viewMatrix,
-		ModelInfo* modelInfo);
+	bool Render(double* bgcolor, DirectX::XMMATRIX viewMatrix,
+		AllModelInfo* modelInfo);
 	
 	//Put model information on pipeline
-	void RenderModel(ModelInfo* modelInfo);
-
-	////////Main Variables
+	bool RenderModel(AllModelInfo* modelInfo, DirectX::XMMATRIX viewMatrix);
 
 	////////Class Variables
 	DirectX11* m_dX11;
@@ -62,5 +73,3 @@ private:
 	////////Shader Variables
 	ColorShader* m_colorShader;
 };
-
-#endif

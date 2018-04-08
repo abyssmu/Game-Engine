@@ -2,6 +2,7 @@
 //Captures input process from windows messages
 
 #include "Input.h"
+#include "Keys.h"
 
 //Default constructor
 Input::Input()
@@ -46,13 +47,77 @@ void Input::KeyUp(int key)
 	m_keys[key] = false;
 }
 
+//Process character movement
+void Input::ProcessCharacter(MathLib::Vectors::Vector3D& force)
+{
+	double speed = 0.2;
+
+	//Unit x movement
+	if (IsKeyDown(Key::Right_Arrow))
+	{
+		force.x += speed;
+	}
+	if (IsKeyDown(Key::Left_Arrow))
+	{
+		force.x -= speed;
+	}
+
+	//Unit y movement
+
+	//Unit z movement
+	if (IsKeyDown(Key::Up_Arrow))
+	{
+		force.z += speed;
+	}
+	if (IsKeyDown(Key::Down_Arrow))
+	{
+		force.z -= speed;
+	}
+}
+
+//Capture movement keys
+void Input::ProcessMovement(MathLib::Vectors::Vector3D& force)
+{
+	double speed = 0.2;
+
+	//Unit x movement
+	if (IsKeyDown(Key::D))
+	{
+		force.x += speed;
+	}
+	if (IsKeyDown(Key::A))
+	{
+		force.x -= speed;
+	}
+
+	//Unit y movement
+	if (IsKeyDown(Key::R))
+	{
+		force.y += speed;
+	}
+	if (IsKeyDown(Key::F))
+	{
+		force.y -= speed;
+	}
+
+	//Unit z movement
+	if (IsKeyDown(Key::W))
+	{
+		force.z += speed;
+	}
+	if (IsKeyDown(Key::S))
+	{
+		force.z -= speed;
+	}
+}
+
 //Capture mouse input
 void Input::ProcessMouse(MathLib::Vectors::Vector3D& torque)
 {
 	//Check cursor position
-	if ((GetKeyState(VK_LBUTTON) & 0x100) != 0)
+	if ((GetKeyState(Key::Left_Mouse) & 0x100) != 0)
 	{
-		float speed = 0.2f;
+		double speed = 0.2;
 
 		//Rotate about y axis
 		if (mouseP.x != prevMouseP.x)
@@ -71,46 +136,10 @@ void Input::ProcessMouse(MathLib::Vectors::Vector3D& torque)
 	GetCursorPos(&mouseP);
 }
 
-//Capture movement keys
-void Input::ProcessMovement(MathLib::Vectors::Vector3D& force)
-{
-	float speed = 0.2f;
-
-	//Unit X movement
-	if (IsKeyDown(D))
-	{
-		force.x += speed;
-	}
-	if (IsKeyDown(A))
-	{
-		force.x -= speed;
-	}
-
-	//Unit Y movement
-	if (IsKeyDown(R))
-	{
-		force.y += speed;
-	}
-	if (IsKeyDown(F))
-	{
-		force.y -= speed;
-	}
-
-	//Unit Z movement
-	if (IsKeyDown(W))
-	{
-		force.z += speed;
-	}
-	if (IsKeyDown(S))
-	{
-		force.z -= speed;
-	}
-}
-
 //Capture quit key
 bool Input::ProcessQuit()
 {
-	if (IsKeyDown(ESC))
+	if (IsKeyDown(Key::Escape))
 	{
 		return false;
 	}

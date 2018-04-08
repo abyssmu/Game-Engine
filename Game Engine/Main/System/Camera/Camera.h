@@ -1,7 +1,9 @@
-#pragma once
+/*
+Camera class is used to setup the view matrix for DirectX. It takes a position and rotation and
+calculates the view matrix with DirectX functions.
+*/
 
-#ifndef _CAMERACLASS_H_
-#define _CAMERACLASS_H_
+#pragma once
 
 //Includes
 #include <DirectXMath.h>
@@ -23,7 +25,8 @@ public:
 
 	////////Main Functions
 	//Initialize camera settings
-	bool Initialize(float* pos, float* rot);
+	bool Initialize(MathLib::Vectors::Vector3D position,
+					MathLib::Vectors::Vector3D rotation);
 
 	//Render camera
 	//Calculate view matrix
@@ -37,5 +40,3 @@ private:
 	////////Main Variables
 	DirectX::XMMATRIX m_viewMatrix;
 };
-
-#endif

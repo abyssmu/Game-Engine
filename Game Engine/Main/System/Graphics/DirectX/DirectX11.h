@@ -1,7 +1,9 @@
-#pragma once
+/*
+DirectX11 class is an interface class that connects with the DirectX11 library.
+It is used to initialize and maintain communications with DirectX
+*/
 
-#ifndef _DIRECTX11CLASS_H_
-#define _DIRECTX11CLASS_H_
+#pragma once
 
 //Links
 #pragma comment(lib, "dxgi.lib")
@@ -22,7 +24,7 @@ public:
 	DirectX11();
 
 	//Default copy constructor
-	DirectX11(const DirectX11&);
+	DirectX11(const DirectX11& other);
 
 	//Default destructor
 	~DirectX11();
@@ -30,14 +32,18 @@ public:
 	////////Main Functions
 	//Initialize components
 	bool Initialize(int screenWidth, int screenHeight, bool vsync,
-		HWND hwnd, bool fullscreen, float screenDepth, float screenNear);
-	
+		HWND hwnd, bool fullscreen, double screenDepth, double screenNear);
+
+	//Reset DirectX if resolution changed
+	bool Resize(int& screenWidth, int& screenHeight, HWND hwnd, double screenDepth,
+				double screenNear);
+
 	//Shutdown components
 	void Shutdown();
 
 	////////Utility Functions
 	//Clear render target to begin scene
-	void BeginScene(float bgcolor[]);
+	void BeginScene(double bgcolor[]);
 
 	//Present screen to scene
 	void EndScene();
@@ -78,8 +84,8 @@ private:
 	bool CreateDepthStencilView();
 
 	//Create all matrices
-	bool CreateMatrices(int screenWidth, int screenHeight, float fieldOfView,
-						float screenAspect, float screenDepth, float screenNear);
+	bool CreateMatrices(int screenWidth, int screenHeight, double fieldOfView,
+						double screenAspect, double screenDepth, double screenNear);
 
 	//Create rasterizer description
 	bool CreateRasterDesc();
@@ -89,15 +95,24 @@ private:
 						unsigned int denominator, HWND hwnd, bool fullscreen);
 	
 	//Create viewport
-	bool CreateViewport(int screenWidth, int screenHeight, float& fieldOfView,
-						float& screenAspect);
+	bool CreateViewport(int screenWidth, int screenHeight, double& fieldOfView,
+						double& screenAspect);
+
+	//Initialize DirectX components
+	bool InitializeDirectX(int screenWidth, int screenHeight, HWND hwnd,
+							bool fullscreen);
+
+	//Initialize matrix components
+	bool InitializeMatrices(int screenWidth, int screenHeight, double screenDepth,
+							double screenNear);
+
+	//Recreate render target view
+	bool RecreateRenderTarget();
 
 	////////Main Variables
 	char m_videoCardDescription[128];
 	int m_videoCardMemory;
 	bool m_vSyncEnabled;
-
-	////////Utility Variables
 
 	////////Class Variables
 	ID3D11Texture2D* m_depthStencilBuffer;
@@ -105,12 +120,8 @@ private:
 	ID3D11DepthStencilView* m_depthStencilView;
 	ID3D11Device* m_device;
 	ID3D11DeviceContext* m_deviceContext;
-	DirectX::XMMATRIX m_orthoMatrix;
-	DirectX::XMMATRIX m_projectionMatrix;
+	DirectX::XMMATRIX m_orthoMatrix, m_projectionMatrix, m_worldMatrix;
 	ID3D11RasterizerState* m_rasterState;
 	ID3D11RenderTargetView* m_renderTargetView;
 	IDXGISwapChain* m_swapChain;
-	DirectX::XMMATRIX m_worldMatrix;
 };
-
-#endif

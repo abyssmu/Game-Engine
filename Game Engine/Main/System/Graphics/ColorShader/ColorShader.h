@@ -1,7 +1,10 @@
-#pragma once
+/*
+Color shader class is used to compiler HLSL code into a DirectX11 shader.
+The class compiles both pixel and vertex shaders currently. Once compiled, it is used to
+transfer information to the shader for rendering.
+*/
 
-#ifndef _COLORSHADERCLASS_H_
-#define _COLORSHADERCLASS_H_
+#pragma once
 
 //Links
 #pragma comment(lib, "d3dcompiler.lib")
@@ -75,16 +78,13 @@ private:
 	ID3D11VertexShader* m_vertexShader;
 
 	////////Utility Variables
-	ID3D10Blob* vertexShaderBuffer;
-	ID3D10Blob* pixelShaderBuffer;
+	ID3D10Blob* vertexShaderBuffer, * pixelShaderBuffer;
 
 	////////Buffers
 	struct MatrixBufferType
 	{
-		DirectX::XMMATRIX world;
-		DirectX::XMMATRIX view;
 		DirectX::XMMATRIX projection;
+		DirectX::XMMATRIX view;
+		DirectX::XMMATRIX world;
 	};
 };
-
-#endif

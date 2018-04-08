@@ -1,7 +1,9 @@
-#pragma once
+/*
+Assimp loader class is used to interface with the assimp library. It loads the model and returns the
+vector of submeshes and number of meshes.
+*/
 
-#ifndef _ASSIMPLOADERCLASS_H_
-#define _ASSIMPLOADERCLASS_H_
+#pragma once
 
 //Includes
 #include <assimp\cimport.h>
@@ -29,6 +31,12 @@ public:
 	//Load model from file
 	bool LoadModel(ID3D11Device* device, char* filename,
 					std::vector<Mesh*>& meshes, int& numMeshes);
-};
 
-#endif
+private:
+	////////Utility Functions
+	//Load indices
+	bool LoadIndices(std::vector<Mesh*>& meshes, aiMesh* mesh, std::uint32_t pos);
+
+	//Load vertices
+	bool LoadVertices(std::vector<Mesh*>& meshes, aiMesh* mesh, std::uint32_t pos);
+};

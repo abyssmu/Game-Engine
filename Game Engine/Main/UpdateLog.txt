@@ -1,0 +1,70 @@
+To do list:
+Promote windows functions in system class to own class
+Add scene management
+Redesign Entity class to be abstract, add it as a child to the scene manager, and modify entity children accordingly
+Add "custom" scene file (.beep) loader (placeholder extension - might leave it)
+Add quaternions
+Add lights and normals to mesh
+Add textures and uvs to mesh
+Add higher physics
+Add physics collision detection
+Add animations
+
+Completed list:
+
+1. Created shell project for GitHub.
+
+2. Added System manager
+2. Added Graphics manager
+2. Added DirectX interface
+2. Added Camera manager
+2. Added Entity manager
+2. Added Model manager 
+2. Added ModelInfo containers for passing model info between cores
+2. Added Color shader
+2. Added Input manager
+
+3. Added Physics manager
+3. Added Vectors
+3. Added Math constants
+3. Added Simple physics calculations (update position and rotation and rotate incoming force vector to forward direction)
+3. Updated input for physics
+
+4. Added Assimp interface
+
+5. Updated assimp
+5. Added Mesh manager
+5. Updated model class to manage submeshes
+5. Added comments to a lot of code inside functions
+5. Added human.dae model
+
+6. Moved vectors and math header to math library
+6. Added Math library (matrices (mxn & square) and vectors and several functions between them)
+6. Adjusted physics and input to use math library vectors
+6. Added comments to all functions and class function declarations
+
+7. Created model folder for models
+7. Moved math library functions into corresponding .cpp files
+7. Added more matrix functions
+
+8. Added abstract matrix and vector classes in math library
+8. Added AllModelInfo struct to allow the transfer of the model's physics variables to DirectX
+8. Added window borders for title, minimize, maximize, and exit
+8. Allow for changing resolution by updating DirectX
+8. Created key namespace and added several key codes with common names for easy access
+8. Converted floats to doubles to fix most warnings
+8. Added class description to all header files
+8. Added program description to main.cpp
+8. Added to do list, completed list, and routine list to UpdateLog.text
+8. Separated most longer functions into smaller functions
+8. Fixed all warning messages currently present
+
+Routine:
+Develop single feature from to do list
+Code check for improvements (Depth first has been easiest)
+	Algorithms
+	Comment every function
+	Promote what can be to a seperate function to keep functions small (try for < 100 lines)
+	Edit class comments as needed
+	Make sure every class function declaration has variable names to aid in identifying incoming variables
+Submit to GitHub

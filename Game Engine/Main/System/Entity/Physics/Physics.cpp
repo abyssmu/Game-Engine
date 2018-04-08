@@ -3,6 +3,9 @@
 
 #include "Physics.h"
 
+//Initialize gravity
+double Physics::gravity = 9.8;
+
 //Default constructor
 Physics::Physics()
 {}
@@ -16,39 +19,27 @@ Physics::~Physics()
 {}
 
 //Set object position
-void Physics::SetPosition(float* position)
+void Physics::SetPosition(MathLib::Vectors::Vector3D position)
 {
-	m_position.x = position[0];
-	m_position.y = position[1];
-	m_position.z = position[2];
+	m_position = position;
 }
 
 //Set object rotation
-void Physics::SetRotation(float* rotation)
+void Physics::SetRotation(MathLib::Vectors::Vector3D rotation)
 {
-	m_rotation.x = rotation[0];
-	m_rotation.y = rotation[1];
-	m_rotation.z = rotation[2];
+	m_rotation = rotation;
 }
 
 //Get object position
-float* Physics::GetPosition()
+MathLib::Vectors::Vector3D Physics::GetPosition()
 {
-	float pos[3] = { m_position.x,
-					m_position.y,
-					m_position.z };
-
-	return pos;
+	return m_position;
 }
 
 //Get object rotation
-float* Physics::GetRotation()
+MathLib::Vectors::Vector3D Physics::GetRotation()
 {
-	float rot[3] = { m_rotation.x,
-		m_rotation.y,
-		m_rotation.z };
-
-	return rot;
+	return m_rotation;
 }
 
 //Update object position and rotation

@@ -28,11 +28,11 @@ MathLib::Matrices::MatrixMxN::MatrixMxN(int m, int n)
 
 	//Create matrix arrays
 	//Create y arrays
-	container = new float*[m];
+	container = new double*[m];
 	for (int x = 0; x < m; ++x)
 	{
 		//Create x arrays
-		container[x] = new float[n];
+		container[x] = new double[n];
 	}
 
 	//Set all values to 0
@@ -66,15 +66,15 @@ void MathLib::Matrices::MatrixMxN::Delete()
 }
 
 //Get dimensions m, n
-float* MathLib::Matrices::MatrixMxN::GetDim()
+double* MathLib::Matrices::MatrixMxN::GetDim()
 {
-	float dim[2] = { m, n };
+	double dim[2] = { m, n };
 
 	return dim;
 }
 
 //Get value at x, y
-float MathLib::Matrices::MatrixMxN::GetVal(int x, int y)
+double MathLib::Matrices::MatrixMxN::GetVal(int x, int y)
 {
 	if ((x > n) || (x < 0))
 	{
@@ -89,7 +89,7 @@ float MathLib::Matrices::MatrixMxN::GetVal(int x, int y)
 }
 
 //Set value at x, y to val
-void MathLib::Matrices::MatrixMxN::SetVal(int x, int y, float val)
+void MathLib::Matrices::MatrixMxN::SetVal(int x, int y, double val)
 {
 	if ((x > n) || (x < 0))
 	{
@@ -129,11 +129,11 @@ MathLib::Matrices::MatrixSquare::MatrixSquare(int p)
 
 	//Create matrix arrays
 	//Create y arrays
-	container = new float*[p];
+	container = new double*[p];
 	for (int x = 0; x < p; ++x)
 	{
 		//Create x arrays
-		container[x] = new float[p];
+		container[x] = new double[p];
 	}
 
 	//Set all values to 0
@@ -166,15 +166,15 @@ void MathLib::Matrices::MatrixSquare::Delete()
 }
 
 //Get dimensions m, n
-float* MathLib::Matrices::MatrixSquare::GetDim()
+double* MathLib::Matrices::MatrixSquare::GetDim()
 {
-	float dim[2] = { m, n };
+	double dim[2] = { m, n };
 
 	return dim;
 }
 
 //Get value at x, y
-float MathLib::Matrices::MatrixSquare::GetVal(int x, int y)
+double MathLib::Matrices::MatrixSquare::GetVal(int x, int y)
 {
 	if ((x > n) || (x < 0))
 	{
@@ -189,7 +189,7 @@ float MathLib::Matrices::MatrixSquare::GetVal(int x, int y)
 }
 
 //Set value at x, y to val
-void MathLib::Matrices::MatrixSquare::SetVal(int x, int y, float val)
+void MathLib::Matrices::MatrixSquare::SetVal(int x, int y, double val)
 {
 	if ((x > n) || (x < 0))
 	{
@@ -208,6 +208,7 @@ void MathLib::Matrices::MatrixSquare::SetVal(int x, int y, float val)
 /////////////////////////////////////////////////////////
 
 //Calculate matrix dot product
+//Can return NULL
 //A dot B
 MathLib::Matrices::MatrixParent* MathLib::Matrices::Dot(
 												Matrices::MatrixParent* A,
@@ -237,7 +238,7 @@ MathLib::Matrices::MatrixParent* MathLib::Matrices::Dot(
 	{
 		for (int x = 0; x < bx; ++x)
 		{
-			float val = 0.0;
+			double val = 0.0;
 
 			for (int same = 0; same < ay; ++same)
 			{
@@ -252,7 +253,7 @@ MathLib::Matrices::MatrixParent* MathLib::Matrices::Dot(
 }
 
 //Scale matrix M by amt
-void MathLib::Matrices::Scale(Matrices::MatrixParent* M, float amt)
+void MathLib::Matrices::Scale(Matrices::MatrixParent* M, double amt)
 {
 	for (int y = 0; y < M->GetDim()[0]; ++y)
 	{
@@ -272,7 +273,7 @@ void MathLib::Matrices::Scale(Matrices::MatrixParent* M, float amt)
 void MathLib::Matrices::Add(Matrices::MatrixParent* A,
 							Matrices::MatrixParent* B)
 {
-	float ax, ay, bx, by;
+	double ax, ay, bx, by;
 	ax = A->GetDim()[1];
 	ay = A->GetDim()[0];
 	bx = B->GetDim()[1];
@@ -284,7 +285,7 @@ void MathLib::Matrices::Add(Matrices::MatrixParent* A,
 		{
 			for (int x = 0; x < ax; ++x)
 			{
-				float val = A->GetVal(x, y) + B->GetVal(x, y);
+				double val = A->GetVal(x, y) + B->GetVal(x, y);
 				A->SetVal(x, y, val);
 			}
 		}
@@ -296,7 +297,7 @@ void MathLib::Matrices::Add(Matrices::MatrixParent* A,
 bool MathLib::Matrices::Compare(Matrices::MatrixParent* A,
 								Matrices::MatrixParent* B)
 {
-	float ax, ay, bx, by;
+	double ax, ay, bx, by;
 	ax = A->GetDim()[1];
 	ay = A->GetDim()[0];
 	bx = B->GetDim()[1];
@@ -324,7 +325,7 @@ bool MathLib::Matrices::Compare(Matrices::MatrixParent* A,
 void MathLib::Matrices::Equal(Matrices::MatrixParent* A,
 							Matrices::MatrixParent* B)
 {
-	float ax, ay, bx, by;
+	double ax, ay, bx, by;
 	ax = A->GetDim()[1];
 	ay = A->GetDim()[0];
 	bx = B->GetDim()[1];
@@ -347,7 +348,7 @@ void MathLib::Matrices::Equal(Matrices::MatrixParent* A,
 void MathLib::Matrices::Subtract(Matrices::MatrixParent* A,
 								Matrices::MatrixParent* B)
 {
-	float ax, ay, bx, by;
+	double ax, ay, bx, by;
 	ax = A->GetDim()[1];
 	ay = A->GetDim()[0];
 	bx = B->GetDim()[1];
@@ -359,7 +360,7 @@ void MathLib::Matrices::Subtract(Matrices::MatrixParent* A,
 		{
 			for (int x = 0; x < ax; ++x)
 			{
-				float val = A->GetVal(x, y) - B->GetVal(x, y);
+				double val = A->GetVal(x, y) - B->GetVal(x, y);
 				A->SetVal(x, y, val);
 			}
 		}
@@ -578,7 +579,7 @@ MathLib::Matrices::MatrixSquare MathLib::Matrices::Identity_4D()
 /////////////////////////////////////////////////////////
 
 //Calculate and return 4x4 rotation matrix about x axis by r radians
-MathLib::Matrices::MatrixSquare MathLib::Matrices::EulerX(float r)
+MathLib::Matrices::MatrixSquare MathLib::Matrices::EulerX(double r)
 {
 	//Rotation matrix for roll
 	// 1    0    0    0
@@ -603,7 +604,7 @@ MathLib::Matrices::MatrixSquare MathLib::Matrices::EulerX(float r)
 }
 
 //Calculate and return 4x4 rotation matrix about y axis by r radians
-MathLib::Matrices::MatrixSquare MathLib::Matrices::EulerY(float r)
+MathLib::Matrices::MatrixSquare MathLib::Matrices::EulerY(double r)
 {
 	//Rotation matrix for pitch
 	//cos   0   sin   0
@@ -628,7 +629,7 @@ MathLib::Matrices::MatrixSquare MathLib::Matrices::EulerY(float r)
 }
 
 //Calculate and return 4x4 rotation matrix about z axis by r radians
-MathLib::Matrices::MatrixSquare MathLib::Matrices::EulerZ(float r)
+MathLib::Matrices::MatrixSquare MathLib::Matrices::EulerZ(double r)
 {
 	//Rotation matrix for yaw
 	//cos -sin   0    0

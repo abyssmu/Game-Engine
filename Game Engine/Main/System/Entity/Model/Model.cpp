@@ -5,7 +5,9 @@
 
 //Default constructor
 Model::Model()
-{}
+{
+	m_allModelInfo = new AllModelInfo;
+}
 
 //Default copy constructor
 Model::Model(const Model& other)
@@ -47,9 +49,12 @@ int Model::GetNumMeshes()
 }
 
 //Get model information
-ModelInfo* Model::GetModelInfo(int i)
+AllModelInfo* Model::GetModelInfo(MathLib::Vectors::Vector3D position, int i)
 {
-	return m_meshes[i]->GetModelInfo();
+	m_allModelInfo->position = position;
+	m_allModelInfo->subModelInfo = m_meshes[i]->GetModelInfo();
+
+	return m_allModelInfo;
 }
 
 /////////////////////////////////////////////////////////

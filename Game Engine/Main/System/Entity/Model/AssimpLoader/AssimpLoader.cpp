@@ -34,66 +34,100 @@ bool AssimpLoader::LoadModel(ID3D11Device* device, char* filename,
 	//Reserve space in meshes
 	meshes.reserve(numMeshes);
 
-	for (std::uint32_t meshIdx = 0u; meshIdx < numMeshes; ++meshIdx)
+	for (std::uint32_t meshIdx = 0u; (int)meshIdx < numMeshes; ++meshIdx)
 	{
 		//Create a new mesh
 		meshes.push_back(new Mesh);
 
 		//Get current mesh
 		aiMesh* mesh = scene->mMeshes[meshIdx];
-		std::vector<unsigned long> indices;
-		std::vector<VertexTypeColor*> vertices;
 
-		unsigned int verts, faces;
-
-		//Get number of vertices and faces
-		verts = mesh->mNumVertices;
-		faces = mesh->mNumFaces;
-
-		//Add verts and inds counts to mesh
-		//Number of indices = 3 * face count
-		meshes[meshIdx]->SetIndexCount(faces * 3u);
-		meshes[meshIdx]->SetVertexCount(verts);
-
-		//Reserve space in vertices
-		vertices.reserve(verts);
-		for (std::uint32_t vertIdx = 0u; vertIdx < verts; ++vertIdx)
+		if (!LoadVertices(meshes, mesh, meshIdx))
 		{
-			//Get current vertex
-			aiVector3D vert = mesh->mVertices[vertIdx];
-			
-			//Create VertexTypeColor container and copy information
-			VertexTypeColor* hold = new VertexTypeColor;
-			hold->color[0] = 0.5f;
-			hold->color[1] = 0.5f;
-			hold->color[2] = 0.5f;
-			hold->color[3] = 1.0f;
-
-			hold->position[0] = vert.x;
-			hold->position[1] = vert.y;
-			hold->position[2] = vert.z;
-
-			//Add holder vertex to vertices vector
-			vertices.push_back(hold);
+			return false;
 		}
 
-		//Reserve space in indices
-		indices.reserve(faces * 3u);
-		for (std::uint32_t faceIdx = 0u; faceIdx < faces; ++faceIdx)
+		if (!LoadIndices(meshes, mesh, meshIdx))
 		{
-			//Get all three indices of the face
-			indices.push_back(mesh->mFaces[faceIdx].mIndices[0u]);
-			indices.push_back(mesh->mFaces[faceIdx].mIndices[1u]);
-			indices.push_back(mesh->mFaces[faceIdx].mIndices[2u]);
+			return false;
 		}
-
-		//Add indices and vertices to mesh
-		meshes[meshIdx]->SetIndices(indices);
-		meshes[meshIdx]->SetVertices(vertices);
 
 		//Initialize mesh
 		meshes[meshIdx]->Initialize(device);
 	}
+
+	return true;
+}
+
+/////////////////////////////////////////////////////////
+//Private
+/////////////////////////////////////////////////////////
+
+//Load indices
+bool AssimpLoader::LoadIndices(std::vector<Mesh*>& meshes, aiMesh* mesh, std::uint32_t pos)
+{
+	unsigned int faces;
+	std::vector<unsigned long> indices;
+
+	//Get number of vertices and faces
+	faces = mesh->mNumFaces;
+
+	//Reserve space in indices
+	indices.reserve(faces * 3u);
+	for (std::uint32_t faceIdx = 0u; faceIdx < faces; ++faceIdx)
+	{
+		//Get all three indices of the face
+		indices.push_back(mesh->mFaces[faceIdx].mIndices[0u]);
+		indices.push_back(mesh->mFaces[faceIdx].mIndices[1u]);
+		indices.push_back(mesh->mFaces[faceIdx].mIndices[2u]);
+	}
+
+	//Add index counts to mesh
+	//Number of indices = 3 * face count
+	meshes[pos]->SetIndexCount(faces * 3u);
+
+	//Add indices to mesh
+	meshes[pos]->SetIndices(indices);
+
+	return true;
+}
+
+//Load vertices
+bool AssimpLoader::LoadVertices(std::vector<Mesh*>& meshes, aiMesh* mesh, std::uint32_t pos)
+{
+	unsigned int verts = 0;
+	std::vector<VertexColor*> vertices;
+
+	//Get number of vertices
+	verts = mesh->mNumVertices;
+
+	//Reserve space in vertices
+	vertices.reserve(verts);
+	for (std::uint32_t vertIdx = 0u; vertIdx < verts; ++vertIdx)
+	{
+		//Get current vertex
+		aiVector3D vert = mesh->mVertices[vertIdx];
+
+		//Create VertexColor container and copy information
+		VertexColor* hold = new VertexColor;
+		hold->color[0] = 0.5;
+		hold->color[1] = 0.5;
+		hold->color[2] = 0.5;
+		hold->color[3] = 1.0;
+
+		hold->position[0] = vert.x;
+		hold->position[1] = vert.y;
+		hold->position[2] = vert.z;
+
+		//Add holder vertex to vertices vector
+		vertices.push_back(hold);
+	}
+
+	//Add vertex count to mesh
+	meshes[pos]->SetVertexCount(verts);
+
+	//Add vertices to mesh
+	meshes[pos]->SetVertices(vertices);
 
 	return true;
 }

@@ -1,7 +1,9 @@
-#pragma once
+/*
+Mesh class is used to store all mesh data. It stores all vertex information in VertexType as well as the
+vertex buffer, vertex count, index buffer, index count, and index array.
+*/
 
-#ifndef _MESHCLASS_H_
-#define _MESHCLASS_H_
+#pragma once
 
 //Includes
 #include <d3d11.h>
@@ -40,14 +42,14 @@ public:
 	void SetVertexCount(unsigned int numVerts);
 
 	//Set vertices
-	void SetVertices(std::vector<VertexTypeColor*> verts);
+	void SetVertices(std::vector<VertexColor*> verts);
 
 	////////Struct Functions
 	//Get model information
-	ModelInfo* GetModelInfo();
+	SubModelInfo* GetModelInfo();
 
 	//Get vertices
-	std::vector<VertexTypeColor*>& GetVertices();
+	std::vector<VertexColor*>& GetVertices();
 
 private:
 	////////Main Functions
@@ -78,8 +80,6 @@ private:
 	ID3D11Buffer* m_vertexBuffer, * m_indexBuffer;
 
 	////////Struct Variables
-	std::vector<VertexTypeColor*> m_vertices;
-	ModelInfo* m_modelInfo;
+	std::vector<VertexColor*> m_vertices;
+	SubModelInfo* m_modelInfo;
 };
-
-#endif

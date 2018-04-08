@@ -9,8 +9,11 @@
 //Class Includes
 #include "System.h"
 
+//Globals
+bool MINIMIZED = false;
+
 //Constructor
-SystemClass::SystemClass()
+System::System()
 {
 	//Initialize pointers
 	m_camera = 0;
@@ -20,78 +23,54 @@ SystemClass::SystemClass()
 }
 
 //Default copy constructor
-SystemClass::SystemClass(const SystemClass& other)
+System::System(const System& other)
 {}
 
 //Default destructor
-SystemClass::~SystemClass()
+System::~System()
 {}
 
 //Initialize all cores and utilities
-bool SystemClass::Initialize()
+bool System::Initialize(int screenHeight, int screenWidth)
 {
 	bool result = false;
 
 	//Initialize width and height of screen
-	screenWidth = 0;
-	screenHeight = 0;
+	m_screenHeight = screenHeight;
+	m_screenWidth = screenWidth;
 
 	//Initialize window api
-	InitializeWindows(screenWidth, screenHeight);
+	InitializeWindows();
 
-	//Create and initialize graphics
-	m_graphics = new Graphics;
-	if (!m_graphics)
+	//Initialize graphics
+	if (!InitializeGraphics())
 	{
 		return false;
 	}
 
-	m_graphics->Initialize(screenWidth, screenHeight,
-		m_hWnd);
-
-	//Create and initialize camera
-	m_camera = new Camera;
-	if (!m_camera)
+	//Initialize camera
+	if (!InitializeCamera())
 	{
 		return false;
 	}
 
-	float pos[3] = { 0.0f, 0.0f, -10.0f };
-	float rot[3] = { 0.0f, 0.0f, 0.0f };
-	m_camera->Initialize(pos, rot);
-
-	//Create initial view matrix
-	m_camera->Render();
-
-	//Create and initialize entities
-	m_entities = new Entity;
-	if (!m_entities)
+	//Initialize entities
+	if (!InitializeEntity())
 	{
 		return false;
 	}
 
-	float ePos[3] = { 0.0f, 0.0f, 0.0f };
-	result = m_entities->Initialize(m_graphics->GetDevice(),
-		ePos, rot, (char*)"./Models/human.dae");
-	if (!result)
+	//Initialize input
+	if (!InitializeInput())
 	{
 		return false;
 	}
-
-	//Create and initialize input
-	m_input = new Input;
-	if (!m_input)
-	{
-		return false;
-	}
-
-	m_input->Initialize();
 
 	return true;
 }
 
 //Shutdown all cores and utilities
-void SystemClass::Shutdown()
+void System::Shutdown()
 {
 	//Shutdown graphics
 	if (m_graphics)
@@ -121,11 +100,12 @@ void SystemClass::Shutdown()
 }
 
 //Main program loop
-void SystemClass::Run()
+void System::Run()
 {
 	MSG msg;
-	bool done, result;
+	bool done, result, firstPass;
 	done = result = false;
+	firstPass = true;
 
 	//Initialize message structure
 	ZeroMemory(&msg, sizeof(MSG));
@@ -145,20 +125,32 @@ void SystemClass::Run()
 		{
 			done = true;
 		}
-		//Run frame
-		else
+		//Check if window size has changed then run frame
+		else if (!MINIMIZED)
 		{
-			result = Frame();
-			if (!result)
+			if (CheckResizeWindow())
 			{
-				done = true;
+				result = Frame();
+				if (!result)
+				{
+					done = true;
+				}
+
+				firstPass = false;
+			}
+			else if (!firstPass)
+			{
+				if (!m_graphics->ResetDX(m_screenWidth, m_screenHeight, m_hWnd))
+				{
+					done = true;
+				}
 			}
 		}
 	}
 }
 
 //Windows message handling
-LRESULT CALLBACK SystemClass::MessageHandler(HWND hwnd, UINT umsg,
+LRESULT CALLBACK System::MessageHandler(HWND hwnd, UINT umsg,
 	WPARAM wparam, LPARAM lparam)
 {
 	switch (umsg)
@@ -180,52 +172,129 @@ LRESULT CALLBACK SystemClass::MessageHandler(HWND hwnd, UINT umsg,
 //Private
 /////////////////////////////////////////////////////////
 
-//Start of each frame processing
-bool SystemClass::Frame()
+//Check for window resolution changes
+bool System::CheckResizeWindow()
 {
-	bool result = false;
-	float bgcolor[4] = { 0.0f, 0.0f, 0.0f, 1.0f };
+	RECT rect;
 
-	//Process if quit button pressed
-	result = m_input->ProcessQuit();
-	if (!result)
+	GetWindowRect(m_hWnd, &rect);
+
+	int dX, dY;
+
+	dX = (rect.right - rect.left) - m_screenWidth;
+	dY = (rect.bottom - rect.top) - m_screenHeight;
+	
+	if((dX != 0) || (dY != 0))
 	{
+		m_screenHeight = dY + m_screenHeight;
+		m_screenWidth = dX + m_screenWidth;
+
 		return false;
-	}
-
-	//Process movement
-	MathLib::Vectors::Vector3D force, torque;
-
-	//Process mouse
-	m_input->ProcessMouse(torque);
-
-	//Process keys
-	m_input->ProcessMovement(force);
-
-	//Set camera current view matrix
-	m_camera->UpdatePosRot(force, torque);
-	m_camera->Render();
-
-	//Process and render scene
-	for (int i = 0; i < m_entities->GetNumMeshes(); ++i)
-	{
-		result = m_graphics->Frame(bgcolor, m_camera->GetViewMatrix(),
-			m_entities->GetModelInfo(i));
-		if (!result)
-		{
-			return false;
-		}
 	}
 
 	return true;
 }
 
+//Start of each frame processing
+bool System::Frame()
+{
+	MathLib::Vectors::Vector3D force, forceC, torque;
+
+	//Process input
+	if (!ProcessInput(force, forceC, torque))
+	{
+		return false;
+	}
+
+	//Update camera
+	UpdateCamera(force, torque);
+
+	//Process and render scene
+	ProcessGraphics();
+
+	return true;
+}
+
+//Initialize camera
+bool System::InitializeCamera()
+{
+	MathLib::Vectors::Vector3D position(0.0, 0.0, -10.0);
+	MathLib::Vectors::Vector3D rotation(0.0, 0.0, 0.0);
+
+	//Create and initialize camera
+	m_camera = new Camera;
+	if (!m_camera)
+	{
+		return false;
+	}
+
+	m_camera->Initialize(position, rotation);
+
+	//Create initial view matrix
+	m_camera->Render();
+
+	return true;
+}
+
+//Initialize entities
+bool System::InitializeEntity()
+{
+	//Create and initialize entities
+	m_entities = new Entity;
+	if (!m_entities)
+	{
+		return false;
+	}
+
+	MathLib::Vectors::Vector3D position(5.0, 0.0, 10.0);
+	MathLib::Vectors::Vector3D rotation(0.0, 0.0, 0.0);
+	
+	if (!m_entities->Initialize(m_graphics->GetDevice(),
+		position, rotation, (char*)"./Models/human.dae"))
+	{
+		return false;
+	}
+
+	return true;
+}
+
+//Initialize graphics
+bool System::InitializeGraphics()
+{
+	//Create and initialize graphics
+	m_graphics = new Graphics;
+	if (!m_graphics)
+	{
+		return false;
+	}
+
+	m_graphics->Initialize(m_screenWidth, m_screenHeight,
+		m_hWnd);
+
+	return true;
+}
+
+//Initialize input
+bool System::InitializeInput()
+{
+	//Create and initialize input
+	m_input = new Input;
+	if (!m_input)
+	{
+		return false;
+	}
+
+	m_input->Initialize();
+
+	return true;
+}
+
 //Initialize windows handle to screen
-void SystemClass::InitializeWindows(int& screenWidth, int& screenHeight)
+void System::InitializeWindows()
 {
 	WNDCLASSEX wc;
 	DEVMODE dmScreenSettings;
-	int posX, posY;
+	int posX, posY, resHeight, resWidth;
 	posX = posY = 0;
 
 	//Get an external pointer to this object
@@ -235,7 +304,7 @@ void SystemClass::InitializeWindows(int& screenWidth, int& screenHeight)
 	m_hInstance = GetModuleHandle(NULL);
 
 	//Give application name
-	m_applicationName = L"Game Engine";
+	m_applicationName = "Game Engine";
 
 	//Setup windows class with default settings
 	wc.style = CS_HREDRAW | CS_VREDRAW | CS_OWNDC;
@@ -248,23 +317,23 @@ void SystemClass::InitializeWindows(int& screenWidth, int& screenHeight)
 	wc.hCursor = LoadCursor(NULL, IDC_ARROW);
 	wc.hbrBackground = (HBRUSH)GetStockObject(BLACK_BRUSH);
 	wc.lpszMenuName = NULL;
-	wc.lpszClassName = (LPCSTR)m_applicationName;
+	wc.lpszClassName = m_applicationName;
 	wc.cbSize = sizeof(WNDCLASSEX);
 
-	//Regist window class
+	//Register window class
 	RegisterClassEx(&wc);
 
 	//Determine resolution of clients desktop screen
-	screenWidth = GetSystemMetrics(SM_CXSCREEN);
-	screenHeight = GetSystemMetrics(SM_CYSCREEN);
+	resHeight = GetSystemMetrics(SM_CYSCREEN);
+	resWidth = GetSystemMetrics(SM_CXSCREEN);
 
 	//Setup screen settings depending on full screen
 	if (FULL_SCREEN)
 	{
 		memset(&dmScreenSettings, 0, sizeof(dmScreenSettings));
 		dmScreenSettings.dmSize = sizeof(dmScreenSettings);
-		dmScreenSettings.dmPelsWidth = (unsigned long)screenWidth;
-		dmScreenSettings.dmPelsHeight = (unsigned long)screenHeight;
+		dmScreenSettings.dmPelsWidth = (unsigned long)resWidth;
+		dmScreenSettings.dmPelsHeight = (unsigned long)resHeight;
 		dmScreenSettings.dmBitsPerPel = 32;
 		dmScreenSettings.dmFields = DM_BITSPERPEL | DM_PELSWIDTH | DM_PELSHEIGHT;
 
@@ -276,18 +345,16 @@ void SystemClass::InitializeWindows(int& screenWidth, int& screenHeight)
 	}
 	else
 	{
-		screenWidth = 800;
-		screenHeight = 600;
-
 		//Place window in middle of screen
-		posX = (GetSystemMetrics(SM_CXSCREEN) - screenWidth) / 2;
-		posY = (GetSystemMetrics(SM_CYSCREEN) - screenHeight) / 2;
+		posX = (GetSystemMetrics(SM_CXSCREEN) - m_screenWidth) / 2;
+		posY = (GetSystemMetrics(SM_CYSCREEN) - m_screenHeight) / 2;
 	}
 
 	//Create window with screen settings and get handle
-	m_hWnd = CreateWindowEx(WS_EX_APPWINDOW, (LPCSTR)m_applicationName, 
-		(LPCSTR)m_applicationName, WS_CLIPSIBLINGS | WS_CLIPCHILDREN | WS_POPUP, 
-		posX, posY, screenWidth, screenHeight, NULL, NULL, m_hInstance, NULL);
+	m_hWnd = CreateWindowEx(WS_EX_APPWINDOW, m_applicationName, 
+		(LPCSTR)m_applicationName, 
+		WS_CLIPSIBLINGS | WS_CLIPCHILDREN | WS_POPUP | WS_OVERLAPPEDWINDOW | WS_VISIBLE, 
+		posX, posY, m_screenWidth, m_screenHeight, NULL, NULL, m_hInstance, NULL);
 
 	//Bring window up on screen and set it as main focus
 	ShowWindow(m_hWnd, SW_SHOW);
@@ -295,8 +362,50 @@ void SystemClass::InitializeWindows(int& screenWidth, int& screenHeight)
 	SetFocus(m_hWnd);
 }
 
+//Process graphics
+bool System::ProcessGraphics()
+{
+	double bgcolor[4] = { 0.0f, 0.0f, 0.0f, 1.0f };
+
+	//Process and render scene
+	for (int i = 0; i < m_entities->GetNumMeshes(); ++i)
+	{
+		if (!m_graphics->Frame(bgcolor, m_camera->GetViewMatrix(),
+			m_entities->GetModelInfo(i)))
+		{
+			return false;
+		}
+	}
+
+	return true;
+}
+
+//Process input
+bool System::ProcessInput(MathLib::Vectors::Vector3D& force,
+						MathLib::Vectors::Vector3D& forceC,
+						MathLib::Vectors::Vector3D& torque)
+{
+	//Process if quit button pressed
+	if (!m_input->ProcessQuit())
+	{
+		return false;
+	}
+
+	//Process character
+	m_input->ProcessCharacter(forceC);
+	m_entities->UpdatePosRot(forceC, MathLib::Vectors::Vector3D(0.0, 0.0, 0.0));
+
+	//Process mouse
+	m_input->ProcessMouse(torque);
+
+	//Process keys
+	m_input->ProcessMovement(force);
+
+	return true;
+}
+
 //Shutdown windows
-void SystemClass::ShutdownWindows()
+void System::ShutdownWindows()
 {
 	//Fix display settings if in full screen
 	if (FULL_SCREEN)
@@ -314,6 +423,15 @@ void SystemClass::ShutdownWindows()
 
 	//Release pointer to class
 	ApplicationHandle = NULL;
+}
+
+//Update camera
+void System::UpdateCamera(MathLib::Vectors::Vector3D force,
+						MathLib::Vectors::Vector3D torque)
+{
+	//Set camera current view matrix
+	m_camera->UpdatePosRot(force, torque);
+	m_camera->Render();
 }
 
 /////////////////////////////////////////////////////////
@@ -334,7 +452,19 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT umessage,
 	case WM_CLOSE:
 		PostQuitMessage(0);
 		return 0;
+	case WM_SIZE:
+		if (wparam = SIZE_MINIMIZED)
+		{
+			MINIMIZED = true;
+		}
+
+		if (wparam = SIZE_MAXIMIZED)
+		{
+			MINIMIZED = false;
+		}
+		return 0;
 	default:
-		return ApplicationHandle->MessageHandler(hwnd, umessage, wparam, lparam);
+		return ApplicationHandle->MessageHandler(hwnd, umessage,
+												wparam, lparam);
 	}
 }

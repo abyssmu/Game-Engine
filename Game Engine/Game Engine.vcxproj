@@ -48,6 +48,7 @@
     <ClInclude Include="Main\System\Graphics\DirectX\DirectX11.h" />
     <ClInclude Include="Main\System\Graphics\Graphics.h" />
     <ClInclude Include="Main\System\Input\Input.h" />
+    <ClInclude Include="Main\System\Input\Keys.h" />
     <ClInclude Include="Main\System\Math\MathLib.h" />
     <ClInclude Include="Main\System\System.h" />
   </ItemGroup>
@@ -70,6 +71,9 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </FxCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Main\UpdateLog.txt" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>

@@ -4,9 +4,9 @@
 
 cbuffer MatrixBuffer
 {
-	matrix worldMatrix;
-	matrix viewMatrix;
 	matrix projectionMatrix;
+	matrix viewMatrix;
+	matrix worldMatrix;
 };
 
 struct VertexInputType
@@ -26,7 +26,7 @@ PixelInputType main(VertexInputType input)
 	PixelInputType output;
 
 	//Change position vector to 4 units
-	input.position.w = 1.0f;
+	input.position.w = 1.0;
 
 	//Calculate position of vertex
 	output.position = mul(input.position, worldMatrix);

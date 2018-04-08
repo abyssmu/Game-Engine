@@ -1,7 +1,11 @@
-#pragma once
+/*
+Input class is captures peripheral input (currently mouse and keyboard).
+It captures the state of a key/the mouse by receiving messages as to which keys are down from the message handler.
+It then stores these states in a boolean array from which they can be queried.
+An enumeration is used to store the keys as known alphabet characters.
+*/
 
-#ifndef _INPUTCLASS_H_
-#define _INPUTCLASS_H_
+#pragma once
 
 //Includes
 #include <Windows.h>
@@ -35,11 +39,14 @@ public:
 	//Capture up state of key
 	void KeyUp(int key);
 
-	//Capture mouse input
-	void ProcessMouse(MathLib::Vectors::Vector3D& torque);
+	//Capture character keys
+	void ProcessCharacter(MathLib::Vectors::Vector3D& force);
 
 	//Capture movement keys
 	void ProcessMovement(MathLib::Vectors::Vector3D& force);
+
+	//Capture mouse input
+	void ProcessMouse(MathLib::Vectors::Vector3D& torque);
 	
 	//Capture quit key
 	bool ProcessQuit();
@@ -50,18 +57,4 @@ private:
 	////////Main Variables
 	bool m_keys[256];
 	POINT mouseP, prevMouseP;
-
-	////////Keys
-	enum
-	{
-		ESC = 0x1B,
-		W = 0x57,
-		A = 0x41,
-		S = 0x53,
-		D = 0x44,
-		R = 0x52,
-		F = 0x46
-	};
 };
-
-#endif

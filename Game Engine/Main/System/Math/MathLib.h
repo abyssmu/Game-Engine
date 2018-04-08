@@ -1,26 +1,37 @@
+/*
+Math library contains classes for matrices (both mxn and square), quaternions, and vectors (2D, 3D, and 4D).
+All have corresponding abstract parent classes along with common constants, operations, and math functions.
+Numeric constants and conversion constants are also included.
+*/
+
 #pragma once
 
 //Includes
 #include <math.h>
 
 //Math namespace
-//Current data held:
-	//Numeric Constants
-	//Matrices
-	//Matrix Constants
-	//Matrix Constants
-	//Quaternions
-	//Quaternion Constants
-	//Quaternion Constants
-	//Vectors
-	//Vector Constants
-	//Math Operations
+/*Current data held:
+	Numeric Constants
+	Matrices
+	Matrix Constants
+	Matrix Operations
+	Matrix Math
+	Quaternions
+	Quaternion Constants
+	Quaternion Operations
+	Quaternion Math
+	Vectors
+	Vector Constants
+	Vector Operations
+	Vector Math
+	Math Operations
+*/
 
 namespace MathLib
 {
 	////////Numeric Constants
-	const float PI = 3.141592653589793;
-	const float RADIAN = PI / 180;
+	const double PI		= 3.141592653589793;
+	const double RADIAN	= PI / 180;
 
 	////////Matrices
 	namespace Matrices
@@ -43,13 +54,13 @@ namespace MathLib
 			virtual void Delete() = 0;
 
 			//Get dimensions m, n
-			virtual float* GetDim() = 0;
+			virtual double* GetDim() = 0;
 
 			//Get value at x, y
-			virtual float GetVal(int x, int y) = 0;
+			virtual double GetVal(int x, int y) = 0;
 
 			//Set value at x, y to val
-			virtual void SetVal(int x, int y, float val) = 0;
+			virtual void SetVal(int x, int y, double val) = 0;
 		};
 
 		//Matrix of M by N dimensions
@@ -73,18 +84,18 @@ namespace MathLib
 			void Delete();
 
 			//Get dimensions m, n
-			float* GetDim();
+			double* GetDim();
 
 			//Get value at x, y
-			float GetVal(int x, int y);
+			double GetVal(int x, int y);
 
 			//Set value at x, y to val
-			void SetVal(int x, int y, float val);
+			void SetVal(int x, int y, double val);
 
 		private:
 			////////Main Variables
 			int m, n;
-			float** container;
+			double** container;
 		};
 
 		//Matrix of M by M dimensions
@@ -108,18 +119,18 @@ namespace MathLib
 			void Delete();
 
 			//Get dimensions m, n
-			float* GetDim();
+			double* GetDim();
 
 			//Get value at x, y
-			float GetVal(int x, int y);
+			double GetVal(int x, int y);
 
 			//Set value at x, y to val
-			void SetVal(int x, int y, float val);
+			void SetVal(int x, int y, double val);
 
 		private:
 			////////Utility Variables
 			int m, n;
-			float** container;
+			double** container;
 		};
 
 		////////Matrix Constants
@@ -144,17 +155,18 @@ namespace MathLib
 
 		////////Rotation Matrix Constants
 		//Calculate and return 4x4 rotation matrix about axis by r radians
-		MatrixSquare EulerX(float r);
-		MatrixSquare EulerY(float r);
-		MatrixSquare EulerZ(float r);
+		MatrixSquare EulerX(double r);
+		MatrixSquare EulerY(double r);
+		MatrixSquare EulerZ(double r);
 
 		////////Matrix Operation Functions
 		//Calculate matrix dot product
+		//Can return NULL
 		//A dot B
 		MatrixParent* Dot(MatrixParent* A, MatrixParent* B);
 
 		//Scale matrix M by amt
-		void Scale(MatrixParent* M, float amt);
+		void Scale(MatrixParent* M, double amt);
 
 		////////Matrix Math
 		//Matrix addition
@@ -204,14 +216,14 @@ namespace MathLib
 
 			////////Utility Functions
 			//Get vector units
-			virtual void GetUnits(float* units) = 0;
+			virtual void GetUnits(double* units) = 0;
 			
 			//Set vector units
-			virtual void SetUnits(float* units) = 0;
+			virtual void SetUnits(double* units) = 0;
 
 			////////Utility Variables
 			int dimension;
-			float x, y, z, w;
+			double x, y, z, w;
 		};
 
 		//2D vector
@@ -225,17 +237,17 @@ namespace MathLib
 			Vector2D(const Vector2D& other);
 
 			//Unit constructor
-			Vector2D(float x, float y);
+			Vector2D(double x, double y);
 			
 			//Default destructor
 			~Vector2D();
 
 			////////Utility Functions
 			//Get vector units
-			void GetUnits(float* units);
+			void GetUnits(double* units);
 			
 			//Set vector units
-			void SetUnits(float* units);
+			void SetUnits(double* units);
 		};
 
 		//3D vector
@@ -253,7 +265,7 @@ namespace MathLib
 			Vector3D(const Vector3D& other);
 
 			//Unit constructor
-			Vector3D(float x, float y, float z);
+			Vector3D(double x, double y, double z);
 			
 			//Default destructor
 			~Vector3D();
@@ -265,10 +277,10 @@ namespace MathLib
 
 			////////Utility Functions
 			//Get vector units
-			void GetUnits(float* units);
+			void GetUnits(double* units);
 
 			//Set vector units
-			void SetUnits(float* units);
+			void SetUnits(double* units);
 		};
 
 		//4D vector
@@ -290,17 +302,17 @@ namespace MathLib
 			Vector4D(const Vector4D& other);
 			
 			//Unit constructor
-			Vector4D(float x, float y, float z, float w);
+			Vector4D(double x, double y, double z, double w);
 			
 			//Default destructor
 			~Vector4D();
 
 			////////Utility Functions
 			//Get vector units
-			void GetUnits(float* units);
+			void GetUnits(double* units);
 
 			//Set vector units
-			void SetUnits(float* units);
+			void SetUnits(double* units);
 		};
 
 		////////Vector Constants
@@ -332,16 +344,16 @@ namespace MathLib
 		////////Vector Operation Functions
 		//Calculate dot product
 		//A dot B
-		float Dot(VectorParent* A, VectorParent* B);
+		double Dot(VectorParent* A, VectorParent* B);
 
 		//Calculate length of V
-		float Length(VectorParent* V);
+		double Length(VectorParent* V);
 
 		//Normalize V
 		void Normalize(VectorParent* V);
 
 		//Scale V by amt
-		void Scale(VectorParent* V, float amt);
+		void Scale(VectorParent* V, double amt);
 
 		////////Vector Math Functions
 		//Vector addition
@@ -383,11 +395,11 @@ namespace MathLib
 
 	////////Rotations
 	//Rotate vector V about x axis by r radians
-	Vectors::Vector3D RotateEulerX(Vectors::VectorParent* V, float r);
+	Vectors::Vector3D RotateEulerX(Vectors::VectorParent* V, double r);
 
 	//Rotate vector V about y axis by r radians
-	Vectors::Vector3D RotateEulerY(Vectors::VectorParent* V, float r);
+	Vectors::Vector3D RotateEulerY(Vectors::VectorParent* V, double r);
 
 	//Rotate vector V about z axis by r radians
-	Vectors::Vector3D RotateEulerZ(Vectors::VectorParent* V, float r);
+	Vectors::Vector3D RotateEulerZ(Vectors::VectorParent* V, double r);
 }

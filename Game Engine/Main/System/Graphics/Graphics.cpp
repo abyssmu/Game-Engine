@@ -28,36 +28,21 @@ Graphics::~Graphics()
 bool Graphics::Initialize(int screenWidth, int screenHeight,
 	HWND hwnd)
 {
-	bool result = false;
+	//Initialize DirectX
+	InitializeDirectX(screenWidth, screenHeight, hwnd);
 
-	//Create and initialize DirectX11 object
-	m_dX11 = new DirectX11;
-	if (!m_dX11)
-	{
-		return false;
-	}
+	//Initialize shaders
+	InitializeShaders(hwnd);
 
-	result = m_dX11->Initialize(screenWidth, screenHeight,
-		VSYNC_ENABLED, hwnd, FULL_SCREEN, SCREEN_DEPTH,
-		SCREEN_NEAR);
-	if (!result)
-	{
-		MessageBox(hwnd, "Could not initialize DX11", "Error", MB_OK);
-		return false;
-	}
+	return true;
+}
 
-	//Create and initialize color shader
-	m_colorShader = new ColorShader;
-	if (!m_colorShader)
+//Reset DirectX if resolution changed
+bool Graphics::ResetDX(int& screenWidth, int& screenHeight, HWND hwnd)
+{
+	if (!m_dX11->Resize(screenWidth, screenHeight, hwnd, 
+						SCREEN_DEPTH, SCREEN_NEAR))
 	{
-		return false;
-	}
-
-	result = m_colorShader->Initialize(m_dX11->GetDevice(), hwnd);
-	if (!result)
-	{
-		MessageBox(hwnd, "Could not initialize color shader.", "Error",
-			MB_OK);
 		return false;
 	}
 
@@ -85,8 +70,8 @@ void Graphics::Shutdown()
 }
 
 //Graphical frame processing
-bool Graphics::Frame(float* bgcolor, DirectX::XMMATRIX viewMatrix,
-					ModelInfo* modelInfo)
+bool Graphics::Frame(double* bgcolor, DirectX::XMMATRIX viewMatrix,
+					AllModelInfo* modelInfo)
 {
 	bool result = false;
 
@@ -110,26 +95,70 @@ ID3D11Device* Graphics::GetDevice()
 //Private
 /////////////////////////////////////////////////////////
 
-//Render model to scene and present scene
-bool Graphics::Render(float* bgcolor, DirectX::XMMATRIX viewMatrix,
-					ModelInfo* modelInfo)
+//Calculate world matrix
+void Graphics::CalculateWorld(DirectX::XMMATRIX& world, AllModelInfo* modelInfo)
 {
-	bool result = false;
+	DirectX::XMMATRIX translation = DirectX::XMMatrixTranslation((float)modelInfo->position.x,
+		(float)modelInfo->position.y,
+		(float)modelInfo->position.z);
 
+	//DirectX::XMMATRIX rotation;
+	//DirectX::XMMATRIX scale;
+
+	//world = scale * rotation * translation;
+	world = translation;
+}
+
+//Initialize DirectX
+bool Graphics::InitializeDirectX(int screenWidth, int screenHeight, HWND hwnd)
+{
+	//Create and initialize DirectX11 object
+	m_dX11 = new DirectX11;
+	if (!m_dX11)
+	{
+		return false;
+	}
+
+	if (!m_dX11->Initialize(screenWidth, screenHeight,
+		VSYNC_ENABLED, hwnd, FULL_SCREEN, SCREEN_DEPTH,
+		SCREEN_NEAR))
+	{
+		MessageBox(hwnd, "Could not initialize DX11", "Error", MB_OK);
+		return false;
+	}
+
+	return true;
+}
+
+//Initialize shaders
+bool Graphics::InitializeShaders(HWND hwnd)
+{
+	//Create and initialize color shader
+	m_colorShader = new ColorShader;
+	if (!m_colorShader)
+	{
+		return false;
+	}
+
+	if (!m_colorShader->Initialize(m_dX11->GetDevice(), hwnd))
+	{
+		MessageBox(hwnd, "Could not initialize color shader.", "Error",
+			MB_OK);
+		return false;
+	}
+
+	return true;
+}
+
+//Render model to scene and present scene
+bool Graphics::Render(double* bgcolor, DirectX::XMMATRIX viewMatrix,
+					AllModelInfo* modelInfo)
+{
 	//Clear buffers to begin scene
 	m_dX11->BeginScene(bgcolor);
 
 	//Render model
-	RenderModel(modelInfo);
-
-	//Render model with color shader
-	result = m_colorShader->Render(m_dX11->GetDeviceContext(),
-		modelInfo->indexCount, m_dX11->GetWorldMatrix(),
-		viewMatrix, m_dX11->GetProjectionMatrix());
-	if (!result)
-	{
-		return false;
-	}
+	RenderModel(modelInfo, viewMatrix);
 
 	//Present rendered scene
 	m_dX11->EndScene();
@@ -138,18 +167,31 @@ bool Graphics::Render(float* bgcolor, DirectX::XMMATRIX viewMatrix,
 }
 
 //Put model information on pipeline
-void Graphics::RenderModel(ModelInfo* modelInfo)
+bool Graphics::RenderModel(AllModelInfo* modelInfo, DirectX::XMMATRIX viewMatrix)
 {
+	DirectX::XMMATRIX world;
+	CalculateWorld(world, modelInfo);
+
+	//Render model with color shader
+	if (!m_colorShader->Render(m_dX11->GetDeviceContext(),
+		modelInfo->subModelInfo->indexCount, world,
+		viewMatrix, m_dX11->GetProjectionMatrix()))
+	{
+		return false;
+	}
+
 	//Set vertex buffer to active
 	m_dX11->GetDeviceContext()->IASetVertexBuffers(0, 1,
-		&modelInfo->vertexBuffer, &modelInfo->stride,
-		&modelInfo->offset);
+		&modelInfo->subModelInfo->vertexBuffer, &modelInfo->subModelInfo->stride,
+		&modelInfo->subModelInfo->offset);
 
 	//Set index buffer to active
-	m_dX11->GetDeviceContext()->IASetIndexBuffer(modelInfo->indexBuffer,
+	m_dX11->GetDeviceContext()->IASetIndexBuffer(modelInfo->subModelInfo->indexBuffer,
 		DXGI_FORMAT_R32_UINT, 0);
 
 	//Set type of primitive
 	m_dX11->GetDeviceContext()->IASetPrimitiveTopology(
 		D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+
+	return true;
 }

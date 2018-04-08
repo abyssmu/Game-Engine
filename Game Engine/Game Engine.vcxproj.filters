@@ -135,6 +135,9 @@
     <ClInclude Include="Main\System\Math\MathLib.h">
       <Filter>Main\System\Math</Filter>
     </ClInclude>
+    <ClInclude Include="Main\System\Input\Keys.h">
+      <Filter>Main\System\Input</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Main\System\Graphics\ColorShader\ColorShader_ps.hlsl">
@@ -143,5 +146,10 @@
     <FxCompile Include="Main\System\Graphics\ColorShader\ColorShader_vs.hlsl">
       <Filter>Main\System\Graphics\ColorShader</Filter>
     </FxCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Main\UpdateLog.txt">
+      <Filter>Main</Filter>
+    </None>
   </ItemGroup>
 </Project>

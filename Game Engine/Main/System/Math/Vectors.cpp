@@ -25,7 +25,7 @@ MathLib::Vectors::Vector2D::Vector2D(const Vector2D& other)
 }
 
 //Unit constructor
-MathLib::Vectors::Vector2D::Vector2D(float x, float y)
+MathLib::Vectors::Vector2D::Vector2D(double x, double y)
 {
 	dimension = 2;
 	this->x = x;
@@ -37,14 +37,14 @@ MathLib::Vectors::Vector2D::~Vector2D()
 {}
 
 //Get vector units
-void MathLib::Vectors::Vector2D::GetUnits(float* units)
+void MathLib::Vectors::Vector2D::GetUnits(double* units)
 {
 	units[0] = x;
 	units[1] = y;
 }
 
 //Set vector units
-void MathLib::Vectors::Vector2D::SetUnits(float* units)
+void MathLib::Vectors::Vector2D::SetUnits(double* units)
 {
 	x = units[0];
 	y = units[1];
@@ -81,7 +81,7 @@ MathLib::Vectors::Vector3D::Vector3D(const Vector3D& other)
 }
 
 //Unit constructor
-MathLib::Vectors::Vector3D::Vector3D(float x, float y, float z)
+MathLib::Vectors::Vector3D::Vector3D(double x, double y, double z)
 {
 	dimension = 3;
 	this->x = x;
@@ -106,7 +106,7 @@ MathLib::Vectors::VectorParent* MathLib::Vectors::Vector3D::Cross(VectorParent* 
 }
 
 //Get vector units
-void MathLib::Vectors::Vector3D::GetUnits(float* units)
+void MathLib::Vectors::Vector3D::GetUnits(double* units)
 {
 	units[0] = x;
 	units[1] = y;
@@ -114,7 +114,7 @@ void MathLib::Vectors::Vector3D::GetUnits(float* units)
 }
 
 //Set vector units
-void MathLib::Vectors::Vector3D::SetUnits(float* units)
+void MathLib::Vectors::Vector3D::SetUnits(double* units)
 {
 	x = units[0];
 	y = units[1];
@@ -164,7 +164,7 @@ MathLib::Vectors::Vector4D::Vector4D(const Vector4D& other)
 }
 
 //Unit constructor
-MathLib::Vectors::Vector4D::Vector4D(float x, float y, float z, float w)
+MathLib::Vectors::Vector4D::Vector4D(double x, double y, double z, double w)
 {
 	dimension = 4;
 	this->x = x;
@@ -178,7 +178,7 @@ MathLib::Vectors::Vector4D::~Vector4D()
 {}
 
 //Get vector units
-void MathLib::Vectors::Vector4D::GetUnits(float* units)
+void MathLib::Vectors::Vector4D::GetUnits(double* units)
 {
 	units[0] = x;
 	units[1] = y;
@@ -187,7 +187,7 @@ void MathLib::Vectors::Vector4D::GetUnits(float* units)
 }
 
 //Set vector units
-void MathLib::Vectors::Vector4D::SetUnits(float* units)
+void MathLib::Vectors::Vector4D::SetUnits(double* units)
 {
 	x = units[0];
 	y = units[1];
@@ -295,18 +295,18 @@ MathLib::Vectors::Vector4D MathLib::Vectors::Zero_4D()
 
 //Vector dot product
 //A dot B
-float MathLib::Vectors::Dot(VectorParent* A, VectorParent* B)
+double MathLib::Vectors::Dot(VectorParent* A, VectorParent* B)
 {
 	if (A->dimension != B->dimension)
 	{
 		return _CRT_INT_MAX;
 	}
 
-	float result = 0.0;
+	double result = 0.0;
 
 	//Obtain unit information
-	float* uA = new float[A->dimension];
-	float* uB = new float[B->dimension];
+	double* uA = new double[A->dimension];
+	double* uB = new double[B->dimension];
 
 	A->GetUnits(uA);
 	B->GetUnits(uB);
@@ -324,12 +324,12 @@ float MathLib::Vectors::Dot(VectorParent* A, VectorParent* B)
 }
 
 //Vector length/magnitude
-float MathLib::Vectors::Length(VectorParent* A)
+double MathLib::Vectors::Length(VectorParent* A)
 {
-	float result = 0.0;
+	double result = 0.0;
 
 	//Obtain unit information
-	float* u = new float[A->dimension];
+	double* u = new double[A->dimension];
 	
 	A->GetUnits(u);
 
@@ -350,10 +350,10 @@ float MathLib::Vectors::Length(VectorParent* A)
 void MathLib::Vectors::Normalize(VectorParent* A)
 {
 	//Obtain vector length
-	float length = Length(A);
+	double length = Length(A);
 
 	//Obtain unit information
-	float* u = new float[A->dimension];
+	double* u = new double[A->dimension];
 
 	A->GetUnits(u);
 
@@ -370,10 +370,10 @@ void MathLib::Vectors::Normalize(VectorParent* A)
 }
 
 //Vector scaling
-void MathLib::Vectors::Scale(VectorParent* A, float amt)
+void MathLib::Vectors::Scale(VectorParent* A, double amt)
 {
 	//Obtain unit information
-	float* u = new float[A->dimension];
+	double* u = new double[A->dimension];
 
 	A->GetUnits(u);
 
@@ -397,8 +397,8 @@ void MathLib::Vectors::Scale(VectorParent* A, float amt)
 void MathLib::Vectors::Add(VectorParent* A, VectorParent* B)
 {
 	//Obtain unit information
-	float* uA = new float[A->dimension];
-	float* uB = new float[B->dimension];
+	double* uA = new double[A->dimension];
+	double* uB = new double[B->dimension];
 
 	A->GetUnits(uA);
 	B->GetUnits(uB);
@@ -427,8 +427,8 @@ bool MathLib::Vectors::Compare(VectorParent* A, VectorParent* B)
 	bool equals = true;
 
 	//Obtain unit information
-	float* uA = new float[A->dimension];
-	float* uB = new float[B->dimension];
+	double* uA = new double[A->dimension];
+	double* uB = new double[B->dimension];
 
 	A->GetUnits(uA);
 	B->GetUnits(uB);
@@ -459,8 +459,8 @@ void MathLib::Vectors::Equal(VectorParent* A, VectorParent* B)
 	}
 
 	//Obtain unit information
-	float* uA = new float[A->dimension];
-	float* uB = new float[B->dimension];
+	double* uA = new double[A->dimension];
+	double* uB = new double[B->dimension];
 
 	A->GetUnits(uA);
 	B->GetUnits(uB);
@@ -482,8 +482,8 @@ void MathLib::Vectors::Equal(VectorParent* A, VectorParent* B)
 void MathLib::Vectors::Subtract(VectorParent* A, VectorParent* B)
 {
 	//Obtain unit information
-	float* uA = new float[A->dimension];
-	float* uB = new float[B->dimension];
+	double* uA = new double[A->dimension];
+	double* uB = new double[B->dimension];
 
 	A->GetUnits(uA);
 	B->GetUnits(uB);

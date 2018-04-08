@@ -97,7 +97,7 @@ MathLib::Vectors::Vector3D MathLib::Vector3D_Dot_Matrix3x3(
 
 //Rotate vector V about x axis by r radians
 MathLib::Vectors::Vector3D MathLib::RotateEulerX(Vectors::VectorParent* V,
-												float r)
+												double r)
 {
 	Matrices::MatrixSquare EulerX(Matrices::EulerX(r));
 
@@ -106,7 +106,7 @@ MathLib::Vectors::Vector3D MathLib::RotateEulerX(Vectors::VectorParent* V,
 
 //Rotate vector V about y axis by r radians
 MathLib::Vectors::Vector3D MathLib::RotateEulerY(Vectors::VectorParent* V,
-												float r)
+												double r)
 {
 	Matrices::MatrixSquare EulerY(Matrices::EulerY(r));
 
@@ -115,7 +115,7 @@ MathLib::Vectors::Vector3D MathLib::RotateEulerY(Vectors::VectorParent* V,
 
 //Rotate vector V about z axis by r radians
 MathLib::Vectors::Vector3D MathLib::RotateEulerZ(Vectors::VectorParent* V,
-												float r)
+												double r)
 {
 	Matrices::MatrixSquare EulerZ(Matrices::EulerZ(r));
 
