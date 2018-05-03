@@ -15,6 +15,7 @@ It contains the game loop and manages communication between cores.
 
 //Class Includes
 #include "Camera\Camera.h"
+#include "Color\Color.h"
 #include "Entity\Entity.h"
 #include "Graphics\Graphics.h"
 #include "Input\Input.h"

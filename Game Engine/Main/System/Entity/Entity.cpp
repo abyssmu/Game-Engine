@@ -1,7 +1,3 @@
-//Entity class
-//Acts as an interface for all components of
-//world objects
-
 #include "Entity.h"
 
 //Constructor

@@ -1,6 +1,3 @@
-//Model class
-//Container for model components
-
 #include "Model.h"
 
 //Default constructor

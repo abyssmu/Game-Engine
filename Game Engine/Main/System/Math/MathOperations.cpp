@@ -8,7 +8,7 @@
 //Create 4D vector from 3D
 MathLib::Vectors::VectorParent* MathLib::Convert3Dto4D(Vectors::VectorParent* V)
 {
-	Vectors::Vector4D hold(MathLib::Vectors::Zero_4D());
+	static Vectors::Vector4D hold(MathLib::Vectors::Zero_4D());
 
 	hold.x = V->x;
 	hold.y = V->y;
@@ -21,7 +21,7 @@ MathLib::Vectors::VectorParent* MathLib::Convert3Dto4D(Vectors::VectorParent* V)
 //Create 3D vector from 4D
 MathLib::Vectors::VectorParent* MathLib::Convert4Dto3D(Vectors::VectorParent* V)
 {
-	Vectors::Vector3D hold(MathLib::Vectors::Zero_3D());
+	static Vectors::Vector3D hold(MathLib::Vectors::Zero_3D());
 
 	hold.x = V->x;
 	hold.y = V->y;
@@ -33,7 +33,7 @@ MathLib::Vectors::VectorParent* MathLib::Convert4Dto3D(Vectors::VectorParent* V)
 //Convert 3D vector S to scale matrix
 MathLib::Matrices::MatrixParent* MathLib::ToScale(Vectors::VectorParent* S)
 {
-	Matrices::MatrixSquare scale(Matrices::Identity_4D());
+	static Matrices::MatrixSquare scale(Matrices::Identity_4D());
 
 	scale.SetVal(0, 0, S->x);
 	scale.SetVal(1, 1, S->y);
@@ -45,7 +45,7 @@ MathLib::Matrices::MatrixParent* MathLib::ToScale(Vectors::VectorParent* S)
 //Convert 3D vector T to translation matrix
 MathLib::Matrices::MatrixParent* MathLib::ToTranslate(Vectors::VectorParent* T)
 {
-	Matrices::MatrixSquare translation(Matrices::Identity_4D());
+	static Matrices::MatrixSquare translation(Matrices::Identity_4D());
 
 	translation.SetVal(3, 0, T->x);
 	translation.SetVal(3, 1, T->y);
@@ -79,7 +79,7 @@ MathLib::Vectors::Vector3D MathLib::Vector3D_Dot_Matrix3x3(
 	vecMatrix.SetVal(0, 3, 1.0);
 
 	Matrices::MatrixParent* temp = Matrices::Dot(&M, &vecMatrix);
-	if (temp == NULL)
+	if (temp == 0)
 	{
 		return Vectors::Zero_3D();
 	}

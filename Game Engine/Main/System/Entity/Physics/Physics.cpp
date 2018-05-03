@@ -1,6 +1,3 @@
-//Physics class
-//Calculates position and rotation of object
-
 #include "Physics.h"
 
 //Initialize gravity

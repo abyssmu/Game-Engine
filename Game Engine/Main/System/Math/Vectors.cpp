@@ -96,7 +96,7 @@ MathLib::Vectors::Vector3D::~Vector3D()
 //Vector cross product
 MathLib::Vectors::VectorParent* MathLib::Vectors::Vector3D::Cross(VectorParent* B)
 {
-	Vector3D result(Zero_3D());
+	static Vector3D result(Zero_3D());
 
 	result.x = (this->y * B->z) - (this->z * B->y);
 	result.y = (this->z * B->x) - (this->x * B->z);
@@ -336,10 +336,10 @@ double MathLib::Vectors::Length(VectorParent* A)
 	//Calculate length
 	for (int i = 0; i < A->dimension; ++i)
 	{
-		result += powf(u[i], 2);
+		result += pow(u[i], 2);
 	}
 
-	result = sqrtf(result);
+	result = sqrt(result);
 
 	delete[] u;
 

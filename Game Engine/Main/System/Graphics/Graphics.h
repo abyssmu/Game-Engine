@@ -8,6 +8,7 @@ Graphics class is a manager for the graphics core. It holds the DirectX class an
 #include <Windows.h>
 
 //Class Includes
+#include "../Color/Color.h"
 #include "ColorShader\ColorShader.h"
 #include "DirectX\DirectX11.h"
 
@@ -42,7 +43,7 @@ public:
 	void Shutdown();
 
 	//Graphical frame processing
-	bool Frame(double* bgcolor, DirectX::XMMATRIX viewMatrix,
+	bool Frame(Colors::Color bgcolor, DirectX::XMMATRIX viewMatrix,
 		AllModelInfo* modelInfo);
 
 	////////Utility Functions
@@ -61,7 +62,7 @@ private:
 	bool InitializeShaders(HWND hwnd);
 
 	//Render model to scene and present scene
-	bool Render(double* bgcolor, DirectX::XMMATRIX viewMatrix,
+	bool Render(Colors::Color bgcolor, DirectX::XMMATRIX viewMatrix,
 		AllModelInfo* modelInfo);
 	
 	//Put model information on pipeline

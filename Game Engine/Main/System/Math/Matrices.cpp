@@ -9,7 +9,7 @@
 MathLib::Matrices::MatrixMxN::MatrixMxN()
 {
 	m = n = 0;
-	container = NULL;
+	container = 0;
 }
 
 //Copy constructor
@@ -62,13 +62,13 @@ void MathLib::Matrices::MatrixMxN::Delete()
 
 	delete[] container;
 
-	container = NULL;
+	container = 0;
 }
 
 //Get dimensions m, n
-double* MathLib::Matrices::MatrixMxN::GetDim()
+int* MathLib::Matrices::MatrixMxN::GetDim()
 {
-	double dim[2] = { m, n };
+	static int dim[2] = { m, n };
 
 	return dim;
 }
@@ -111,7 +111,7 @@ void MathLib::Matrices::MatrixMxN::SetVal(int x, int y, double val)
 MathLib::Matrices::MatrixSquare::MatrixSquare()
 {
 	m = n = 0;
-	container = NULL;
+	container = 0;
 }
 
 //Copy constructor
@@ -162,13 +162,13 @@ void MathLib::Matrices::MatrixSquare::Delete()
 
 	delete[] container;
 
-	container = NULL;
+	container = 0;
 }
 
 //Get dimensions m, n
-double* MathLib::Matrices::MatrixSquare::GetDim()
+int* MathLib::Matrices::MatrixSquare::GetDim()
 {
-	double dim[2] = { m, n };
+	static int dim[2] = { m, n };
 
 	return dim;
 }
@@ -208,13 +208,13 @@ void MathLib::Matrices::MatrixSquare::SetVal(int x, int y, double val)
 /////////////////////////////////////////////////////////
 
 //Calculate matrix dot product
-//Can return NULL
+//Can return 0
 //A dot B
 MathLib::Matrices::MatrixParent* MathLib::Matrices::Dot(
 												Matrices::MatrixParent* A,
 												Matrices::MatrixParent* B)
 {
-	MatrixParent* newMatrix = NULL;
+	MatrixParent* newMatrix = 0;
 	int ax, ay, bx, by;
 	ax = A->GetDim()[1];
 	ay = A->GetDim()[0];
@@ -231,7 +231,7 @@ MathLib::Matrices::MatrixParent* MathLib::Matrices::Dot(
 	}
 	else
 	{
-		return NULL;
+		return 0;
 	}
 
 	for (int y = 0; y < ay; ++y)
@@ -593,12 +593,12 @@ MathLib::Matrices::MatrixSquare MathLib::Matrices::EulerX(double r)
 	id.SetVal(0, 0, 1.0);
 
 	//Row 2
-	id.SetVal(1, 1, cosf(r));
-	id.SetVal(1, 2, -sinf(r));
+	id.SetVal(1, 1, cos(r));
+	id.SetVal(1, 2, -sin(r));
 
 	//Row 3
-	id.SetVal(2, 1, sinf(r));
-	id.SetVal(2, 2, cosf(r));
+	id.SetVal(2, 1, sin(r));
+	id.SetVal(2, 2, cos(r));
 
 	return id;
 }
@@ -615,15 +615,15 @@ MathLib::Matrices::MatrixSquare MathLib::Matrices::EulerY(double r)
 	MatrixSquare id(Identity_4D());
 
 	//Row 1
-	id.SetVal(0, 0, cosf(r));
-	id.SetVal(0, 2, sinf(r));
+	id.SetVal(0, 0, cos(r));
+	id.SetVal(0, 2, sin(r));
 
 	//Row 2
 	id.SetVal(1, 1, 1.0);
 
 	//Row 3
-	id.SetVal(2, 0, -sinf(r));
-	id.SetVal(2, 2, cosf(r));
+	id.SetVal(2, 0, -sin(r));
+	id.SetVal(2, 2, cos(r));
 
 	return id;
 }
@@ -640,12 +640,12 @@ MathLib::Matrices::MatrixSquare MathLib::Matrices::EulerZ(double r)
 	MatrixSquare id(Identity_4D());
 
 	//Row 1
-	id.SetVal(0, 0, cosf(r));
-	id.SetVal(0, 1, -sinf(r));
+	id.SetVal(0, 0, cos(r));
+	id.SetVal(0, 1, -sin(r));
 
 	//Row 2
-	id.SetVal(1, 0, sinf(r));
-	id.SetVal(1, 1, cosf(r));
+	id.SetVal(1, 0, sin(r));
+	id.SetVal(1, 1, cos(r));
 
 	//Row 3
 	id.SetVal(2, 2, 1.0);

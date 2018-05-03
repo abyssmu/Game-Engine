@@ -1,6 +1,3 @@
-//Camera class
-//Sets up viewport
-
 #include "Camera.h"
 
 //Default constructor

@@ -44,6 +44,12 @@
     <Filter Include="Main\System\Math">
       <UniqueIdentifier>{7831e6f2-2725-460e-8388-40df0d74d41d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Main\System\Math\RNG">
+      <UniqueIdentifier>{011a528e-bda0-4dbd-9723-8395e040802d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Main\System\Color">
+      <UniqueIdentifier>{7b3f8d9e-0a69-485f-89a0-b939042ca5c6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main\Main.cpp">
@@ -94,6 +100,12 @@
     <ClCompile Include="Main\System\Math\Vectors.cpp">
       <Filter>Main\System\Math</Filter>
     </ClCompile>
+    <ClCompile Include="Main\System\Math\RNG\RNG.cpp">
+      <Filter>Main\System\Math\RNG</Filter>
+    </ClCompile>
+    <ClCompile Include="Main\System\Color\Color.cpp">
+      <Filter>Main\System\Color</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Main\System\System.h">
@@ -137,6 +149,12 @@
     </ClInclude>
     <ClInclude Include="Main\System\Input\Keys.h">
       <Filter>Main\System\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="Main\System\Math\RNG\RNG.h">
+      <Filter>Main\System\Math\RNG</Filter>
+    </ClInclude>
+    <ClInclude Include="Main\System\Color\Color.h">
+      <Filter>Main\System\Color</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

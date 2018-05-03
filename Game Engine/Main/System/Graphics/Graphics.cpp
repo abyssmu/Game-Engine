@@ -1,10 +1,3 @@
-//Graphics class
-//Used as an interface to DirectX
-//Combines components of DirectX to render objects
-
-//Current Shaders
-	//ColorShader
-
 #include "Graphics.h"
 
 //Constructor
@@ -70,7 +63,7 @@ void Graphics::Shutdown()
 }
 
 //Graphical frame processing
-bool Graphics::Frame(double* bgcolor, DirectX::XMMATRIX viewMatrix,
+bool Graphics::Frame(Colors::Color bgcolor, DirectX::XMMATRIX viewMatrix,
 					AllModelInfo* modelInfo)
 {
 	bool result = false;
@@ -151,7 +144,7 @@ bool Graphics::InitializeShaders(HWND hwnd)
 }
 
 //Render model to scene and present scene
-bool Graphics::Render(double* bgcolor, DirectX::XMMATRIX viewMatrix,
+bool Graphics::Render(Colors::Color bgcolor, DirectX::XMMATRIX viewMatrix,
 					AllModelInfo* modelInfo)
 {
 	//Clear buffers to begin scene

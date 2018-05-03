@@ -10,7 +10,8 @@ Numeric constants and conversion constants are also included.
 #include <math.h>
 
 //Math namespace
-/*Current data held:
+/*
+Current data held:
 	Numeric Constants
 	Matrices
 	Matrix Constants
@@ -54,7 +55,7 @@ namespace MathLib
 			virtual void Delete() = 0;
 
 			//Get dimensions m, n
-			virtual double* GetDim() = 0;
+			virtual int* GetDim() = 0;
 
 			//Get value at x, y
 			virtual double GetVal(int x, int y) = 0;
@@ -84,7 +85,7 @@ namespace MathLib
 			void Delete();
 
 			//Get dimensions m, n
-			double* GetDim();
+			int* GetDim();
 
 			//Get value at x, y
 			double GetVal(int x, int y);
@@ -119,7 +120,7 @@ namespace MathLib
 			void Delete();
 
 			//Get dimensions m, n
-			double* GetDim();
+			int* GetDim();
 
 			//Get value at x, y
 			double GetVal(int x, int y);
@@ -161,7 +162,7 @@ namespace MathLib
 
 		////////Matrix Operation Functions
 		//Calculate matrix dot product
-		//Can return NULL
+		//Can return 0
 		//A dot B
 		MatrixParent* Dot(MatrixParent* A, MatrixParent* B);
 
@@ -242,6 +243,7 @@ namespace MathLib
 			//Default destructor
 			~Vector2D();
 
+		private:
 			////////Utility Functions
 			//Get vector units
 			void GetUnits(double* units);
@@ -275,6 +277,7 @@ namespace MathLib
 			//A(this) cross B
 			VectorParent* Cross(VectorParent* B);
 
+		private:
 			////////Utility Functions
 			//Get vector units
 			void GetUnits(double* units);
@@ -307,6 +310,7 @@ namespace MathLib
 			//Default destructor
 			~Vector4D();
 
+		private:
 			////////Utility Functions
 			//Get vector units
 			void GetUnits(double* units);

@@ -1,6 +1,3 @@
-//System class
-//Holds the cores of the game engine
-
 //Includes
 #include <vector>
 #include <string>
@@ -114,7 +111,7 @@ void System::Run()
 	while (!done)
 	{
 		//Handle windows messages
-		if (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
+		if (PeekMessage(&msg, 0, 0, 0, PM_REMOVE))
 		{
 			TranslateMessage(&msg);
 			DispatchMessage(&msg);
@@ -301,7 +298,7 @@ void System::InitializeWindows()
 	ApplicationHandle = this;
 
 	//Get instance of application
-	m_hInstance = GetModuleHandle(NULL);
+	m_hInstance = GetModuleHandle(0);
 
 	//Give application name
 	m_applicationName = "Game Engine";
@@ -312,11 +309,11 @@ void System::InitializeWindows()
 	wc.cbClsExtra = 0;
 	wc.cbWndExtra = 0;
 	wc.hInstance = m_hInstance;
-	wc.hIcon = LoadIcon(NULL, IDI_WINLOGO);
+	wc.hIcon = LoadIcon(0, IDI_WINLOGO);
 	wc.hIconSm = wc.hIcon;
-	wc.hCursor = LoadCursor(NULL, IDC_ARROW);
+	wc.hCursor = LoadCursor(0, IDC_ARROW);
 	wc.hbrBackground = (HBRUSH)GetStockObject(BLACK_BRUSH);
-	wc.lpszMenuName = NULL;
+	wc.lpszMenuName = 0;
 	wc.lpszClassName = m_applicationName;
 	wc.cbSize = sizeof(WNDCLASSEX);
 
@@ -354,7 +351,7 @@ void System::InitializeWindows()
 	m_hWnd = CreateWindowEx(WS_EX_APPWINDOW, m_applicationName, 
 		(LPCSTR)m_applicationName, 
 		WS_CLIPSIBLINGS | WS_CLIPCHILDREN | WS_POPUP | WS_OVERLAPPEDWINDOW | WS_VISIBLE, 
-		posX, posY, m_screenWidth, m_screenHeight, NULL, NULL, m_hInstance, NULL);
+		posX, posY, m_screenWidth, m_screenHeight, 0, 0, m_hInstance, 0);
 
 	//Bring window up on screen and set it as main focus
 	ShowWindow(m_hWnd, SW_SHOW);
@@ -365,7 +362,7 @@ void System::InitializeWindows()
 //Process graphics
 bool System::ProcessGraphics()
 {
-	double bgcolor[4] = { 0.0f, 0.0f, 0.0f, 1.0f };
+	Colors::Color bgcolor = Colors::Black();
 
 	//Process and render scene
 	for (int i = 0; i < m_entities->GetNumMeshes(); ++i)
@@ -410,19 +407,19 @@ void System::ShutdownWindows()
 	//Fix display settings if in full screen
 	if (FULL_SCREEN)
 	{
-		ChangeDisplaySettings(NULL, 0);
+		ChangeDisplaySettings(0, 0);
 	}
 
 	//Remove window
 	DestroyWindow(m_hWnd);
-	m_hWnd = NULL;
+	m_hWnd = 0;
 
 	//Remove application instance
 	UnregisterClass((LPCSTR)m_applicationName, m_hInstance);
-	m_hInstance = NULL;
+	m_hInstance = 0;
 
 	//Release pointer to class
-	ApplicationHandle = NULL;
+	ApplicationHandle = 0;
 }
 
 //Update camera

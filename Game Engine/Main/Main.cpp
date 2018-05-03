@@ -7,10 +7,8 @@ Their corresponding classes are custom and used as an interface.
 See UpdateLog.txt for completed and future updates along with routine list.
 */
 
-
-
 //Windows main function
-//Creates system root object that is basis for entire program
+//Creates system root object that is base for entire program
 
 //Class Includes
 #include "System\System.h"
@@ -19,7 +17,7 @@ See UpdateLog.txt for completed and future updates along with routine list.
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 	PSTR pScmdline, int iCmdshow)
 {
-	System* system = NULL;
+	System* system = 0;
 
 	//Create system object
 	system = new System;

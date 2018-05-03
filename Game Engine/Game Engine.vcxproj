@@ -21,6 +21,7 @@
   <ItemGroup>
     <ClCompile Include="Main\Main.cpp" />
     <ClCompile Include="Main\System\Camera\Camera.cpp" />
+    <ClCompile Include="Main\System\Color\Color.cpp" />
     <ClCompile Include="Main\System\Entity\Entity.cpp" />
     <ClCompile Include="Main\System\Entity\Model\AssimpLoader\AssimpLoader.cpp" />
     <ClCompile Include="Main\System\Entity\Model\Mesh\Mesh.cpp" />
@@ -33,11 +34,13 @@
     <ClCompile Include="Main\System\Math\MathOperations.cpp" />
     <ClCompile Include="Main\System\Math\Matrices.cpp" />
     <ClCompile Include="Main\System\Math\Quaternions.cpp" />
+    <ClCompile Include="Main\System\Math\RNG\RNG.cpp" />
     <ClCompile Include="Main\System\Math\Vectors.cpp" />
     <ClCompile Include="Main\System\System.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Main\System\Camera\Camera.h" />
+    <ClInclude Include="Main\System\Color\Color.h" />
     <ClInclude Include="Main\System\Entity\Entity.h" />
     <ClInclude Include="Main\System\Entity\Model\AssimpLoader\AssimpLoader.h" />
     <ClInclude Include="Main\System\Entity\Model\Mesh\Mesh.h" />
@@ -50,6 +53,7 @@
     <ClInclude Include="Main\System\Input\Input.h" />
     <ClInclude Include="Main\System\Input\Keys.h" />
     <ClInclude Include="Main\System\Math\MathLib.h" />
+    <ClInclude Include="Main\System\Math\RNG\RNG.h" />
     <ClInclude Include="Main\System\System.h" />
   </ItemGroup>
   <ItemGroup>

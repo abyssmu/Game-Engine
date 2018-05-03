@@ -1,7 +1,3 @@
-//ColorShader class
-//Compiles color vertex and pixel shaders
-//and acts as interface for compiled shaders
-
 #include "ColorShader.h"
 
 //Constructor
@@ -85,9 +81,9 @@ bool ColorShader::CompilerShaders(ID3D11Device* device, HWND hwnd,
 	ID3D10Blob* errorMessage = 0;
 
 	//Compile vertex shader
-	result = D3DCompileFromFile(vsFilename, NULL, NULL, "main",
+	result = D3DCompileFromFile(vsFilename, 0, 0, "main",
 		"vs_5_0", D3DCOMPILE_SKIP_OPTIMIZATION | D3DCOMPILE_DEBUG,
-		NULL, &vertexShaderBuffer, &errorMessage);
+		0, &vertexShaderBuffer, &errorMessage);
 	if (FAILED(result))
 	{
 		//If shader failed to compile
@@ -99,16 +95,16 @@ bool ColorShader::CompilerShaders(ID3D11Device* device, HWND hwnd,
 		else
 		{
 			MessageBox(hwnd, (LPCSTR)vsFilename,
-				"Missing shader file", NULL);
+				"Missing shader file", 0);
 		}
 
 		return false;
 	}
 
 	//Compile pixel shader
-	result = D3DCompileFromFile(psFilename, NULL, NULL, "main",
+	result = D3DCompileFromFile(psFilename, 0, 0, "main",
 		"ps_5_0", D3DCOMPILE_SKIP_OPTIMIZATION | D3DCOMPILE_DEBUG,
-		NULL, &pixelShaderBuffer, &errorMessage);
+		0, &pixelShaderBuffer, &errorMessage);
 	if (FAILED(result))
 	{
 		//If shader failed to compile
@@ -120,7 +116,7 @@ bool ColorShader::CompilerShaders(ID3D11Device* device, HWND hwnd,
 		else
 		{
 			MessageBox(hwnd, (LPCSTR)psFilename,
-				"Missing shader file", NULL);
+				"Missing shader file", 0);
 		}
 
 		return false;
@@ -128,14 +124,14 @@ bool ColorShader::CompilerShaders(ID3D11Device* device, HWND hwnd,
 
 	//Create shaders
 	result = device->CreateVertexShader(vertexShaderBuffer->GetBufferPointer(),
-		vertexShaderBuffer->GetBufferSize(), NULL, &m_vertexShader);
+		vertexShaderBuffer->GetBufferSize(), 0, &m_vertexShader);
 	if (FAILED(result))
 	{
 		return false;
 	}
 
 	result = device->CreatePixelShader(pixelShaderBuffer->GetBufferPointer(),
-		pixelShaderBuffer->GetBufferSize(), NULL, &m_pixelShader);
+		pixelShaderBuffer->GetBufferSize(), 0, &m_pixelShader);
 	if (FAILED(result))
 	{
 		return false;
@@ -209,12 +205,14 @@ bool ColorShader::CreateMatrixCB(ID3D11Device* device)
 	matrixBufferDesc.StructureByteStride = 0;
 
 	//Create constant buffer
-	result = device->CreateBuffer(&matrixBufferDesc, NULL,
+	result = device->CreateBuffer(&matrixBufferDesc, 0,
 		&m_matrixBuffer);
 	if (FAILED(result))
 	{
 		return false;
 	}
+
+	return true;
 }
 
 //Initialize shaders
@@ -254,13 +252,13 @@ void ColorShader::OutputShaderErrorMessage(ID3D10Blob* errorMessage,
 	compilerErrors = (char*)errorMessage->GetBufferPointer();
 
 	//Get length of message
-	bufferSize = errorMessage->GetBufferSize();
+	bufferSize = (unsigned long)errorMessage->GetBufferSize();
 
 	//Open file to write message
 	fout.open("shader-error.txt");
 
 	//Write out error message
-	for (int i = 0; i < bufferSize; ++i)
+	for (unsigned int i = 0; i < bufferSize; ++i)
 	{
 		fout << compilerErrors[i];
 	}
@@ -285,8 +283,8 @@ void ColorShader::RenderShader(ID3D11DeviceContext* deviceContext,
 	deviceContext->IASetInputLayout(m_layout);
 
 	//Set shaders
-	deviceContext->VSSetShader(m_vertexShader, NULL, 0);
-	deviceContext->PSSetShader(m_pixelShader, NULL, 0);
+	deviceContext->VSSetShader(m_vertexShader, 0, 0);
+	deviceContext->PSSetShader(m_pixelShader, 0, 0);
 
 	//Render
 	deviceContext->DrawIndexed(indexCount, 0, 0);

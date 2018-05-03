@@ -16,6 +16,7 @@ It is used to initialize and maintain communications with DirectX
 #include <dxgi.h>
 
 //Class Includes
+#include "../../Color/Color.h"
 
 class DirectX11
 {
@@ -43,7 +44,7 @@ public:
 
 	////////Utility Functions
 	//Clear render target to begin scene
-	void BeginScene(double bgcolor[]);
+	void BeginScene(Colors::Color bgcolor);
 
 	//Present screen to scene
 	void EndScene();

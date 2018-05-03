@@ -1,6 +1,3 @@
-//DirectX Class
-//Creates DirectX utilities
-
 #include "DirectX11.h"
 
 //Constructor
@@ -53,10 +50,10 @@ bool DirectX11::Resize(int& screenWidth, int& screenHeight, HWND hwnd, double sc
 {
 	HRESULT result;
 
-	ID3D11RenderTargetView* nullViews[] = { NULL };
+	ID3D11RenderTargetView* noViews[] = { 0 };
 
 	//Clear components
-	m_deviceContext->OMSetRenderTargets(ARRAYSIZE(nullViews), nullViews, NULL);
+	m_deviceContext->OMSetRenderTargets(ARRAYSIZE(noViews), noViews, 0);
 	m_renderTargetView->Release();
 	m_depthStencilView->Release();
 	m_deviceContext->Flush();
@@ -103,7 +100,7 @@ void DirectX11::Shutdown()
 	//Check if fullscreen
 	if (m_swapChain)
 	{
-		m_swapChain->SetFullscreenState(false, NULL);
+		m_swapChain->SetFullscreenState(false, 0);
 	}
 
 	//Shutdown raster state
@@ -164,14 +161,14 @@ void DirectX11::Shutdown()
 }
 
 //Clear render target to begin scene
-void DirectX11::BeginScene(double bgcolor[])
+void DirectX11::BeginScene(Colors::Color bgcolor)
 {
-	float bg[4] = { 0 };
-
-	for (int i = 0; i < 4; ++i)
-	{
-		bg[i] = bgcolor[i];
-	}
+	float bg[4] = {
+		(float)bgcolor.color.r,
+		(float)bgcolor.color.g,
+		(float)bgcolor.color.b,
+		(float)bgcolor.color.a
+	};
 
 	//Clear back buffer
 	m_deviceContext->ClearRenderTargetView(m_renderTargetView, bg);
@@ -280,7 +277,7 @@ bool DirectX11::CreateAdapterDesc(int screenWidth, int screenHeight,
 
 	//Get number of modes that fit display format
 	result = adapterOutput->GetDisplayModeList(DXGI_FORMAT_R8G8B8A8_UNORM,
-												DXGI_ENUM_MODES_INTERLACED, &numModes, NULL);
+												DXGI_ENUM_MODES_INTERLACED, &numModes, 0);
 	if (FAILED(result))
 	{
 		return false;
@@ -374,7 +371,7 @@ bool DirectX11::CreateDepthBuffer(int screenWidth, int screenHeight)
 	depthBufferDesc.MiscFlags = 0;
 
 	//Create texture for depth buffer
-	result = m_device->CreateTexture2D(&depthBufferDesc, NULL,
+	result = m_device->CreateTexture2D(&depthBufferDesc, 0,
 										&m_depthStencilBuffer);
 	if (FAILED(result))
 	{
@@ -461,15 +458,15 @@ bool DirectX11::CreateMatrices(int screenWidth, int screenHeight,
 								double screenDepth, double screenNear)
 {
 	//Create projection matrix for 3D rendering
-	m_projectionMatrix = DirectX::XMMatrixPerspectiveFovLH(fieldOfView, screenAspect,
-															screenNear, screenDepth);
+	m_projectionMatrix = DirectX::XMMatrixPerspectiveFovLH((float)fieldOfView, (float)screenAspect,
+															(float)screenNear, (float)screenDepth);
 
 	//Initialize world matrix to identity matrix
 	m_worldMatrix = DirectX::XMMatrixIdentity();
 
 	//Create an orthographic projection matrix for 2D rendering
 	m_orthoMatrix = DirectX::XMMatrixOrthographicLH((float)screenWidth, (float)screenHeight,
-													screenNear, screenDepth);
+													(float)screenNear, (float)screenDepth);
 
 	return true;
 }
@@ -576,9 +573,9 @@ bool DirectX11::CreateSwapChain(int screenWidth, int screenHeight,
 	featureLevel = D3D_FEATURE_LEVEL_11_0;
 
 	//Create swap chain, Direct3D device, and device context
-	result = D3D11CreateDeviceAndSwapChain(NULL, D3D_DRIVER_TYPE_HARDWARE,
-											NULL, 0, &featureLevel, 1, D3D11_SDK_VERSION,
-											&swapChainDesc, &m_swapChain, &m_device, NULL,
+	result = D3D11CreateDeviceAndSwapChain(0, D3D_DRIVER_TYPE_HARDWARE,
+											0, 0, &featureLevel, 1, D3D11_SDK_VERSION,
+											&swapChainDesc, &m_swapChain, &m_device, 0,
 											&m_deviceContext);
 	if (FAILED(result))
 	{
@@ -594,7 +591,7 @@ bool DirectX11::CreateSwapChain(int screenWidth, int screenHeight,
 	}
 
 	//Create render target view with back buffer pointer
-	result = m_device->CreateRenderTargetView(backBufferPtr, NULL,
+	result = m_device->CreateRenderTargetView(backBufferPtr, 0,
 											&m_renderTargetView);
 	if (FAILED(result))
 	{
@@ -729,7 +726,7 @@ bool DirectX11::RecreateRenderTarget()
 	}
 
 	//Create render target view with back buffer pointer
-	result = m_device->CreateRenderTargetView(backBufferPtr, NULL,
+	result = m_device->CreateRenderTargetView(backBufferPtr, 0,
 		&m_renderTargetView);
 	if (FAILED(result))
 	{

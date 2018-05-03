@@ -1,6 +1,3 @@
-//AssimpLoader class
-//Interface to assimp library
-
 #include "AssimpLoader.h"
 
 //Default constructor

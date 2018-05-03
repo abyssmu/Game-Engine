@@ -1,6 +1,3 @@
-//Input handler class
-//Captures input process from windows messages
-
 #include "Input.h"
 #include "Keys.h"
 

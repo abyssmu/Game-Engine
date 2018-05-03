@@ -2,7 +2,7 @@ To do list:
 Promote windows functions in system class to own class
 Add scene management
 Redesign Entity class to be abstract, add it as a child to the scene manager, and modify entity children accordingly
-Add "custom" scene file (.beep) loader (placeholder extension - might leave it)
+Add "custom" scene file (.beep) loader (placeholder extension name - might leave it)
 Add quaternions
 Add lights and normals to mesh
 Add textures and uvs to mesh
@@ -57,7 +57,13 @@ Completed list:
 8. Added program description to main.cpp
 8. Added to do list, completed list, and routine list to UpdateLog.text
 8. Separated most longer functions into smaller functions
-8. Fixed all warning messages currently present
+8. Fixed some warning messages present
+
+9. Added RNG library
+9. Added Color library
+9. Fixed remainder of warning messages
+9. Removed .cpp explanation comments at the top of the file since it is in the header
+9. Removed references to NULL and replaced with 0 to maintain consistency
 
 Routine:
 Develop single feature from to do list
@@ -67,4 +73,4 @@ Code check for improvements (Depth first has been easiest)
 	Promote what can be to a seperate function to keep functions small (try for < 100 lines)
 	Edit class comments as needed
 	Make sure every class function declaration has variable names to aid in identifying incoming variables
-Submit to GitHub
+Submit to Git

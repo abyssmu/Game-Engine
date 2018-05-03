@@ -1,6 +1,3 @@
-//Mesh class
-//Container for mesh data
-
 #include "Mesh.h"
 
 //Constructor
