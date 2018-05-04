@@ -18,11 +18,11 @@ Graphics::~Graphics()
 {}
 
 //Initialize components
-bool Graphics::Initialize(int screenWidth, int screenHeight,
+bool Graphics::Initialize(int screenHeight, int screenWidth,
 	HWND hwnd)
 {
 	//Initialize DirectX
-	InitializeDirectX(screenWidth, screenHeight, hwnd);
+	InitializeDirectX(screenHeight, screenWidth, hwnd);
 
 	//Initialize shaders
 	InitializeShaders(hwnd);
@@ -31,9 +31,9 @@ bool Graphics::Initialize(int screenWidth, int screenHeight,
 }
 
 //Reset DirectX if resolution changed
-bool Graphics::ResetDX(int& screenWidth, int& screenHeight, HWND hwnd)
+bool Graphics::ResetDX(int& screenHeight, int& screenWidth, HWND hwnd)
 {
-	if (!m_dX11->Resize(screenWidth, screenHeight, hwnd, 
+	if (!m_dX11->Resize(screenHeight, screenWidth, hwnd,
 						SCREEN_DEPTH, SCREEN_NEAR))
 	{
 		return false;
@@ -66,11 +66,8 @@ void Graphics::Shutdown()
 bool Graphics::Frame(Colors::Color bgcolor, DirectX::XMMATRIX viewMatrix,
 					AllModelInfo* modelInfo)
 {
-	bool result = false;
-
 	//Render the scene
-	result = Render(bgcolor, viewMatrix, modelInfo);
-	if (!result)
+	if (!Render(bgcolor, viewMatrix, modelInfo))
 	{
 		return false;
 	}
@@ -103,7 +100,7 @@ void Graphics::CalculateWorld(DirectX::XMMATRIX& world, AllModelInfo* modelInfo)
 }
 
 //Initialize DirectX
-bool Graphics::InitializeDirectX(int screenWidth, int screenHeight, HWND hwnd)
+bool Graphics::InitializeDirectX(int screenHeight, int screenWidth, HWND hwnd)
 {
 	//Create and initialize DirectX11 object
 	m_dX11 = new DirectX11;
@@ -112,7 +109,7 @@ bool Graphics::InitializeDirectX(int screenWidth, int screenHeight, HWND hwnd)
 		return false;
 	}
 
-	if (!m_dX11->Initialize(screenWidth, screenHeight,
+	if (!m_dX11->Initialize(screenHeight, screenWidth,
 		VSYNC_ENABLED, hwnd, FULL_SCREEN, SCREEN_DEPTH,
 		SCREEN_NEAR))
 	{

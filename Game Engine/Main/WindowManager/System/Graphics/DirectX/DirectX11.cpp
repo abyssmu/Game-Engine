@@ -23,7 +23,7 @@ DirectX11::~DirectX11()
 {}
 
 //Initialize components
-bool DirectX11::Initialize(int screenWidth, int screenHeight,
+bool DirectX11::Initialize(int screenHeight, int screenWidth,
 							bool vsync, HWND hwnd, bool fullscreen,
 							double screenDepth, double screenNear)
 {
@@ -31,13 +31,13 @@ bool DirectX11::Initialize(int screenWidth, int screenHeight,
 	m_vSyncEnabled = vsync;
 
 	//Initialize DirectX components
-	if(!InitializeDirectX(screenWidth, screenHeight, hwnd, fullscreen))
+	if(!InitializeDirectX(screenHeight, screenWidth, hwnd, fullscreen))
 	{
 		return false;
 	}
 
 	//Initialize matrix components
-	if (!InitializeMatrices(screenWidth, screenHeight, screenDepth, screenNear))
+	if (!InitializeMatrices(screenHeight, screenWidth, screenDepth, screenNear))
 	{
 		return false;
 	}
@@ -46,7 +46,7 @@ bool DirectX11::Initialize(int screenWidth, int screenHeight,
 }
 
 //Reset DirectX if resolution changed
-bool DirectX11::Resize(int& screenWidth, int& screenHeight, HWND hwnd, double screenDepth, double screenNear)
+bool DirectX11::Resize(int& screenHeight, int& screenWidth, HWND hwnd, double screenDepth, double screenNear)
 {
 	HRESULT result;
 
@@ -69,7 +69,7 @@ bool DirectX11::Resize(int& screenWidth, int& screenHeight, HWND hwnd, double sc
 		}
 
 		//Recreate depth buffer
-		if (!CreateDepthBuffer(screenWidth, screenHeight))
+		if (!CreateDepthBuffer(screenHeight, screenWidth))
 		{
 			return false;
 		}
@@ -82,10 +82,10 @@ bool DirectX11::Resize(int& screenWidth, int& screenHeight, HWND hwnd, double sc
 
 		//Recreate rendering viewport
 		double fieldOfView, screenAspect;
-		CreateViewport(screenWidth, screenHeight, fieldOfView, screenAspect);
+		CreateViewport(screenHeight, screenWidth, fieldOfView, screenAspect);
 
 		//Recreate matrices
-		CreateMatrices(screenWidth, screenHeight, fieldOfView, screenAspect, screenDepth, screenNear);
+		CreateMatrices(screenHeight, screenWidth, fieldOfView, screenAspect, screenDepth, screenNear);
 
 		//Reset render target view and depth
 		m_deviceContext->OMSetRenderTargets(1, &m_renderTargetView, m_depthStencilView);
@@ -238,7 +238,7 @@ ID3D11DeviceContext* DirectX11::GetDeviceContext()
 
 //Create adapter and factory to get video card information
 //and display monitor information
-bool DirectX11::CreateAdapterDesc(int screenWidth, int screenHeight, 
+bool DirectX11::CreateAdapterDesc(int screenHeight, int screenWidth,
 								unsigned int& numerator, unsigned int& denominator)
 {
 	HRESULT result;
@@ -348,7 +348,7 @@ bool DirectX11::CreateAdapterDesc(int screenWidth, int screenHeight,
 }
 
 //Create depth buffer
-bool DirectX11::CreateDepthBuffer(int screenWidth, int screenHeight)
+bool DirectX11::CreateDepthBuffer(int screenHeight, int screenWidth)
 {
 	HRESULT result;
 
@@ -453,7 +453,7 @@ bool DirectX11::CreateDepthStencilView()
 }
 
 //Create all matrices
-bool DirectX11::CreateMatrices(int screenWidth, int screenHeight,
+bool DirectX11::CreateMatrices(int screenHeight, int screenWidth,
 								double fieldOfView, double screenAspect,
 								double screenDepth, double screenNear)
 {
@@ -504,7 +504,7 @@ bool DirectX11::CreateRasterDesc()
 }
 
 //Create swap chain
-bool DirectX11::CreateSwapChain(int screenWidth, int screenHeight,
+bool DirectX11::CreateSwapChain(int screenHeight, int screenWidth,
 								unsigned int numerator, unsigned int denominator,
 								HWND hwnd, bool fullscreen)
 {
@@ -606,7 +606,7 @@ bool DirectX11::CreateSwapChain(int screenWidth, int screenHeight,
 }
 
 //Create viewport
-bool DirectX11::CreateViewport(int screenWidth, int screenHeight,
+bool DirectX11::CreateViewport(int screenHeight, int screenWidth,
 	double& fieldOfView, double& screenAspect)
 {
 	D3D11_VIEWPORT viewport;
@@ -637,27 +637,27 @@ bool DirectX11::CreateViewport(int screenWidth, int screenHeight,
 }
 
 //Initialize DirectX components
-bool DirectX11::InitializeDirectX(int screenWidth, int screenHeight, HWND hwnd,
+bool DirectX11::InitializeDirectX(int screenHeight, int screenWidth, HWND hwnd,
 								bool fullscreen)
 {
 	unsigned int denominator, numerator;
 
 	//Setup adapter
-	if (!CreateAdapterDesc(screenWidth, screenHeight,
+	if (!CreateAdapterDesc(screenHeight, screenWidth,
 		numerator, denominator))
 	{
 		return false;
 	}
 
 	//Setup swapchain
-	if (!CreateSwapChain(screenWidth, screenHeight,
+	if (!CreateSwapChain(screenHeight, screenWidth,
 		numerator, denominator, hwnd, fullscreen))
 	{
 		return false;
 	}
 
 	//Setup depth buffer
-	if (!CreateDepthBuffer(screenWidth, screenHeight))
+	if (!CreateDepthBuffer(screenHeight, screenWidth))
 	{
 		return false;
 	}
@@ -688,20 +688,20 @@ bool DirectX11::InitializeDirectX(int screenWidth, int screenHeight, HWND hwnd,
 }
 
 //Initialize matrix components
-bool DirectX11::InitializeMatrices(int screenWidth, int screenHeight, double screenDepth,
+bool DirectX11::InitializeMatrices(int screenHeight, int screenWidth, double screenDepth,
 									double screenNear)
 {
 	double fieldOfView, screenAspect;
 
 	//Setup viewport
-	if (!CreateViewport(screenWidth, screenHeight, fieldOfView,
+	if (!CreateViewport(screenHeight, screenWidth, fieldOfView,
 		screenAspect))
 	{
 		return false;
 	}
 
 	//Setup matrices
-	if (!CreateMatrices(screenWidth, screenHeight, fieldOfView,
+	if (!CreateMatrices(screenHeight, screenWidth, fieldOfView,
 		screenAspect, screenDepth, screenNear))
 	{
 		return false;

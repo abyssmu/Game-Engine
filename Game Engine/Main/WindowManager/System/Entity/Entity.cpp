@@ -19,8 +19,6 @@ Entity::~Entity()
 bool Entity::Initialize(ID3D11Device* device, MathLib::Vectors::Vector3D position,
 						MathLib::Vectors::Vector3D rotation, char* filename)
 {
-	bool result;
-
 	//Create and initialize model
 	m_model = new Model;
 	if (!m_model)
@@ -28,8 +26,7 @@ bool Entity::Initialize(ID3D11Device* device, MathLib::Vectors::Vector3D positio
 		return false;
 	}
 
-	result = m_model->Initialize(device, filename);
-	if (!result)
+	if (!m_model->Initialize(device, filename))
 	{
 		return false;
 	}

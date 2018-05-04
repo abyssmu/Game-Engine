@@ -23,24 +23,31 @@ It contains the game loop and manages communication between cores.
 class System
 {
 public:
+	//Constructor
 	System();
+
+	//Default copy constructor
 	System(const System& other);
+
+	//Default destructor
 	~System();
 
 	////////Main Functions
-	//Initialize class
-	bool Initialize(int screenWidth, int screenHeight);
+	//Initialize program
+	bool Initialize(int screenHeight, int screenWidth, HWND hwnd);
 
-	//Shutdown class
+	//Shutdown program
 	void Shutdown();
 
 	//Main program loop
-	void Run();
+	void Run(bool& minimized);
 
 	////////Utility Functions
-	//Windows message handler
-	LRESULT CALLBACK MessageHandler(HWND hwnd, UINT umsg,
-		WPARAM wparam, LPARAM lparam);
+	//Set input key down
+	void KeyDown(unsigned int key);
+
+	//Set input key up
+	void KeyUp(unsigned int key);
 
 private:
 	////////Main Functions
@@ -62,9 +69,6 @@ private:
 	//Initialize input
 	bool InitializeInput();
 
-	//Intialize window
-	void InitializeWindows();
-
 	//Process graphics
 	bool ProcessGraphics();
 
@@ -73,16 +77,11 @@ private:
 					MathLib::Vectors::Vector3D& forceC,
 					MathLib::Vectors::Vector3D& torque);
 
-	//Shutdown window
-	void ShutdownWindows();
-
 	//Update camera
 	void UpdateCamera(MathLib::Vectors::Vector3D force,
 					MathLib::Vectors::Vector3D torque);
-	
+
 	////////Main Variables
-	LPCSTR m_applicationName;
-	HINSTANCE m_hInstance;
 	HWND m_hWnd;
 
 	////////Class Variabes
@@ -94,11 +93,3 @@ private:
 	////////Utility Variables
 	int m_screenWidth, m_screenHeight;
 };
-
-//Function Prototype
-//Check window exit
-static LRESULT CALLBACK WndProc(HWND hwnd, UINT umsg,
-	WPARAM wparam, LPARAM lparam);
-
-//Globals
-static System* ApplicationHandle = 0;

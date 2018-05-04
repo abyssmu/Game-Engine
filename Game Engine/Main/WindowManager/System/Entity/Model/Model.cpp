@@ -17,11 +17,8 @@ Model::~Model()
 //Initialize model components
 bool Model::Initialize(ID3D11Device* device, char* filename)
 {
-	bool result;
-
 	//Load model data
-	result = LoadModel(device, filename);
-	if (!result)
+	if (!LoadModel(device, filename))
 	{
 		return false;
 	}

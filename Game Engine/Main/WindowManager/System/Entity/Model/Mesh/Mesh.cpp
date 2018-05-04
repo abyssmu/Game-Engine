@@ -18,11 +18,8 @@ Mesh::~Mesh()
 //Initialize mesh
 bool Mesh::Initialize(ID3D11Device* device)
 {
-	bool result = true;
-
 	//Initialize buffers
-	result = InitializeBuffers(device);
-	if (!result)
+	if (!InitializeBuffers(device))
 	{
 		return false;
 	}

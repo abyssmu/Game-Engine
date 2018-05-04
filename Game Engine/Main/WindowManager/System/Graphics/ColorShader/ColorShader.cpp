@@ -24,14 +24,11 @@ ColorShader::~ColorShader()
 //Initialize shader filenames and create shaders
 bool ColorShader::Initialize(ID3D11Device* device, HWND hwnd)
 {
-	bool result = false;
-
-	LPCWSTR vs = L"Main/System/Graphics/ColorShader/ColorShader_vs.hlsl";
-	LPCWSTR ps = L"Main/System/Graphics/ColorShader/ColorShader_ps.hlsl";
+	LPCWSTR vs = L"Main/WindowManager/System/Graphics/ColorShader/ColorShader_vs.hlsl";
+	LPCWSTR ps = L"Main/WindowManager/System/Graphics/ColorShader/ColorShader_ps.hlsl";
 
 	//Initialize vertex and pixel shaders
-	result = InitializeShader(device, hwnd, vs, ps);
-	if (FAILED(result))
+	if (!InitializeShader(device, hwnd, vs, ps))
 	{
 		return false;
 	}
@@ -45,12 +42,9 @@ bool ColorShader::Render(ID3D11DeviceContext* deviceContext,
 						DirectX::XMMATRIX viewMatrix,
 						DirectX::XMMATRIX projectionMatrix)
 {
-	bool result = false;
-
 	//Set shader parameters
-	result = SetShaderParameters(deviceContext, worldMatrix, viewMatrix,
-		projectionMatrix);
-	if (!result)
+	if (!SetShaderParameters(deviceContext, worldMatrix, viewMatrix,
+		projectionMatrix))
 	{
 		return false;
 	}

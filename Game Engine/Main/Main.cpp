@@ -11,31 +11,28 @@ See UpdateLog.txt for completed and future updates along with routine list.
 //Creates system root object that is base for entire program
 
 //Class Includes
-#include "System\System.h"
+#include "WindowManager\WindowManager.h"
 
 //Entry point of program
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 	PSTR pScmdline, int iCmdshow)
 {
-	System* system = 0;
-
-	//Create system object
-	system = new System;
-	if (!system)
+	WindowManager* manager = new WindowManager;
+	if (!manager)
 	{
-		return 0;
+		return false;
 	}
 
-	//Initialize and run system object
-	if (system->Initialize(600, 800))
+	//Initialize and run
+	if (manager->Initialize(600, 800))
 	{
-		system->Run();
+		manager->Run();
 	}
 
-	//Shutdown and release system object
-	system->Shutdown();
-	delete system;
-	system = 0;
+	//Shutdown and release window
+	manager->Shutdown();
+	delete manager;
+	manager = 0;
 
 	return 0;
 }

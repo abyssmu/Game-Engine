@@ -34,10 +34,10 @@ public:
 
 	////////Main Functions
 	//Initialize components
-	bool Initialize(int screenWidth, int screenHeight, HWND hwnd);
+	bool Initialize(int screenHeight, int screenWidth, HWND hwnd);
 
 	//Reset DirectX if resolution changed
-	bool ResetDX(int& screenWidth, int& screenHeight, HWND hwnd);
+	bool ResetDX(int& screenHeight, int& screenWidth, HWND hwnd);
 
 	//Shutdown components
 	void Shutdown();
@@ -56,7 +56,7 @@ private:
 	void CalculateWorld(DirectX::XMMATRIX& world, AllModelInfo* modelInfo);
 
 	//Initialize DirectX
-	bool InitializeDirectX(int screenWidth, int screenHeight, HWND hwnd);
+	bool InitializeDirectX(int screenHeight, int screenWidth, HWND hwnd);
 
 	//Initialize shaders
 	bool InitializeShaders(HWND hwnd);

@@ -1,5 +1,4 @@
 To do list:
-Promote windows functions in system class to own class
 Add scene management
 Redesign Entity class to be abstract, add it as a child to the scene manager, and modify entity children accordingly
 Add "custom" scene file (.beep) loader (placeholder extension name - might leave it)
@@ -64,6 +63,8 @@ Completed list:
 9. Fixed remainder of warning messages
 9. Removed .cpp explanation comments at the top of the file since it is in the header
 9. Removed references to NULL and replaced with 0 to maintain consistency
+
+10. Promote windows functions in system class to own class
 
 Routine:
 Develop single feature from to do list

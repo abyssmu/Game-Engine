@@ -32,11 +32,11 @@ public:
 
 	////////Main Functions
 	//Initialize components
-	bool Initialize(int screenWidth, int screenHeight, bool vsync,
+	bool Initialize(int screenHeight, int screenWidth, bool vsync,
 		HWND hwnd, bool fullscreen, double screenDepth, double screenNear);
 
 	//Reset DirectX if resolution changed
-	bool Resize(int& screenWidth, int& screenHeight, HWND hwnd, double screenDepth,
+	bool Resize(int& screenHeight, int& screenWidth, HWND hwnd, double screenDepth,
 				double screenNear);
 
 	//Shutdown components
@@ -72,11 +72,11 @@ private:
 	////////Main Functions
 	//Create adapter and factory to get video card and
 	//display monitor information
-	bool CreateAdapterDesc(int screenWidth, int screenHeight, 
+	bool CreateAdapterDesc(int screenHeight, int screenWidth,
 						unsigned int& numerator, unsigned int& denominator);
 
 	//Create depth buffer
-	bool CreateDepthBuffer(int screenWidth, int screenHeight);
+	bool CreateDepthBuffer(int screenHeight, int screenWidth);
 
 	//Create depth stencil state
 	bool CreateDepthStencilState();
@@ -85,26 +85,26 @@ private:
 	bool CreateDepthStencilView();
 
 	//Create all matrices
-	bool CreateMatrices(int screenWidth, int screenHeight, double fieldOfView,
+	bool CreateMatrices(int screenHeight, int screenWidth, double fieldOfView,
 						double screenAspect, double screenDepth, double screenNear);
 
 	//Create rasterizer description
 	bool CreateRasterDesc();
 
 	//Create swap chain
-	bool CreateSwapChain(int screenWidth, int screenHeight,	unsigned int numerator,
+	bool CreateSwapChain(int screenHeight, int screenWidth,	unsigned int numerator,
 						unsigned int denominator, HWND hwnd, bool fullscreen);
 	
 	//Create viewport
-	bool CreateViewport(int screenWidth, int screenHeight, double& fieldOfView,
+	bool CreateViewport(int screenHeight, int screenWidth, double& fieldOfView,
 						double& screenAspect);
 
 	//Initialize DirectX components
-	bool InitializeDirectX(int screenWidth, int screenHeight, HWND hwnd,
+	bool InitializeDirectX(int screenHeight, int screenWidth, HWND hwnd,
 							bool fullscreen);
 
 	//Initialize matrix components
-	bool InitializeMatrices(int screenWidth, int screenHeight, double screenDepth,
+	bool InitializeMatrices(int screenHeight, int screenWidth, double screenDepth,
 							double screenNear);
 
 	//Recreate render target view
