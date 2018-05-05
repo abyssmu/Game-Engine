@@ -1,4 +1,5 @@
 To do list:
+Create a child and parent window for scene editor
 Add scene management
 Redesign Entity class to be abstract, add it as a child to the scene manager, and modify entity children accordingly
 Add "custom" scene file (.beep) loader (placeholder extension name - might leave it)

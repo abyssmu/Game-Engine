@@ -20,8 +20,14 @@ WindowManager::~WindowManager()
 //Initialize window
 bool WindowManager::Initialize(int screenHeight, int screenWidth)
 {
-	//Initialize window
-	if (!InitializeWindow(screenHeight, screenWidth))
+	//Initialize main window
+	if (!InitializeMain(screenHeight, screenWidth))
+	{
+		return false;
+	}
+
+	//Initialize game window
+	if (!InitializeGame(screenHeight, screenWidth))
 	{
 		return false;
 	}
@@ -33,7 +39,7 @@ bool WindowManager::Initialize(int screenHeight, int screenWidth)
 		return false;
 	}
 
-	if (!m_system->Initialize(screenHeight, screenWidth, m_hWnd))
+	if (!m_system->Initialize(screenHeight, screenWidth, m_gameWindow))
 	{
 		return false;
 	}
@@ -76,8 +82,64 @@ LRESULT CALLBACK WindowManager::MessageHandler(HWND hwnd, UINT umsg,
 //Private
 /////////////////////////////////////////////////////////
 
-//Initialize window
-bool WindowManager::InitializeWindow(int screenHeight, int screenWidth)
+//Initialize game window
+bool WindowManager::InitializeGame(int screenHeight, int screenWidth)
+{
+	WNDCLASSEX wc;
+	int posX, posY;
+	double percMain, endHeight, endWidth;
+	percMain = 0.75;
+	posX = posY = 0;
+
+	//Get an external pointer to this object
+	ApplicationHandle = this;
+
+	//Get instance of application
+	m_hInstance = GetModuleHandle(0);
+
+	//Give application name
+	m_applicationName = "Game Engine";
+
+	//Setup windows class with default settings
+	wc.style = CS_HREDRAW | CS_VREDRAW | CS_OWNDC;
+	wc.lpfnWndProc = WndProc;
+	wc.cbClsExtra = 0;
+	wc.cbWndExtra = 0;
+	wc.hInstance = m_hInstance;
+	wc.hIcon = LoadIcon(0, IDI_WINLOGO);
+	wc.hIconSm = wc.hIcon;
+	wc.hCursor = LoadCursor(0, IDC_ARROW);
+	wc.hbrBackground = (HBRUSH)GetStockObject(BLACK_BRUSH);
+	wc.lpszMenuName = 0;
+	wc.lpszClassName = m_applicationName;
+	wc.cbSize = sizeof(WNDCLASSEX);
+
+	//Register window class
+	RegisterClassEx(&wc);
+	
+	//Place window in middle of screen
+	posX = (GetSystemMetrics(SM_CXSCREEN) - screenWidth) / 2;
+	posY = (GetSystemMetrics(SM_CYSCREEN) - screenHeight) / 2;
+
+	endHeight = screenHeight * percMain;
+	endWidth = screenWidth * percMain;
+
+	//Create window with screen settings and get handle
+	m_gameWindow = CreateWindowEx(WS_EX_APPWINDOW, m_applicationName,
+		(LPCSTR)m_applicationName,
+		WS_CLIPSIBLINGS | WS_CLIPCHILDREN | WS_POPUP | WS_OVERLAPPEDWINDOW | WS_VISIBLE,
+		posX, posY, (int)endWidth, (int)endHeight, 0, 0, m_hInstance, 0);
+
+	//Bring window up on screen and set it as main focus
+	ShowWindow(m_gameWindow, SW_SHOW);
+	SetForegroundWindow(m_gameWindow);
+	SetFocus(m_gameWindow);
+
+	return true;
+}
+
+//Initialize main window
+bool WindowManager::InitializeMain(int screenHeight, int screenWidth)
 {
 	WNDCLASSEX wc;
 	DEVMODE dmScreenSettings;
@@ -102,7 +164,7 @@ bool WindowManager::InitializeWindow(int screenHeight, int screenWidth)
 	wc.hIcon = LoadIcon(0, IDI_WINLOGO);
 	wc.hIconSm = wc.hIcon;
 	wc.hCursor = LoadCursor(0, IDC_ARROW);
-	wc.hbrBackground = (HBRUSH)GetStockObject(BLACK_BRUSH);
+	wc.hbrBackground = (HBRUSH)GetStockObject(WHITE_BRUSH);
 	wc.lpszMenuName = 0;
 	wc.lpszClassName = m_applicationName;
 	wc.cbSize = sizeof(WNDCLASSEX);
@@ -138,15 +200,15 @@ bool WindowManager::InitializeWindow(int screenHeight, int screenWidth)
 	}
 
 	//Create window with screen settings and get handle
-	m_hWnd = CreateWindowEx(WS_EX_APPWINDOW, m_applicationName,
+	m_mainWindow = CreateWindowEx(WS_EX_APPWINDOW, m_applicationName,
 		(LPCSTR)m_applicationName,
 		WS_CLIPSIBLINGS | WS_CLIPCHILDREN | WS_POPUP | WS_OVERLAPPEDWINDOW | WS_VISIBLE,
 		posX, posY, screenWidth, screenHeight, 0, 0, m_hInstance, 0);
 
 	//Bring window up on screen and set it as main focus
-	ShowWindow(m_hWnd, SW_SHOW);
-	SetForegroundWindow(m_hWnd);
-	SetFocus(m_hWnd);
+	ShowWindow(m_mainWindow, SW_SHOW);
+	SetForegroundWindow(m_mainWindow);
+	SetFocus(m_mainWindow);
 
 	return true;
 }
@@ -161,8 +223,11 @@ void WindowManager::ShutdownWindow()
 	}
 
 	//Remove window
-	DestroyWindow(m_hWnd);
-	m_hWnd = 0;
+	DestroyWindow(m_mainWindow);
+	m_mainWindow = 0;
+
+	DestroyWindow(m_gameWindow);
+	m_gameWindow = 0;
 
 	//Remove application instance
 	UnregisterClass((LPCSTR)m_applicationName, m_hInstance);

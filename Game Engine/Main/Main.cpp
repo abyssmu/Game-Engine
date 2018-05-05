@@ -24,7 +24,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 	}
 
 	//Initialize and run
-	if (manager->Initialize(600, 800))
+	//Height, width
+	if (manager->Initialize(720, 1280))
 	{
 		manager->Run();
 	}

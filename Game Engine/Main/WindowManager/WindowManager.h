@@ -45,8 +45,11 @@ public:
 
 private:
 	////////Main Functions
-	//Initialize window
-	bool InitializeWindow(int screenHeight, int screenWidth);
+	//Initialize game window
+	bool InitializeGame(int screenHeight, int screenWidth);
+
+	//Initialize main window
+	bool InitializeMain(int screenHeight, int screenWidth);
 
 	//Shutdown window
 	void ShutdownWindow();
@@ -54,7 +57,8 @@ private:
 	////////Main Variables
 	LPCSTR m_applicationName;
 	HINSTANCE m_hInstance;
-	HWND m_hWnd;
+	HWND m_mainWindow;
+	HWND m_gameWindow;
 
 	////////Class Variables
 	System* m_system;
