@@ -153,7 +153,7 @@ void System::KeyUp(unsigned int key)
 //Private
 /////////////////////////////////////////////////////////
 
-//Check for window resolution changes
+//Check window resolution changes
 bool System::CheckResizeWindow()
 {
 	RECT rect;

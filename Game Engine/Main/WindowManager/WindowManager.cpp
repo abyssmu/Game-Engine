@@ -20,14 +20,18 @@ WindowManager::~WindowManager()
 //Initialize window
 bool WindowManager::Initialize(int screenHeight, int screenWidth)
 {
+	//Capture main window height and width
+	m_screenHeight = screenHeight;
+	m_screenWidth = screenWidth;
+
 	//Initialize main window
-	if (!InitializeMain(screenHeight, screenWidth))
+	if (!InitializeMain(m_screenHeight, m_screenWidth))
 	{
 		return false;
 	}
 
 	//Initialize game window
-	if (!InitializeGame(screenHeight, screenWidth))
+	if (!InitializeGame(m_screenHeight, m_screenWidth))
 	{
 		return false;
 	}
@@ -39,7 +43,7 @@ bool WindowManager::Initialize(int screenHeight, int screenWidth)
 		return false;
 	}
 
-	if (!m_system->Initialize(screenHeight, screenWidth, m_gameWindow))
+	if (!m_system->Initialize(m_screenHeight, m_screenWidth, m_gameWindow))
 	{
 		return false;
 	}
@@ -58,6 +62,30 @@ void WindowManager::Run()
 {
 	m_system->Run(MINIMIZED);
 }
+
+//Check window resolution changes
+bool WindowManager::CheckResizeWindow()
+{
+	RECT rect;
+
+	GetWindowRect(m_mainWindow, &rect);
+
+	int dX, dY;
+
+	dX = (rect.right - rect.left) - m_screenWidth;
+	dY = (rect.bottom - rect.top) - m_screenHeight;
+
+	if ((dX != 0) || (dY != 0))
+	{
+		m_screenHeight = dY + m_screenHeight;
+		m_screenWidth = dX + m_screenWidth;
+
+		return false;
+	}
+
+	return true;
+}
+
 
 //Windows message handling
 LRESULT CALLBACK WindowManager::MessageHandler(HWND hwnd, UINT umsg,
@@ -78,6 +106,23 @@ LRESULT CALLBACK WindowManager::MessageHandler(HWND hwnd, UINT umsg,
 	}
 }
 
+//Size game window
+void WindowManager::SizeGame()
+{
+	RECT rc;
+	double perc;
+
+	perc = 0.15;
+
+	//Get game window size
+	GetClientRect(m_mainWindow, &rc);
+
+	//Move game window inside main window
+	MoveWindow(m_gameWindow, rc.left, rc.top,
+				rc.right - m_screenWidth * perc,
+				rc.bottom - m_screenHeight * perc, false);
+}
+
 /////////////////////////////////////////////////////////
 //Private
 /////////////////////////////////////////////////////////
@@ -86,19 +131,9 @@ LRESULT CALLBACK WindowManager::MessageHandler(HWND hwnd, UINT umsg,
 bool WindowManager::InitializeGame(int screenHeight, int screenWidth)
 {
 	WNDCLASSEX wc;
-	int posX, posY;
-	double percMain, endHeight, endWidth;
-	percMain = 0.75;
-	posX = posY = 0;
-
-	//Get an external pointer to this object
-	ApplicationHandle = this;
 
 	//Get instance of application
 	m_hInstance = GetModuleHandle(0);
-
-	//Give application name
-	m_applicationName = "Game Engine";
 
 	//Setup windows class with default settings
 	wc.style = CS_HREDRAW | CS_VREDRAW | CS_OWNDC;
@@ -116,24 +151,17 @@ bool WindowManager::InitializeGame(int screenHeight, int screenWidth)
 
 	//Register window class
 	RegisterClassEx(&wc);
-	
-	//Place window in middle of screen
-	posX = (GetSystemMetrics(SM_CXSCREEN) - screenWidth) / 2;
-	posY = (GetSystemMetrics(SM_CYSCREEN) - screenHeight) / 2;
-
-	endHeight = screenHeight * percMain;
-	endWidth = screenWidth * percMain;
 
 	//Create window with screen settings and get handle
 	m_gameWindow = CreateWindowEx(WS_EX_APPWINDOW, m_applicationName,
-		(LPCSTR)m_applicationName,
-		WS_CLIPSIBLINGS | WS_CLIPCHILDREN | WS_POPUP | WS_OVERLAPPEDWINDOW | WS_VISIBLE,
-		posX, posY, (int)endWidth, (int)endHeight, 0, 0, m_hInstance, 0);
+		(LPCSTR)m_applicationName, WS_POPUP | WS_CHILD | WS_VISIBLE,
+		0, 0, 0, 0, 0, 0, m_hInstance, 0);
 
-	//Bring window up on screen and set it as main focus
-	ShowWindow(m_gameWindow, SW_SHOW);
-	SetForegroundWindow(m_gameWindow);
-	SetFocus(m_gameWindow);
+	//Set main window as game window parent
+	SetParent(m_gameWindow, m_mainWindow);
+
+	//Size game window
+	SizeGame();
 
 	return true;
 }
@@ -164,7 +192,7 @@ bool WindowManager::InitializeMain(int screenHeight, int screenWidth)
 	wc.hIcon = LoadIcon(0, IDI_WINLOGO);
 	wc.hIconSm = wc.hIcon;
 	wc.hCursor = LoadCursor(0, IDC_ARROW);
-	wc.hbrBackground = (HBRUSH)GetStockObject(WHITE_BRUSH);
+	wc.hbrBackground = (HBRUSH)GetStockObject(GRAY_BRUSH);
 	wc.lpszMenuName = 0;
 	wc.lpszClassName = m_applicationName;
 	wc.cbSize = sizeof(WNDCLASSEX);
@@ -207,7 +235,6 @@ bool WindowManager::InitializeMain(int screenHeight, int screenWidth)
 
 	//Bring window up on screen and set it as main focus
 	ShowWindow(m_mainWindow, SW_SHOW);
-	SetForegroundWindow(m_mainWindow);
 	SetFocus(m_mainWindow);
 
 	return true;
@@ -267,6 +294,14 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT umessage,
 		}
 		return 0;
 	default:
+		//Check for resize window
+		if (!ApplicationHandle->CheckResizeWindow())
+		{
+			//Size game window
+			ApplicationHandle->SizeGame();
+		}
+
+		//Send message to game manager
 		return ApplicationHandle->MessageHandler(hwnd, umessage,
 			wparam, lparam);
 	}

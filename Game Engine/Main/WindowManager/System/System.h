@@ -51,7 +51,7 @@ public:
 
 private:
 	////////Main Functions
-	//Check for window resolution changes
+	//Check window resolution changes
 	bool CheckResizeWindow();
 
 	//Process all per frame changes

@@ -39,9 +39,15 @@ public:
 	void Run();
 
 	////////Utility Functions
+	//Check window resolution changes
+	bool CheckResizeWindow();
+
 	//Windows message handler
 	LRESULT CALLBACK MessageHandler(HWND hwnd, UINT umsg,
 		WPARAM wparam, LPARAM lparam);
+
+	//Size game window
+	void SizeGame();
 
 private:
 	////////Main Functions
@@ -62,6 +68,9 @@ private:
 
 	////////Class Variables
 	System* m_system;
+
+	////////Utility Variables
+	int m_screenHeight, m_screenWidth;
 };
 
 //Function Prototype
