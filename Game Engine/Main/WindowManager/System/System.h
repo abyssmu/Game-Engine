@@ -49,6 +49,12 @@ public:
 	//Set input key up
 	void KeyUp(unsigned int key);
 
+	//Set mouse active
+	void MouseActive(bool active);
+
+	//Reset key states
+	void ResetKeys();
+
 private:
 	////////Main Functions
 	//Check window resolution changes
@@ -92,4 +98,5 @@ private:
 	
 	////////Utility Variables
 	int m_screenWidth, m_screenHeight;
+	bool m_mouseActive, m_mouseGo;
 };

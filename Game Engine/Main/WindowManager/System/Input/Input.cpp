@@ -109,10 +109,10 @@ void Input::ProcessMovement(MathLib::Vectors::Vector3D& force)
 }
 
 //Capture mouse input
-void Input::ProcessMouse(MathLib::Vectors::Vector3D& torque)
+void Input::ProcessMouse(MathLib::Vectors::Vector3D& torque, bool& go)
 {
-	//Check cursor position
-	if ((GetKeyState(Key::Left_Mouse) & 0x100) != 0)
+	//Check cursor position and first pass
+	if (((GetKeyState(Key::Left_Mouse) & 0x100) != 0) && !go)
 	{
 		double speed = 0.2;
 
@@ -128,9 +128,21 @@ void Input::ProcessMouse(MathLib::Vectors::Vector3D& torque)
 		}
 	}
 
-	//Save previous mouse state and capture new
-	prevMouseP = mouseP;
-	GetCursorPos(&mouseP);
+	//Set first pass
+	if (go)
+	{
+		go = false;
+
+		//Save previous mouse state and capture new
+		GetCursorPos(&mouseP);
+		prevMouseP = mouseP;
+	}
+	else
+	{
+		//Save previous mouse state and capture new
+		prevMouseP = mouseP;
+		GetCursorPos(&mouseP);
+	}
 }
 
 //Capture quit key
@@ -142,4 +154,10 @@ bool Input::ProcessQuit()
 	}
 
 	return true;
+}
+
+//Reset key states
+void Input::ResetKeys()
+{
+	Initialize();
 }

@@ -14,6 +14,12 @@ System::System()
 	m_entities = 0;
 	m_graphics = 0;
 	m_input = 0;
+
+	//Initialize values
+	m_screenHeight = 0;
+	m_screenWidth = 0;
+	m_mouseActive = 0;
+	m_mouseGo = 0;
 }
 
 //Default copy constructor
@@ -147,6 +153,24 @@ void System::KeyDown(unsigned int key)
 void System::KeyUp(unsigned int key)
 {
 	m_input->KeyUp(key);
+}
+
+//Set mouse active
+void System::MouseActive(bool active)
+{
+	//Set mouse first pass
+	if (!active)
+	{
+		m_mouseGo = true;
+	}
+
+	m_mouseActive = active;
+}
+
+//Reset key states
+void System::ResetKeys()
+{
+	m_input->ResetKeys();
 }
 
 /////////////////////////////////////////////////////////
@@ -304,7 +328,10 @@ bool System::ProcessInput(MathLib::Vectors::Vector3D& force,
 	m_entities->UpdatePosRot(forceC, MathLib::Vectors::Vector3D(0.0, 0.0, 0.0));
 
 	//Process mouse
-	m_input->ProcessMouse(torque);
+	if (m_mouseActive)
+	{
+		m_input->ProcessMouse(torque, m_mouseGo);
+	}
 
 	//Process keys
 	m_input->ProcessMovement(force);

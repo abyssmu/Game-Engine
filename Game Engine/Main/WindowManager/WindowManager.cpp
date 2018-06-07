@@ -7,6 +7,8 @@ bool MINIMIZED = false;
 WindowManager::WindowManager()
 {
 	m_system = 0;
+
+	go = true;
 }
 
 //Default copy constructor
@@ -25,16 +27,19 @@ bool WindowManager::Initialize(int screenHeight, int screenWidth)
 	m_screenWidth = screenWidth;
 
 	//Initialize main window
-	if (!InitializeMain(m_screenHeight, m_screenWidth))
+	if (!InitializeMain())
 	{
 		return false;
 	}
 
-	//Initialize game window
-	if (!InitializeGame(m_screenHeight, m_screenWidth))
+	//Initialize inner windows
+	if (!InitializeInner())
 	{
 		return false;
 	}
+
+	//Set go to false to indicate first pass complete
+	go = false;
 
 	//Create and initialize system
 	m_system = new System;
@@ -43,7 +48,7 @@ bool WindowManager::Initialize(int screenHeight, int screenWidth)
 		return false;
 	}
 
-	if (!m_system->Initialize(m_screenHeight, m_screenWidth, m_gameWindow))
+	if (!m_system->Initialize(m_screenHeight, m_screenWidth, m_worldWindow))
 	{
 		return false;
 	}
@@ -86,11 +91,41 @@ bool WindowManager::CheckResizeWindow()
 	return true;
 }
 
-
-//Windows message handling
-LRESULT CALLBACK WindowManager::MessageHandler(HWND hwnd, UINT umsg,
-	WPARAM wparam, LPARAM lparam)
+//Return world window
+HWND WindowManager::GetWorld()
 {
+	return m_worldWindow;
+}
+
+//Main windows message handling
+LRESULT CALLBACK WindowManager::MainMessageHandler(HWND hwnd, UINT umsg,
+													WPARAM wparam, LPARAM lparam)
+{
+	//Set mouse active in world
+	if (m_system)
+	{
+		m_system->MouseActive(false);
+		m_system->ResetKeys();
+	}
+
+	switch (umsg)
+	{
+		//Any other messages send default
+	default:
+		return DefWindowProc(hwnd, umsg, wparam, lparam);
+	}
+}
+
+//World windows message handling
+LRESULT CALLBACK WindowManager::WorldMessageHandler(HWND hwnd, UINT umsg,
+													WPARAM wparam, LPARAM lparam)
+{
+	//Set mouse active in world
+	if (m_system)
+	{
+		m_system->MouseActive(true);
+	}
+
 	switch (umsg)
 	{
 		//Check if a key is down
@@ -100,74 +135,77 @@ LRESULT CALLBACK WindowManager::MessageHandler(HWND hwnd, UINT umsg,
 		//Check if a key is released
 	case WM_KEYUP:
 		m_system->KeyUp((unsigned int)wparam);
+		return 0;	
 		//Any other messages send default
 	default:
 		return DefWindowProc(hwnd, umsg, wparam, lparam);
 	}
 }
 
-//Size game window
-void WindowManager::SizeGame()
+//Check if first pass
+bool WindowManager::PassGo()
+{
+	return go;
+}
+
+//Size world window
+void WindowManager::SizeWorld()
 {
 	RECT rc;
 	double perc;
+	int height, width;
 
 	perc = 0.15;
 
-	//Get game window size
+	//Get world window size
 	GetClientRect(m_mainWindow, &rc);
 
-	//Move game window inside main window
-	MoveWindow(m_gameWindow, rc.left, rc.top,
-				rc.right - m_screenWidth * perc,
-				rc.bottom - m_screenHeight * perc, false);
+	//Calculate world window height and width
+	height = (int)(rc.bottom - (double)m_screenHeight * perc);
+	width = (int)(rc.right - (double)m_screenWidth * perc);
+
+	//Move world window inside main window
+	MoveWindow(m_worldWindow, rc.left, rc.top, width, height, false);
 }
 
 /////////////////////////////////////////////////////////
 //Private
 /////////////////////////////////////////////////////////
 
-//Initialize game window
-bool WindowManager::InitializeGame(int screenHeight, int screenWidth)
+//Initialize button windows
+bool WindowManager::InitializeButtons()
 {
-	WNDCLASSEX wc;
+	m_buttons = new HWND;
 
-	//Get instance of application
-	m_hInstance = GetModuleHandle(0);
+	//Create track buttons
+	if (!CreateTracks(0, 1))
+	{
+		return false;
+	}
 
-	//Setup windows class with default settings
-	wc.style = CS_HREDRAW | CS_VREDRAW | CS_OWNDC;
-	wc.lpfnWndProc = WndProc;
-	wc.cbClsExtra = 0;
-	wc.cbWndExtra = 0;
-	wc.hInstance = m_hInstance;
-	wc.hIcon = LoadIcon(0, IDI_WINLOGO);
-	wc.hIconSm = wc.hIcon;
-	wc.hCursor = LoadCursor(0, IDC_ARROW);
-	wc.hbrBackground = (HBRUSH)GetStockObject(BLACK_BRUSH);
-	wc.lpszMenuName = 0;
-	wc.lpszClassName = m_applicationName;
-	wc.cbSize = sizeof(WNDCLASSEX);
+	return true;
+}
 
-	//Register window class
-	RegisterClassEx(&wc);
+//Initialize inner windows
+bool WindowManager::InitializeInner()
+{
+	//Initialize world window
+	if (!InitializeWorld())
+	{
+		return false;
+	}
 
-	//Create window with screen settings and get handle
-	m_gameWindow = CreateWindowEx(WS_EX_APPWINDOW, m_applicationName,
-		(LPCSTR)m_applicationName, WS_POPUP | WS_CHILD | WS_VISIBLE,
-		0, 0, 0, 0, 0, 0, m_hInstance, 0);
-
-	//Set main window as game window parent
-	SetParent(m_gameWindow, m_mainWindow);
-
-	//Size game window
-	SizeGame();
+	//Initialize button windows
+	if (!InitializeButtons())
+	{
+		return false;
+	}
 
 	return true;
 }
 
 //Initialize main window
-bool WindowManager::InitializeMain(int screenHeight, int screenWidth)
+bool WindowManager::InitializeMain()
 {
 	WNDCLASSEX wc;
 	DEVMODE dmScreenSettings;
@@ -223,19 +261,58 @@ bool WindowManager::InitializeMain(int screenHeight, int screenWidth)
 	else
 	{
 		//Place window in middle of screen
-		posX = (GetSystemMetrics(SM_CXSCREEN) - screenWidth) / 2;
-		posY = (GetSystemMetrics(SM_CYSCREEN) - screenHeight) / 2;
+		posX = (GetSystemMetrics(SM_CXSCREEN) - m_screenWidth) / 2;
+		posY = (GetSystemMetrics(SM_CYSCREEN) - m_screenHeight) / 2;
 	}
 
 	//Create window with screen settings and get handle
 	m_mainWindow = CreateWindowEx(WS_EX_APPWINDOW, m_applicationName,
 		(LPCSTR)m_applicationName,
 		WS_CLIPSIBLINGS | WS_CLIPCHILDREN | WS_POPUP | WS_OVERLAPPEDWINDOW | WS_VISIBLE,
-		posX, posY, screenWidth, screenHeight, 0, 0, m_hInstance, 0);
+		posX, posY, m_screenWidth, m_screenHeight, 0, 0, m_hInstance, 0);
 
 	//Bring window up on screen and set it as main focus
 	ShowWindow(m_mainWindow, SW_SHOW);
 	SetFocus(m_mainWindow);
+
+	return true;
+}
+
+//Initialize world window
+bool WindowManager::InitializeWorld()
+{
+	WNDCLASSEX wc;
+
+	//Get instance of application
+	m_hInstance = GetModuleHandle(0);
+
+	//Setup windows class with default settings
+	wc.style = CS_HREDRAW | CS_VREDRAW | CS_OWNDC;
+	wc.lpfnWndProc = WndProc;
+	wc.cbClsExtra = 0;
+	wc.cbWndExtra = 0;
+	wc.hInstance = m_hInstance;
+	wc.hIcon = LoadIcon(0, IDI_WINLOGO);
+	wc.hIconSm = wc.hIcon;
+	wc.hCursor = LoadCursor(0, IDC_ARROW);
+	wc.hbrBackground = (HBRUSH)GetStockObject(BLACK_BRUSH);
+	wc.lpszMenuName = 0;
+	wc.lpszClassName = m_applicationName;
+	wc.cbSize = sizeof(WNDCLASSEX);
+
+	//Register window class
+	RegisterClassEx(&wc);
+
+	//Create window with screen settings and get handle
+	m_worldWindow = CreateWindowEx(WS_EX_APPWINDOW, m_applicationName,
+		(LPCSTR)m_applicationName, WS_POPUP | WS_CHILD | WS_VISIBLE,
+		0, 0, 0, 0, 0, 0, m_hInstance, 0);
+
+	//Set main window as world window parent
+	SetParent(m_worldWindow, m_mainWindow);
+
+	//Size world window
+	SizeWorld();
 
 	return true;
 }
@@ -253,8 +330,8 @@ void WindowManager::ShutdownWindow()
 	DestroyWindow(m_mainWindow);
 	m_mainWindow = 0;
 
-	DestroyWindow(m_gameWindow);
-	m_gameWindow = 0;
+	DestroyWindow(m_worldWindow);
+	m_worldWindow = 0;
 
 	//Remove application instance
 	UnregisterClass((LPCSTR)m_applicationName, m_hInstance);
@@ -262,6 +339,12 @@ void WindowManager::ShutdownWindow()
 
 	//Release pointer to class
 	ApplicationHandle = 0;
+}
+
+//Create track buttons
+bool WindowManager::CreateTracks(int x, int y)
+{
+	return true;
 }
 
 /////////////////////////////////////////////////////////
@@ -295,14 +378,21 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT umessage,
 		return 0;
 	default:
 		//Check for resize window
-		if (!ApplicationHandle->CheckResizeWindow())
+		if ((!ApplicationHandle->CheckResizeWindow()) && (!ApplicationHandle->PassGo()))
 		{
-			//Size game window
-			ApplicationHandle->SizeGame();
+			//Size world window
+			ApplicationHandle->SizeWorld();
 		}
 
-		//Send message to game manager
-		return ApplicationHandle->MessageHandler(hwnd, umessage,
+		//Send message to world window
+		if (GetActiveWindow() == ApplicationHandle->GetWorld())
+		{
+			return ApplicationHandle->WorldMessageHandler(hwnd, umessage,
+				wparam, lparam);
+		}
+
+		//Send message to main window
+		return ApplicationHandle->MainMessageHandler(hwnd, umessage,
 			wparam, lparam);
 	}
 }

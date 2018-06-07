@@ -46,10 +46,13 @@ public:
 	void ProcessMovement(MathLib::Vectors::Vector3D& force);
 
 	//Capture mouse input
-	void ProcessMouse(MathLib::Vectors::Vector3D& torque);
+	void ProcessMouse(MathLib::Vectors::Vector3D& torque, bool& go);
 	
 	//Capture quit key
 	bool ProcessQuit();
+
+	//Reset key states
+	void ResetKeys();
 
 private:
 	////////Main Functions

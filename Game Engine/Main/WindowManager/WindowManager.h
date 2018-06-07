@@ -42,41 +42,61 @@ public:
 	//Check window resolution changes
 	bool CheckResizeWindow();
 
-	//Windows message handler
-	LRESULT CALLBACK MessageHandler(HWND hwnd, UINT umsg,
-		WPARAM wparam, LPARAM lparam);
+	//Return world window
+	HWND GetWorld();
+
+	//Main windows message handler
+	LRESULT CALLBACK MainMessageHandler(HWND hwnd, UINT umsg,
+										WPARAM wparam, LPARAM lparam);
+
+	//World windows message handler
+	LRESULT CALLBACK WorldMessageHandler(HWND hwnd, UINT umsg,
+										WPARAM wparam, LPARAM lparam);
+
+	//Check if first pass
+	bool PassGo();
 
 	//Size game window
-	void SizeGame();
+	void SizeWorld();
 
 private:
 	////////Main Functions
-	//Initialize game window
-	bool InitializeGame(int screenHeight, int screenWidth);
+	//Initialize button windows
+	bool InitializeButtons();
+
+	//Initialize inner windows
+	bool InitializeInner();
 
 	//Initialize main window
-	bool InitializeMain(int screenHeight, int screenWidth);
+	bool InitializeMain();
+	
+	//Initialize game window
+	bool InitializeWorld();
 
 	//Shutdown window
 	void ShutdownWindow();
 
+	////////Utility Functions
+	//Create track buttons
+	bool CreateTracks(int x, int y);
+
 	////////Main Variables
 	LPCSTR m_applicationName;
 	HINSTANCE m_hInstance;
-	HWND m_mainWindow;
-	HWND m_gameWindow;
+	HWND* m_buttons, m_mainWindow, m_worldWindow;
 
 	////////Class Variables
 	System* m_system;
 
 	////////Utility Variables
+	bool go;
 	int m_screenHeight, m_screenWidth;
 };
 
 //Function Prototype
 //Check window exit
 static LRESULT CALLBACK WndProc(HWND hwnd, UINT umsg,
-	WPARAM wparam, LPARAM lparam);
+								WPARAM wparam, LPARAM lparam);
 
 //Globals
 static WindowManager* ApplicationHandle = 0;

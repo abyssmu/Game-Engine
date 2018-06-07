@@ -66,6 +66,7 @@ Completed list:
 9. Removed references to NULL and replaced with 0 to maintain consistency
 
 10. Promote windows functions in system class to own class
+10. Added multi-window support.
 
 Routine:
 Develop single feature from to do list
