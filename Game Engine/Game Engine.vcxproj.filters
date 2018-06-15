@@ -167,11 +167,6 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Main\UpdateLog.txt">
-      <Filter>Main</Filter>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
     <FxCompile Include="Main\WindowManager\System\Graphics\ColorShader\ColorShader_ps.hlsl">
       <Filter>Main\WindowManager\System\Graphics\ColorShader</Filter>
     </FxCompile>

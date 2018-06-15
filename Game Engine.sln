@@ -5,6 +5,16 @@ VisualStudioVersion = 15.0.27130.2024
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Game Engine", "Game Engine\Game Engine.vcxproj", "{2ACAFE6E-E219-47AC-9B07-DBBEE83DB137}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Material Editor", "Material Editor\Material Editor.vcxproj", "{74D407EF-1319-4B58-87ED-C41C7E847872}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Info Items", "Info Items", "{D81C7324-0444-445C-8594-4DA443B35CCD}"
+	ProjectSection(SolutionItems) = preProject
+		Info Items\README.md = Info Items\README.md
+		Info Items\UpdateLog.txt = Info Items\UpdateLog.txt
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Scene Editor", "Scene Editor\Scene Editor.vcxproj", "{510201D5-E787-426C-A241-3946C806505F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -21,6 +31,22 @@ Global
 		{2ACAFE6E-E219-47AC-9B07-DBBEE83DB137}.Release|x64.Build.0 = Release|x64
 		{2ACAFE6E-E219-47AC-9B07-DBBEE83DB137}.Release|x86.ActiveCfg = Release|Win32
 		{2ACAFE6E-E219-47AC-9B07-DBBEE83DB137}.Release|x86.Build.0 = Release|Win32
+		{74D407EF-1319-4B58-87ED-C41C7E847872}.Debug|x64.ActiveCfg = Debug|x64
+		{74D407EF-1319-4B58-87ED-C41C7E847872}.Debug|x64.Build.0 = Debug|x64
+		{74D407EF-1319-4B58-87ED-C41C7E847872}.Debug|x86.ActiveCfg = Debug|Win32
+		{74D407EF-1319-4B58-87ED-C41C7E847872}.Debug|x86.Build.0 = Debug|Win32
+		{74D407EF-1319-4B58-87ED-C41C7E847872}.Release|x64.ActiveCfg = Release|x64
+		{74D407EF-1319-4B58-87ED-C41C7E847872}.Release|x64.Build.0 = Release|x64
+		{74D407EF-1319-4B58-87ED-C41C7E847872}.Release|x86.ActiveCfg = Release|Win32
+		{74D407EF-1319-4B58-87ED-C41C7E847872}.Release|x86.Build.0 = Release|Win32
+		{510201D5-E787-426C-A241-3946C806505F}.Debug|x64.ActiveCfg = Debug|x64
+		{510201D5-E787-426C-A241-3946C806505F}.Debug|x64.Build.0 = Debug|x64
+		{510201D5-E787-426C-A241-3946C806505F}.Debug|x86.ActiveCfg = Debug|Win32
+		{510201D5-E787-426C-A241-3946C806505F}.Debug|x86.Build.0 = Debug|Win32
+		{510201D5-E787-426C-A241-3946C806505F}.Release|x64.ActiveCfg = Release|x64
+		{510201D5-E787-426C-A241-3946C806505F}.Release|x64.Build.0 = Release|x64
+		{510201D5-E787-426C-A241-3946C806505F}.Release|x86.ActiveCfg = Release|Win32
+		{510201D5-E787-426C-A241-3946C806505F}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
