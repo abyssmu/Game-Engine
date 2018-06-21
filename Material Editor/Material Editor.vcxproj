@@ -69,7 +69,14 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
-  <PropertyGroup />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <IncludePath>$(ProjectDir)\Main\WindowManager\System\Entity\Model\AssimpLoader\Directories\include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(ProjectDir)\Main\WindowManager\System\Entity\Model\AssimpLoader\Directories\lib64;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <IncludePath>$(ProjectDir)\Main\WindowManager\System\Entity\Model\AssimpLoader\Directories\include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(ProjectDir)\Main\WindowManager\System\Entity\Model\AssimpLoader\Directories\lib64;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
@@ -77,6 +84,9 @@
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
     </ClCompile>
+    <Link>
+      <AdditionalDependencies>assimp.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -112,9 +122,58 @@
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalDependencies>assimp.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Main\Main.cpp" />
+    <ClCompile Include="Main\WindowManager\System\Camera\Camera.cpp" />
+    <ClCompile Include="Main\WindowManager\System\Color\Color.cpp" />
+    <ClCompile Include="Main\WindowManager\System\Entity\Entity.cpp" />
+    <ClCompile Include="Main\WindowManager\System\Entity\Model\AssimpLoader\AssimpLoader.cpp" />
+    <ClCompile Include="Main\WindowManager\System\Entity\Model\Mesh\Mesh.cpp" />
+    <ClCompile Include="Main\WindowManager\System\Entity\Model\Model.cpp" />
+    <ClCompile Include="Main\WindowManager\System\Entity\Physics\Physics.cpp" />
+    <ClCompile Include="Main\WindowManager\System\Graphics\ColorShader\ColorShader.cpp" />
+    <ClCompile Include="Main\WindowManager\System\Graphics\DirectX\DirectX11.cpp" />
+    <ClCompile Include="Main\WindowManager\System\Graphics\Graphics.cpp" />
+    <ClCompile Include="Main\WindowManager\System\Input\Input.cpp" />
+    <ClCompile Include="Main\WindowManager\System\Math\MathOperations.cpp" />
+    <ClCompile Include="Main\WindowManager\System\Math\Matrices.cpp" />
+    <ClCompile Include="Main\WindowManager\System\Math\Quaternions.cpp" />
+    <ClCompile Include="Main\WindowManager\System\Math\RNG\RNG.cpp" />
+    <ClCompile Include="Main\WindowManager\System\Math\Vectors.cpp" />
+    <ClCompile Include="Main\WindowManager\System\System.cpp" />
+    <ClCompile Include="Main\WindowManager\WindowManager.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Main\WindowManager\System\Camera\Camera.h" />
+    <ClInclude Include="Main\WindowManager\System\Color\Color.h" />
+    <ClInclude Include="Main\WindowManager\System\Entity\Entity.h" />
+    <ClInclude Include="Main\WindowManager\System\Entity\Model\AssimpLoader\AssimpLoader.h" />
+    <ClInclude Include="Main\WindowManager\System\Entity\Model\Mesh\Mesh.h" />
+    <ClInclude Include="Main\WindowManager\System\Entity\Model\Model.h" />
+    <ClInclude Include="Main\WindowManager\System\Entity\Model\ModelInfo.h" />
+    <ClInclude Include="Main\WindowManager\System\Entity\Physics\Physics.h" />
+    <ClInclude Include="Main\WindowManager\System\Graphics\ColorShader\ColorShader.h" />
+    <ClInclude Include="Main\WindowManager\System\Graphics\DirectX\DirectX11.h" />
+    <ClInclude Include="Main\WindowManager\System\Graphics\Graphics.h" />
+    <ClInclude Include="Main\WindowManager\System\Input\Input.h" />
+    <ClInclude Include="Main\WindowManager\System\Input\Keys.h" />
+    <ClInclude Include="Main\WindowManager\System\Math\MathLib.h" />
+    <ClInclude Include="Main\WindowManager\System\Math\RNG\RNG.h" />
+    <ClInclude Include="Main\WindowManager\System\System.h" />
+    <ClInclude Include="Main\WindowManager\WindowManager.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="Main\WindowManager\System\Graphics\ColorShader\ColorShader_ps.hlsl">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </FxCompile>
+    <FxCompile Include="Main\WindowManager\System\Graphics\ColorShader\ColorShader_vs.hlsl">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </FxCompile>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

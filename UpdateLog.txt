@@ -69,6 +69,8 @@ Completed list:
 10. Added multi-window support
 10. Added solutions for game engine features
 
+11. Added all files to game engine features' solutions
+
 Routine:
 Develop single feature from to do list
 Code check for improvements (Depth first has been easiest)

@@ -1,17 +1,173 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Source Files">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    <Filter Include="Main">
+      <UniqueIdentifier>{800a617b-412d-4541-a2f9-a10524ccd67a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;hm;inl;inc;ipp;xsd</Extensions>
+    <Filter Include="Main\WindowManager">
+      <UniqueIdentifier>{6a422bf3-b741-43e3-82f5-4eaeacd38ce2}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Resource Files">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    <Filter Include="Main\WindowManager\System">
+      <UniqueIdentifier>{2035fc96-b511-41ef-bb4d-cc633e3bc4e2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Main\WindowManager\System\Camera">
+      <UniqueIdentifier>{9fbd01df-bff3-4e20-b8cf-4661d6036c3e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Main\WindowManager\System\Color">
+      <UniqueIdentifier>{84780acf-5f99-47b7-85b7-6c22abe4bb71}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Main\WindowManager\System\Entity">
+      <UniqueIdentifier>{8d5bc236-36fc-4992-aca5-94109bf74e16}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Main\WindowManager\System\Entity\Model">
+      <UniqueIdentifier>{b74df433-2f07-44f4-bf5f-c6c446a4fb68}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Main\WindowManager\System\Entity\Model\AssimpLoader">
+      <UniqueIdentifier>{a3a1fe28-cb15-4cdb-9aa2-9988f21d2e18}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Main\WindowManager\System\Entity\Model\Mesh">
+      <UniqueIdentifier>{278854bb-d6a2-41d5-99a5-ef45d8140e32}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Main\WindowManager\System\Entity\Physics">
+      <UniqueIdentifier>{2705c8ec-c912-4b4d-a77a-42bc00b52ed8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Main\WindowManager\System\Graphics">
+      <UniqueIdentifier>{a919200d-7ad4-406b-98f3-a1f776876ddd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Main\WindowManager\System\Graphics\ColorShader">
+      <UniqueIdentifier>{a66d4883-58d5-4e2a-9ea0-a442062a3737}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Main\WindowManager\System\Graphics\DirectX">
+      <UniqueIdentifier>{a6bf08e7-2350-4436-93a1-e1b07236d84c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Main\WindowManager\System\Input">
+      <UniqueIdentifier>{3ba7d678-3b7e-46ac-859b-5cd4deabf845}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Main\WindowManager\System\Math">
+      <UniqueIdentifier>{a0c646f1-e146-4e97-a270-e66583c27c5f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Main\WindowManager\System\Math\RNG">
+      <UniqueIdentifier>{9d609ded-6bed-4b5e-b8f9-0097e610f05c}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Main\Main.cpp">
+      <Filter>Main</Filter>
+    </ClCompile>
+    <ClCompile Include="Main\WindowManager\WindowManager.cpp">
+      <Filter>Main\WindowManager</Filter>
+    </ClCompile>
+    <ClCompile Include="Main\WindowManager\System\System.cpp">
+      <Filter>Main\WindowManager\System</Filter>
+    </ClCompile>
+    <ClCompile Include="Main\WindowManager\System\Camera\Camera.cpp">
+      <Filter>Main\WindowManager\System\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="Main\WindowManager\System\Color\Color.cpp">
+      <Filter>Main\WindowManager\System\Color</Filter>
+    </ClCompile>
+    <ClCompile Include="Main\WindowManager\System\Entity\Entity.cpp">
+      <Filter>Main\WindowManager\System\Entity</Filter>
+    </ClCompile>
+    <ClCompile Include="Main\WindowManager\System\Entity\Model\Model.cpp">
+      <Filter>Main\WindowManager\System\Entity\Model</Filter>
+    </ClCompile>
+    <ClCompile Include="Main\WindowManager\System\Entity\Model\AssimpLoader\AssimpLoader.cpp">
+      <Filter>Main\WindowManager\System\Entity\Model\AssimpLoader</Filter>
+    </ClCompile>
+    <ClCompile Include="Main\WindowManager\System\Entity\Model\Mesh\Mesh.cpp">
+      <Filter>Main\WindowManager\System\Entity\Model\Mesh</Filter>
+    </ClCompile>
+    <ClCompile Include="Main\WindowManager\System\Entity\Physics\Physics.cpp">
+      <Filter>Main\WindowManager\System\Entity\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="Main\WindowManager\System\Graphics\Graphics.cpp">
+      <Filter>Main\WindowManager\System\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Main\WindowManager\System\Graphics\ColorShader\ColorShader.cpp">
+      <Filter>Main\WindowManager\System\Graphics\ColorShader</Filter>
+    </ClCompile>
+    <ClCompile Include="Main\WindowManager\System\Graphics\DirectX\DirectX11.cpp">
+      <Filter>Main\WindowManager\System\Graphics\DirectX</Filter>
+    </ClCompile>
+    <ClCompile Include="Main\WindowManager\System\Input\Input.cpp">
+      <Filter>Main\WindowManager\System\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="Main\WindowManager\System\Math\MathOperations.cpp">
+      <Filter>Main\WindowManager\System\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="Main\WindowManager\System\Math\Matrices.cpp">
+      <Filter>Main\WindowManager\System\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="Main\WindowManager\System\Math\Quaternions.cpp">
+      <Filter>Main\WindowManager\System\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="Main\WindowManager\System\Math\Vectors.cpp">
+      <Filter>Main\WindowManager\System\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="Main\WindowManager\System\Math\RNG\RNG.cpp">
+      <Filter>Main\WindowManager\System\Math\RNG</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Main\WindowManager\WindowManager.h">
+      <Filter>Main\WindowManager</Filter>
+    </ClInclude>
+    <ClInclude Include="Main\WindowManager\System\System.h">
+      <Filter>Main\WindowManager\System</Filter>
+    </ClInclude>
+    <ClInclude Include="Main\WindowManager\System\Camera\Camera.h">
+      <Filter>Main\WindowManager\System\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="Main\WindowManager\System\Color\Color.h">
+      <Filter>Main\WindowManager\System\Color</Filter>
+    </ClInclude>
+    <ClInclude Include="Main\WindowManager\System\Entity\Entity.h">
+      <Filter>Main\WindowManager\System\Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="Main\WindowManager\System\Entity\Model\Model.h">
+      <Filter>Main\WindowManager\System\Entity\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="Main\WindowManager\System\Entity\Model\ModelInfo.h">
+      <Filter>Main\WindowManager\System\Entity\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="Main\WindowManager\System\Entity\Model\AssimpLoader\AssimpLoader.h">
+      <Filter>Main\WindowManager\System\Entity\Model\AssimpLoader</Filter>
+    </ClInclude>
+    <ClInclude Include="Main\WindowManager\System\Entity\Model\Mesh\Mesh.h">
+      <Filter>Main\WindowManager\System\Entity\Model\Mesh</Filter>
+    </ClInclude>
+    <ClInclude Include="Main\WindowManager\System\Entity\Physics\Physics.h">
+      <Filter>Main\WindowManager\System\Entity\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="Main\WindowManager\System\Graphics\Graphics.h">
+      <Filter>Main\WindowManager\System\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Main\WindowManager\System\Graphics\ColorShader\ColorShader.h">
+      <Filter>Main\WindowManager\System\Graphics\ColorShader</Filter>
+    </ClInclude>
+    <ClInclude Include="Main\WindowManager\System\Graphics\DirectX\DirectX11.h">
+      <Filter>Main\WindowManager\System\Graphics\DirectX</Filter>
+    </ClInclude>
+    <ClInclude Include="Main\WindowManager\System\Input\Input.h">
+      <Filter>Main\WindowManager\System\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="Main\WindowManager\System\Input\Keys.h">
+      <Filter>Main\WindowManager\System\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="Main\WindowManager\System\Math\MathLib.h">
+      <Filter>Main\WindowManager\System\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Main\WindowManager\System\Math\RNG\RNG.h">
+      <Filter>Main\WindowManager\System\Math\RNG</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="Main\WindowManager\System\Graphics\ColorShader\ColorShader_ps.hlsl">
+      <Filter>Main\WindowManager\System\Graphics\ColorShader</Filter>
+    </FxCompile>
+    <FxCompile Include="Main\WindowManager\System\Graphics\ColorShader\ColorShader_vs.hlsl">
+      <Filter>Main\WindowManager\System\Graphics\ColorShader</Filter>
+    </FxCompile>
   </ItemGroup>
 </Project>

@@ -7,13 +7,13 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Game Engine", "Game Engine\
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Material Editor", "Material Editor\Material Editor.vcxproj", "{74D407EF-1319-4B58-87ED-C41C7E847872}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Info Items", "Info Items", "{D81C7324-0444-445C-8594-4DA443B35CCD}"
-	ProjectSection(SolutionItems) = preProject
-		Info Items\README.md = Info Items\README.md
-		Info Items\UpdateLog.txt = Info Items\UpdateLog.txt
-	EndProjectSection
-EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Scene Editor", "Scene Editor\Scene Editor.vcxproj", "{510201D5-E787-426C-A241-3946C806505F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Info Items", "Info Items", "{CF6241A0-3BB0-4865-9554-9620A470CEF5}"
+	ProjectSection(SolutionItems) = preProject
+		README.md = README.md
+		UpdateLog.txt = UpdateLog.txt
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
