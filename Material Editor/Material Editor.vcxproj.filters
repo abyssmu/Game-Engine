@@ -161,6 +161,9 @@
     <ClInclude Include="Main\WindowManager\System\Entity\Physics\Physics.h">
       <Filter>Main\WindowManager\System\Entity\Physics</Filter>
     </ClInclude>
+    <ClInclude Include="Main\WindowManager\MenuResource.h">
+      <Filter>Main\WindowManager</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Main\WindowManager\System\Graphics\ColorShader\ColorShader_ps.hlsl">
@@ -169,5 +172,10 @@
     <FxCompile Include="Main\WindowManager\System\Graphics\ColorShader\ColorShader_vs.hlsl">
       <Filter>Main\WindowManager\System\Graphics\ColorShader</Filter>
     </FxCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Main\WindowManager\MenuResource.rc">
+      <Filter>Main\WindowManager</Filter>
+    </ResourceCompile>
   </ItemGroup>
 </Project>

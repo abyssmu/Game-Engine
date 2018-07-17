@@ -14,6 +14,7 @@ It holds the program manager and transfers information from there to the display
 #include <tchar.h>
 
 //Class Includes
+#include "MenuResource.h"
 #include "System\System.h"
 
 class WindowManager
@@ -61,9 +62,6 @@ public:
 
 private:
 	////////Main Functions
-	//Initialize button windows
-	bool InitializeButtons();
-
 	//Initialize inner windows
 	bool InitializeInner();
 
@@ -77,8 +75,6 @@ private:
 	void ShutdownWindow();
 
 	////////Utility Functions
-	//Create track buttons
-	bool CreateTracks(int x, int y);
 
 	////////Main Variables
 	LPCSTR m_applicationName;
@@ -90,7 +86,8 @@ private:
 
 	////////Utility Variables
 	bool go;
-	int m_screenHeight, m_screenWidth;
+	int m_screenHeight, m_screenWidth,
+		m_worldHeight, m_worldWidth;
 };
 
 //Function Prototype

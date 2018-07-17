@@ -133,10 +133,12 @@ LRESULT CALLBACK WindowManager::WorldMessageHandler(HWND hwnd, UINT umsg,
 	case WM_KEYDOWN:
 		m_system->KeyDown((unsigned int)wparam);
 		return 0;
+
 		//Check if a key is released
 	case WM_KEYUP:
 		m_system->KeyUp((unsigned int)wparam);
 		return 0;	
+
 		//Any other messages send default
 	default:
 		return DefWindowProc(hwnd, umsg, wparam, lparam);
@@ -220,7 +222,7 @@ bool WindowManager::InitializeMain()
 	m_hInstance = GetModuleHandle(0);
 
 	//Give application name
-	m_applicationName = "Game Engine";
+	m_applicationName = "Scene Editor";
 
 	//Setup windows class with default settings
 	wc.style = CS_HREDRAW | CS_VREDRAW | CS_OWNDC;
@@ -360,12 +362,17 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT umessage,
 	{
 		//Check if window is destroyed
 	case WM_DESTROY:
+		ApplicationHandle->Shutdown();
 		PostQuitMessage(0);
 		return 0;
+
 		//Check if window is closed
 	case WM_CLOSE:
+		ApplicationHandle->Shutdown();
 		PostQuitMessage(0);
 		return 0;
+
+		//Check for minimize
 	case WM_SIZE:
 		if (wparam = SIZE_MINIMIZED)
 		{
@@ -377,6 +384,7 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT umessage,
 			MINIMIZED = false;
 		}
 		return 0;
+
 	default:
 		//Check for resize window
 		if ((!ApplicationHandle->CheckResizeWindow()) && (!ApplicationHandle->PassGo()))

@@ -49,7 +49,7 @@ bool WindowManager::Initialize(int screenHeight, int screenWidth)
 		return false;
 	}
 
-	if (!m_system->Initialize(m_screenHeight, m_screenWidth, m_worldWindow))
+	if (!m_system->Initialize(m_worldHeight, m_worldWidth, m_worldWindow))
 	{
 		return false;
 	}
@@ -100,7 +100,7 @@ HWND WindowManager::GetWorld()
 
 //Main windows message handling
 LRESULT CALLBACK WindowManager::MainMessageHandler(HWND hwnd, UINT umsg,
-													WPARAM wparam, LPARAM lparam)
+	WPARAM wparam, LPARAM lparam)
 {
 	//Set mouse active in world
 	if (m_system)
@@ -111,6 +111,10 @@ LRESULT CALLBACK WindowManager::MainMessageHandler(HWND hwnd, UINT umsg,
 
 	switch (umsg)
 	{
+		//Just to get a warning to go away
+	case 0:
+		return DefWindowProc(hwnd, umsg, wparam, lparam);
+
 		//Any other messages send default
 	default:
 		return DefWindowProc(hwnd, umsg, wparam, lparam);
@@ -119,7 +123,7 @@ LRESULT CALLBACK WindowManager::MainMessageHandler(HWND hwnd, UINT umsg,
 
 //World windows message handling
 LRESULT CALLBACK WindowManager::WorldMessageHandler(HWND hwnd, UINT umsg,
-													WPARAM wparam, LPARAM lparam)
+	WPARAM wparam, LPARAM lparam)
 {
 	//Set mouse active in world
 	if (m_system)
@@ -133,10 +137,12 @@ LRESULT CALLBACK WindowManager::WorldMessageHandler(HWND hwnd, UINT umsg,
 	case WM_KEYDOWN:
 		m_system->KeyDown((unsigned int)wparam);
 		return 0;
+
 		//Check if a key is released
 	case WM_KEYUP:
 		m_system->KeyUp((unsigned int)wparam);
-		return 0;	
+		return 0;
+
 		//Any other messages send default
 	default:
 		return DefWindowProc(hwnd, umsg, wparam, lparam);
@@ -154,50 +160,29 @@ void WindowManager::SizeWorld()
 {
 	RECT rc;
 	double perc;
-	int height, width;
 
-	perc = 0.15;
+	perc = 0.8; //% of the main window
 
 	//Get world window size
 	GetClientRect(m_mainWindow, &rc);
 
 	//Calculate world window height and width
-	height = (int)(rc.bottom - (double)m_screenHeight * perc);
-	width = (int)(rc.right - (double)m_screenWidth * perc);
+	m_worldHeight = (int)(rc.bottom);
+	m_worldWidth = (int)(rc.right * perc);
 
 	//Move world window inside main window
-	MoveWindow(m_worldWindow, rc.left, rc.top, width, height, false);
+	MoveWindow(m_worldWindow, rc.left, rc.top, m_worldWidth, m_worldHeight, false);
 }
 
 /////////////////////////////////////////////////////////
 //Private
 /////////////////////////////////////////////////////////
 
-//Initialize button windows
-bool WindowManager::InitializeButtons()
-{
-	m_buttons = new HWND;
-
-	//Create track buttons
-	if (!CreateTracks(0, 1))
-	{
-		return false;
-	}
-
-	return true;
-}
-
 //Initialize inner windows
 bool WindowManager::InitializeInner()
 {
 	//Initialize world window
 	if (!InitializeWorld())
-	{
-		return false;
-	}
-
-	//Initialize button windows
-	if (!InitializeButtons())
 	{
 		return false;
 	}
@@ -220,7 +205,7 @@ bool WindowManager::InitializeMain()
 	m_hInstance = GetModuleHandle(0);
 
 	//Give application name
-	m_applicationName = "Game Engine";
+	m_applicationName = "Material Editor";
 
 	//Setup windows class with default settings
 	wc.style = CS_HREDRAW | CS_VREDRAW | CS_OWNDC;
@@ -228,11 +213,11 @@ bool WindowManager::InitializeMain()
 	wc.cbClsExtra = 0;
 	wc.cbWndExtra = 0;
 	wc.hInstance = m_hInstance;
-	wc.hIcon = LoadIcon(0, IDI_WINLOGO);
-	wc.hIconSm = wc.hIcon;
+	wc.hIcon = LoadIcon(m_hInstance, MAKEINTRESOURCE(IDI_PSI));
+	wc.hIconSm = LoadIcon(wc.hInstance, MAKEINTRESOURCE(IDI_PSI));
 	wc.hCursor = LoadCursor(0, IDC_ARROW);
 	wc.hbrBackground = (HBRUSH)GetStockObject(GRAY_BRUSH);
-	wc.lpszMenuName = 0;
+	wc.lpszMenuName = MAKEINTRESOURCE(IDR_MAINMENU);
 	wc.lpszClassName = m_applicationName;
 	wc.cbSize = sizeof(WNDCLASSEX);
 
@@ -241,7 +226,7 @@ bool WindowManager::InitializeMain()
 
 	//Setup screen settings depending on full screen
 	if (FULL_SCREEN)
-	{	
+	{
 		//Determine resolution of clients desktop screen
 		resHeight = GetSystemMetrics(SM_CYSCREEN);
 		resWidth = GetSystemMetrics(SM_CXSCREEN);
@@ -267,8 +252,7 @@ bool WindowManager::InitializeMain()
 	}
 
 	//Create window with screen settings and get handle
-	m_mainWindow = CreateWindowEx(WS_EX_APPWINDOW, m_applicationName,
-		(LPCSTR)m_applicationName,
+	m_mainWindow = CreateWindowEx(WS_EX_OVERLAPPEDWINDOW, m_applicationName, m_applicationName,
 		WS_CLIPSIBLINGS | WS_CLIPCHILDREN | WS_POPUP | WS_OVERLAPPEDWINDOW | WS_VISIBLE,
 		posX, posY, m_screenWidth, m_screenHeight, 0, 0, m_hInstance, 0);
 
@@ -293,8 +277,8 @@ bool WindowManager::InitializeWorld()
 	wc.cbClsExtra = 0;
 	wc.cbWndExtra = 0;
 	wc.hInstance = m_hInstance;
-	wc.hIcon = LoadIcon(0, IDI_WINLOGO);
-	wc.hIconSm = wc.hIcon;
+	wc.hIcon = 0;
+	wc.hIconSm = 0;
 	wc.hCursor = LoadCursor(0, IDC_ARROW);
 	wc.hbrBackground = (HBRUSH)GetStockObject(BLACK_BRUSH);
 	wc.lpszMenuName = 0;
@@ -315,6 +299,8 @@ bool WindowManager::InitializeWorld()
 	//Size world window
 	SizeWorld();
 
+	SetMenu(m_worldWindow, 0);
+
 	return true;
 }
 
@@ -327,12 +313,16 @@ void WindowManager::ShutdownWindow()
 		ChangeDisplaySettings(0, 0);
 	}
 
+	//Remove child window
+	DestroyWindow(m_worldWindow);
+	m_worldWindow = 0;
+
 	//Remove window
 	DestroyWindow(m_mainWindow);
 	m_mainWindow = 0;
 
-	DestroyWindow(m_worldWindow);
-	m_worldWindow = 0;
+	//Shutdown system
+	m_system->Shutdown();
 
 	//Remove application instance
 	UnregisterClass((LPCSTR)m_applicationName, m_hInstance);
@@ -340,12 +330,6 @@ void WindowManager::ShutdownWindow()
 
 	//Release pointer to class
 	ApplicationHandle = 0;
-}
-
-//Create track buttons
-bool WindowManager::CreateTracks(int x, int y)
-{
-	return true;
 }
 
 /////////////////////////////////////////////////////////
@@ -363,9 +347,12 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT umessage,
 		PostQuitMessage(0);
 		return 0;
 		//Check if window is closed
+
 	case WM_CLOSE:
 		PostQuitMessage(0);
 		return 0;
+
+		//Check for minimize
 	case WM_SIZE:
 		if (wparam = SIZE_MINIMIZED)
 		{
@@ -377,6 +364,21 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT umessage,
 			MINIMIZED = false;
 		}
 		return 0;
+
+		//Menu bar options
+	case WM_COMMAND:
+	{	
+		int iD = LOWORD(wparam);
+
+		switch (iD)
+		{
+			//File menu options
+		case IDF_EXIT:
+			PostQuitMessage(0);
+			return 0;
+		}
+	}
+
 	default:
 		//Check for resize window
 		if ((!ApplicationHandle->CheckResizeWindow()) && (!ApplicationHandle->PassGo()))
