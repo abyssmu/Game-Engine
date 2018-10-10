@@ -16,7 +16,7 @@ It is used to initialize and maintain communications with DirectX
 #include <dxgi.h>
 
 //Class Includes
-#include "../../Color/Color.h"
+#include "..\..\Color\Color.h"
 
 class DirectX11
 {
@@ -33,7 +33,7 @@ public:
 	////////Main Functions
 	//Initialize components
 	bool Initialize(int screenHeight, int screenWidth, bool vsync,
-		HWND hwnd, bool fullscreen, double screenDepth, double screenNear);
+		HWND hwnd, double screenDepth, double screenNear);
 
 	//Reset DirectX if resolution changed
 	bool Resize(int& screenHeight, int& screenWidth, HWND hwnd, double screenDepth,
@@ -93,15 +93,14 @@ private:
 
 	//Create swap chain
 	bool CreateSwapChain(int screenHeight, int screenWidth,	unsigned int numerator,
-						unsigned int denominator, HWND hwnd, bool fullscreen);
+						unsigned int denominator, HWND hwnd);
 	
 	//Create viewport
 	bool CreateViewport(int screenHeight, int screenWidth, double& fieldOfView,
 						double& screenAspect);
 
 	//Initialize DirectX components
-	bool InitializeDirectX(int screenHeight, int screenWidth, HWND hwnd,
-							bool fullscreen);
+	bool InitializeDirectX(int screenHeight, int screenWidth, HWND hwnd);
 
 	//Initialize matrix components
 	bool InitializeMatrices(int screenHeight, int screenWidth, double screenDepth,

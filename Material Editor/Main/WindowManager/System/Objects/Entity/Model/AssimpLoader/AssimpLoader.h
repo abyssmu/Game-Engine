@@ -12,8 +12,8 @@ vector of submeshes and number of meshes.
 #include <vector>
 
 //Globals
-#include "../Mesh/Mesh.h"
-#include "../ModelInfo.h"
+#include "..\Mesh\Mesh.h"
+#include "..\ModelInfo.h"
 
 class AssimpLoader
 {

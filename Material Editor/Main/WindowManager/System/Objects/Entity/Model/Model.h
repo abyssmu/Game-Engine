@@ -43,7 +43,8 @@ public:
 
 	////////Class Functions
 	//Get model information
-	AllModelInfo* GetModelInfo(MathLib::Vectors::Vector3D position, int i);
+	AllModelInfo* GetModelInfo(MathLib::Vectors::Vector3D position,
+								MathLib::Vectors::Vector3D rotation, int i);
 
 private:
 	////////Utility Functions

@@ -9,7 +9,7 @@ It also contains the struct for the vertex shaders.
 #include <d3d11.h>
 
 //Class Includes
-#include "../../Math/MathLib.h"
+#include "..\..\..\Math\MathLib.h"
 
 //Used to transfer buffers entity model to graphics
 //Model information container
@@ -23,6 +23,7 @@ struct SubModelInfo
 struct AllModelInfo
 {
 	MathLib::Vectors::Vector3D position;
+	MathLib::Vectors::Vector3D rotation;
 	SubModelInfo* subModelInfo;
 };
 

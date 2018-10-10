@@ -43,9 +43,11 @@ int Model::GetNumMeshes()
 }
 
 //Get model information
-AllModelInfo* Model::GetModelInfo(MathLib::Vectors::Vector3D position, int i)
+AllModelInfo* Model::GetModelInfo(MathLib::Vectors::Vector3D position,
+									MathLib::Vectors::Vector3D rotation, int i)
 {
 	m_allModelInfo->position = position;
+	m_allModelInfo->rotation = rotation;
 	m_allModelInfo->subModelInfo = m_meshes[i]->GetModelInfo();
 
 	return m_allModelInfo;

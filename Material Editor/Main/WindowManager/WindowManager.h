@@ -9,9 +9,10 @@ It holds the program manager and transfers information from there to the display
 #define WIN32_LEAN_AND_MEAN
 
 //Includes
-#include <Windows.h>
+#include <ShObjIdl.h>
 #include <stdio.h>
 #include <tchar.h>
+#include <Windows.h>
 
 //Class Includes
 #include "MenuResource.h"
@@ -46,11 +47,11 @@ public:
 	//Return world window
 	HWND GetWorld();
 
-	//Main windows message handler
+	//Main window message handler
 	LRESULT CALLBACK MainMessageHandler(HWND hwnd, UINT umsg,
 										WPARAM wparam, LPARAM lparam);
 
-	//World windows message handler
+	//World window message handler
 	LRESULT CALLBACK WorldMessageHandler(HWND hwnd, UINT umsg,
 										WPARAM wparam, LPARAM lparam);
 
@@ -59,6 +60,9 @@ public:
 
 	//Size game window
 	void SizeWorld();
+
+	//Update model
+	void UpdateModel(std::string modelName);
 
 private:
 	////////Main Functions
@@ -74,12 +78,10 @@ private:
 	//Shutdown window
 	void ShutdownWindow();
 
-	////////Utility Functions
-
 	////////Main Variables
 	LPCSTR m_applicationName;
 	HINSTANCE m_hInstance;
-	HWND* m_buttons, m_mainWindow, m_worldWindow;
+	HWND m_mainWindow, m_worldWindow;
 
 	////////Class Variables
 	System* m_system;

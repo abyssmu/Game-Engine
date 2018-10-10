@@ -35,11 +35,17 @@ public:
 	//Get number of meshes
 	int GetNumMeshes();
 
+	//Set physics on or off
+	void SetPhysics(bool onOff);
+
 	////////Class Functions
 	//Get model information
 	AllModelInfo* GetModelInfo(int i);
 
 private:
 	////////Main Variables
+	bool physicsOnOff;
+
+	////////Class Variables
 	Model* m_model;
 };

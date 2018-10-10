@@ -92,11 +92,14 @@ void Graphics::CalculateWorld(DirectX::XMMATRIX& world, AllModelInfo* modelInfo)
 		(float)modelInfo->position.y,
 		(float)modelInfo->position.z);
 
-	//DirectX::XMMATRIX rotation;
+	DirectX::XMMATRIX rotation = DirectX::XMMatrixRotationRollPitchYaw((float)modelInfo->rotation.x,
+		(float)modelInfo->rotation.y,
+		(float)modelInfo->rotation.z);
+	
 	//DirectX::XMMATRIX scale;
 
 	//world = scale * rotation * translation;
-	world = translation;
+	world = rotation * translation;
 }
 
 //Initialize DirectX
@@ -110,8 +113,7 @@ bool Graphics::InitializeDirectX(int screenHeight, int screenWidth, HWND hwnd)
 	}
 
 	if (!m_dX11->Initialize(screenHeight, screenWidth,
-		VSYNC_ENABLED, hwnd, FULL_SCREEN, SCREEN_DEPTH,
-		SCREEN_NEAR))
+		VSYNC_ENABLED, hwnd, SCREEN_DEPTH, SCREEN_NEAR))
 	{
 		MessageBox(hwnd, "Could not initialize DX11", "Error", MB_OK);
 		return false;

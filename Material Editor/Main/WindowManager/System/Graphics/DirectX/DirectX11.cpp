@@ -24,14 +24,13 @@ DirectX11::~DirectX11()
 
 //Initialize components
 bool DirectX11::Initialize(int screenHeight, int screenWidth,
-							bool vsync, HWND hwnd, bool fullscreen,
-							double screenDepth, double screenNear)
+							bool vsync, HWND hwnd, double screenDepth, double screenNear)
 {
 	//Store vsync
 	m_vSyncEnabled = vsync;
 
 	//Initialize DirectX components
-	if(!InitializeDirectX(screenHeight, screenWidth, hwnd, fullscreen))
+	if(!InitializeDirectX(screenHeight, screenWidth, hwnd))
 	{
 		return false;
 	}
@@ -49,7 +48,6 @@ bool DirectX11::Initialize(int screenHeight, int screenWidth,
 bool DirectX11::Resize(int& screenHeight, int& screenWidth, HWND hwnd, double screenDepth, double screenNear)
 {
 	HRESULT result;
-
 	ID3D11RenderTargetView* noViews[] = { 0 };
 
 	//Clear components
@@ -505,8 +503,7 @@ bool DirectX11::CreateRasterDesc()
 
 //Create swap chain
 bool DirectX11::CreateSwapChain(int screenHeight, int screenWidth,
-								unsigned int numerator, unsigned int denominator,
-								HWND hwnd, bool fullscreen)
+								unsigned int numerator, unsigned int denominator, HWND hwnd)
 {
 	HRESULT result;
 
@@ -553,15 +550,8 @@ bool DirectX11::CreateSwapChain(int screenHeight, int screenWidth,
 	swapChainDesc.SampleDesc.Count = 1;
 	swapChainDesc.SampleDesc.Quality = 0;
 
-	//Set to fullscreen or windowed
-	if (fullscreen)
-	{
-		swapChainDesc.Windowed = false;
-	}
-	else
-	{
-		swapChainDesc.Windowed = true;
-	}
+	//Set to windowed
+	swapChainDesc.Windowed = true;
 
 	//Discard back buffer contents after presenting
 	swapChainDesc.SwapEffect = DXGI_SWAP_EFFECT_DISCARD;
@@ -637,8 +627,7 @@ bool DirectX11::CreateViewport(int screenHeight, int screenWidth,
 }
 
 //Initialize DirectX components
-bool DirectX11::InitializeDirectX(int screenHeight, int screenWidth, HWND hwnd,
-								bool fullscreen)
+bool DirectX11::InitializeDirectX(int screenHeight, int screenWidth, HWND hwnd)
 {
 	unsigned int denominator, numerator;
 
@@ -651,7 +640,7 @@ bool DirectX11::InitializeDirectX(int screenHeight, int screenWidth, HWND hwnd,
 
 	//Setup swapchain
 	if (!CreateSwapChain(screenHeight, screenWidth,
-		numerator, denominator, hwnd, fullscreen))
+		numerator, denominator, hwnd))
 	{
 		return false;
 	}

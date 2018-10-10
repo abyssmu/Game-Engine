@@ -11,7 +11,7 @@ An enumeration is used to store the keys as known alphabet characters.
 #include <Windows.h>
 
 //Class Includes
-#include "../Math/MathLib.h"
+#include "..\Math\MathLib.h"
 
 class Input
 {

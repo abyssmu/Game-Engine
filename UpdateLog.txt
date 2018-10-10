@@ -7,6 +7,7 @@ Add quaternions
 Add lights and normals to mesh
 Add textures and uvs to mesh
 Add higher physics
+Add basic 3D shapes for simple object collisions
 Add physics collision detection
 Add animations
 

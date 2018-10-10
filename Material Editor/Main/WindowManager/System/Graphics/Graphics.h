@@ -13,9 +13,8 @@ Graphics class is a manager for the graphics core. It holds the DirectX class an
 #include "DirectX\DirectX11.h"
 
 //Globals
-#include "..\Entity\Model\ModelInfo.h"
+#include "..\Objects\Entity\Model\ModelInfo.h"
 
-const bool FULL_SCREEN = false;
 const bool VSYNC_ENABLED = true;
 const double SCREEN_DEPTH = 1000.0;
 const double SCREEN_NEAR = 0.1;

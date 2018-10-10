@@ -10,7 +10,7 @@ vertex buffer, vertex count, index buffer, index count, and index array.
 #include <vector>
 
 //Class Includes
-#include "../ModelInfo.h"
+#include "..\ModelInfo.h"
 
 class Mesh
 {

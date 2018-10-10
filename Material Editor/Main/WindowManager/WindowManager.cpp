@@ -73,10 +73,9 @@ void WindowManager::Run()
 bool WindowManager::CheckResizeWindow()
 {
 	RECT rect;
+	int dX, dY;
 
 	GetWindowRect(m_mainWindow, &rect);
-
-	int dX, dY;
 
 	dX = (rect.right - rect.left) - m_screenWidth;
 	dY = (rect.bottom - rect.top) - m_screenHeight;
@@ -98,7 +97,7 @@ HWND WindowManager::GetWorld()
 	return m_worldWindow;
 }
 
-//Main windows message handling
+//Main window message handling
 LRESULT CALLBACK WindowManager::MainMessageHandler(HWND hwnd, UINT umsg,
 	WPARAM wparam, LPARAM lparam)
 {
@@ -121,7 +120,7 @@ LRESULT CALLBACK WindowManager::MainMessageHandler(HWND hwnd, UINT umsg,
 	}
 }
 
-//World windows message handling
+//World window message handling
 LRESULT CALLBACK WindowManager::WorldMessageHandler(HWND hwnd, UINT umsg,
 	WPARAM wparam, LPARAM lparam)
 {
@@ -161,7 +160,8 @@ void WindowManager::SizeWorld()
 	RECT rc;
 	double perc;
 
-	perc = 0.8; //% of the main window
+	//% of the main window
+	perc = 0.8;
 
 	//Get world window size
 	GetClientRect(m_mainWindow, &rc);
@@ -172,6 +172,12 @@ void WindowManager::SizeWorld()
 
 	//Move world window inside main window
 	MoveWindow(m_worldWindow, rc.left, rc.top, m_worldWidth, m_worldHeight, false);
+}
+
+//Update model
+void WindowManager::UpdateModel(std::string modelName)
+{
+	m_system->UpdateModel(modelName);
 }
 
 /////////////////////////////////////////////////////////
@@ -194,8 +200,7 @@ bool WindowManager::InitializeInner()
 bool WindowManager::InitializeMain()
 {
 	WNDCLASSEX wc;
-	DEVMODE dmScreenSettings;
-	int posX, posY, resHeight, resWidth;
+	int posX, posY;
 	posX = posY = 0;
 
 	//Get an external pointer to this object
@@ -224,37 +229,20 @@ bool WindowManager::InitializeMain()
 	//Register window class
 	RegisterClassEx(&wc);
 
-	//Setup screen settings depending on full screen
-	if (FULL_SCREEN)
-	{
-		//Determine resolution of clients desktop screen
-		resHeight = GetSystemMetrics(SM_CYSCREEN);
-		resWidth = GetSystemMetrics(SM_CXSCREEN);
-
-		memset(&dmScreenSettings, 0, sizeof(dmScreenSettings));
-		dmScreenSettings.dmSize = sizeof(dmScreenSettings);
-		dmScreenSettings.dmPelsWidth = (unsigned long)resWidth;
-		dmScreenSettings.dmPelsHeight = (unsigned long)resHeight;
-		dmScreenSettings.dmBitsPerPel = 32;
-		dmScreenSettings.dmFields = DM_BITSPERPEL | DM_PELSWIDTH | DM_PELSHEIGHT;
-
-		//Change display to full screen
-		ChangeDisplaySettings(&dmScreenSettings, CDS_FULLSCREEN);
-
-		//Set position of window to top left corner
-		posX = posY = 0;
-	}
-	else
-	{
-		//Place window in middle of screen
-		posX = (GetSystemMetrics(SM_CXSCREEN) - m_screenWidth) / 2;
-		posY = (GetSystemMetrics(SM_CYSCREEN) - m_screenHeight) / 2;
-	}
+	//Setup screen settings
+	//Place window in middle of screen
+	posX = (GetSystemMetrics(SM_CXSCREEN) - m_screenWidth) / 2;
+	posY = (GetSystemMetrics(SM_CYSCREEN) - m_screenHeight) / 2;
 
 	//Create window with screen settings and get handle
-	m_mainWindow = CreateWindowEx(WS_EX_OVERLAPPEDWINDOW, m_applicationName, m_applicationName,
+	m_mainWindow = CreateWindowEx(WS_EX_APPWINDOW, m_applicationName, m_applicationName,
 		WS_CLIPSIBLINGS | WS_CLIPCHILDREN | WS_POPUP | WS_OVERLAPPEDWINDOW | WS_VISIBLE,
 		posX, posY, m_screenWidth, m_screenHeight, 0, 0, m_hInstance, 0);
+
+	if (!m_mainWindow)
+	{
+		return false;
+	}
 
 	//Bring window up on screen and set it as main focus
 	ShowWindow(m_mainWindow, SW_SHOW);
@@ -282,16 +270,21 @@ bool WindowManager::InitializeWorld()
 	wc.hCursor = LoadCursor(0, IDC_ARROW);
 	wc.hbrBackground = (HBRUSH)GetStockObject(BLACK_BRUSH);
 	wc.lpszMenuName = 0;
-	wc.lpszClassName = m_applicationName;
+	wc.lpszClassName = 0;
 	wc.cbSize = sizeof(WNDCLASSEX);
 
 	//Register window class
 	RegisterClassEx(&wc);
 
 	//Create window with screen settings and get handle
-	m_worldWindow = CreateWindowEx(WS_EX_APPWINDOW, m_applicationName,
-		(LPCSTR)m_applicationName, WS_POPUP | WS_CHILD | WS_VISIBLE,
+	m_worldWindow = CreateWindowEx(WS_EX_APPWINDOW, m_applicationName, m_applicationName,
+		WS_POPUP | WS_CHILD | WS_VISIBLE,
 		0, 0, 0, 0, 0, 0, m_hInstance, 0);
+
+	if (!m_worldWindow)
+	{
+		return false;
+	}
 
 	//Set main window as world window parent
 	SetParent(m_worldWindow, m_mainWindow);
@@ -307,12 +300,6 @@ bool WindowManager::InitializeWorld()
 //Shutdown window
 void WindowManager::ShutdownWindow()
 {
-	//Fix display settings if in full screen
-	if (FULL_SCREEN)
-	{
-		ChangeDisplaySettings(0, 0);
-	}
-
 	//Remove child window
 	DestroyWindow(m_worldWindow);
 	m_worldWindow = 0;
@@ -333,6 +320,126 @@ void WindowManager::ShutdownWindow()
 }
 
 /////////////////////////////////////////////////////////
+//Local
+/////////////////////////////////////////////////////////
+
+//Convert filename
+std::string ConvertFilename(std::wstring path)
+{
+	int size;
+	int pathLength = (int)path.length() + 1;
+
+	//Get size of path
+	size = WideCharToMultiByte(CP_ACP, 0, path.c_str(), pathLength, 0, 0, 0, 0);
+
+	//Create string to size of path
+	std::string result(size, '\0');
+
+	//Convert path to result
+	WideCharToMultiByte(CP_ACP, 0, path.c_str(), pathLength, &result[0], size, 0, 0);
+
+	return result;
+}
+
+//Extract filename
+std::string ExtractFilename(std::wstring path)
+{
+	std::string p = ConvertFilename(path);
+	std::string result;
+
+	int i = 0;
+	char h = ' ';
+
+	while (h != '.')
+	{
+		h = p[i];
+
+		++i;
+	}
+
+	while (h != '\\')
+	{
+		h = p[i];
+
+		--i;
+	}
+
+	++i;
+
+	while (h != '.')
+	{
+		h = p[i];
+
+		if ((h != '.') && (h != '\\'))
+		{
+			result.push_back(h);
+		}
+
+		++i;
+	}
+
+	return result;
+}
+
+//Open file dialog
+void OpenFile(HWND hwnd)
+{
+	std::string filename;
+
+	//Initialize common item
+	HRESULT hr = CoInitializeEx(0, COINIT_APARTMENTTHREADED |
+									COINIT_DISABLE_OLE1DDE);
+
+	if (SUCCEEDED(hr))
+	{
+		IFileDialog* fo = 0;
+
+		//Create the file open dialog object
+		hr = CoCreateInstance(CLSID_FileOpenDialog, 0, CLSCTX_INPROC_SERVER,
+			IID_PPV_ARGS(&fo));
+
+		if (SUCCEEDED(hr))
+		{
+			//Show the open dialog box
+			hr = fo->Show(0);
+
+			//Get the file name from the dialog box
+			if (SUCCEEDED(hr))
+			{
+				IShellItem* item;
+
+				hr = fo->GetResult(&item);
+
+				if (SUCCEEDED(hr))
+				{
+					LPWSTR path;
+
+					hr = item->GetDisplayName(SIGDN_FILESYSPATH, &path);
+
+					//Display the file name
+					if (SUCCEEDED(hr))
+					{
+						//Convert to wstring and extract filename
+						std::wstring t = path;
+						filename = ExtractFilename(t);
+
+						CoTaskMemFree(path);
+					}
+
+					item->Release();
+				}
+			}
+
+			fo->Release();
+		}
+
+		CoUninitialize();
+	}
+
+	ApplicationHandle->UpdateModel((char*)filename.c_str());
+}
+
+/////////////////////////////////////////////////////////
 //Global
 /////////////////////////////////////////////////////////
 
@@ -342,13 +449,37 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT umessage,
 {
 	switch (umessage)
 	{
-		//Check if window is destroyed
-	case WM_DESTROY:
+		//Check for activation messages
+	case WM_ACTIVATE:
+		switch LOWORD(wparam)
+		{
+			//If window is active
+		case WA_ACTIVE:
+			return 0;
+
+			//If window was activated by click
+		case WA_CLICKACTIVE:
+
+			SendMessage(hwnd, WM_NCACTIVATE, TRUE, NULL);
+
+			return 0;
+
+			//If window was deactivated
+		case WA_INACTIVE:
+			if ((HWND)lparam != hwnd)
+			{
+				SendMessage(hwnd, WM_NCACTIVATE, TRUE, NULL);
+				return 0;
+			};
+		}
+
+		//Check if window is closed
+	case WM_CLOSE:
 		PostQuitMessage(0);
 		return 0;
-		//Check if window is closed
 
-	case WM_CLOSE:
+		//Check if window is destroyed
+	case WM_DESTROY:
 		PostQuitMessage(0);
 		return 0;
 
@@ -372,10 +503,42 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT umessage,
 
 		switch (iD)
 		{
-			//File menu options
+			//File menu actions
+			//Open file
+		case IDF_OPEN:
+			OpenFile(hwnd);
+			return 0;
+
+			//Shutdown and exit program
 		case IDF_EXIT:
 			PostQuitMessage(0);
 			return 0;
+
+			//Material menu actions
+			
+			//Model menu cations
+			//Load cube model
+		case IDMOD_CUBE:
+			ApplicationHandle->UpdateModel("Cube");
+			return 0;
+
+			//Load human male model
+		case IDMOD_HUMANMALE:
+			ApplicationHandle->UpdateModel("HumanMale");
+			return 0;
+
+			//Load monkey model
+		case IDMOD_MONKEY:
+			ApplicationHandle->UpdateModel("Monkey");
+			return 0;
+
+			//Load sphere model
+		case IDMOD_SPHERE:
+			ApplicationHandle->UpdateModel("Sphere");
+			return 0;
+
+		default:
+			break;
 		}
 	}
 

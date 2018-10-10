@@ -8,7 +8,7 @@ Physics class is used to hold and update the position and rotation of an entity.
 #include <math.h>
 
 //Class Includes
-#include "../../Math/MathLib.h"
+#include "..\..\..\Math\MathLib.h"
 
 class Physics
 {
@@ -22,19 +22,18 @@ public:
 	//Default destructor
 	~Physics();
 
-	////////Main Functions
-	//Set object position
-	void SetPosition(MathLib::Vectors::Vector3D position);
-
-	//Set object rotation
-	void SetRotation(MathLib::Vectors::Vector3D rotation);
-
 	////////Utility Functions
 	//Get object position
 	MathLib::Vectors::Vector3D GetPosition();
 
 	//Get object rotation
 	MathLib::Vectors::Vector3D GetRotation();
+
+	//Set object position
+	void SetPosition(MathLib::Vectors::Vector3D position);
+
+	//Set object rotation
+	void SetRotation(MathLib::Vectors::Vector3D rotation);
 
 	//Update object position and rotation
 	void UpdatePosRot(MathLib::Vectors::Vector3D force,

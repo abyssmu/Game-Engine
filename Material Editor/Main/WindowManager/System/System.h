@@ -11,12 +11,13 @@ It contains the game loop and manages communication between cores.
 //Includes
 #include <Windows.h>
 #include <stdio.h>
+#include <string>
 #include <tchar.h>
 
 //Class Includes
 #include "Camera\Camera.h"
 #include "Color\Color.h"
-#include "Entity\Entity.h"
+#include "Objects\Entity\Entity.h"
 #include "Graphics\Graphics.h"
 #include "Input\Input.h"
 
@@ -55,8 +56,17 @@ public:
 	//Reset key states
 	void ResetKeys();
 
+	//Update entity model
+	void UpdateModel(std::string modelName);
+
 private:
 	////////Main Functions
+	//Create full model filename string
+	void CreateFilenameString(std::string& filename);
+
+	//Check new model position
+	void CheckPosition();
+
 	//Check window resolution changes
 	bool CheckResizeWindow();
 
@@ -87,6 +97,9 @@ private:
 	void UpdateCamera(MathLib::Vectors::Vector3D force,
 					MathLib::Vectors::Vector3D torque);
 
+	//Update entity model
+	void UpdateEntity();
+
 	////////Main Variables
 	HWND m_hWnd;
 
@@ -99,4 +112,5 @@ private:
 	////////Utility Variables
 	int m_screenWidth, m_screenHeight;
 	bool m_mouseActive, m_mouseGo;
+	std::string m_modelName;
 };

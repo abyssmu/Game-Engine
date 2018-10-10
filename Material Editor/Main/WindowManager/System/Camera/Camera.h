@@ -9,7 +9,7 @@ calculates the view matrix with DirectX functions.
 #include <DirectXMath.h>
 
 //Class Includes
-#include "..\Entity\Entity.h"
+#include "..\Objects\Entity\Entity.h"
 
 class Camera : public Entity
 {

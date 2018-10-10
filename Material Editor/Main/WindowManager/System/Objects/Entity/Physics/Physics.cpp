@@ -15,18 +15,6 @@ Physics::Physics(const Physics& other)
 Physics::~Physics()
 {}
 
-//Set object position
-void Physics::SetPosition(MathLib::Vectors::Vector3D position)
-{
-	m_position = position;
-}
-
-//Set object rotation
-void Physics::SetRotation(MathLib::Vectors::Vector3D rotation)
-{
-	m_rotation = rotation;
-}
-
 //Get object position
 MathLib::Vectors::Vector3D Physics::GetPosition()
 {
@@ -37,6 +25,18 @@ MathLib::Vectors::Vector3D Physics::GetPosition()
 MathLib::Vectors::Vector3D Physics::GetRotation()
 {
 	return m_rotation;
+}
+
+//Set object position
+void Physics::SetPosition(MathLib::Vectors::Vector3D position)
+{
+	m_position = position;
+}
+
+//Set object rotation
+void Physics::SetRotation(MathLib::Vectors::Vector3D rotation)
+{
+	m_rotation = rotation;
 }
 
 //Update object position and rotation

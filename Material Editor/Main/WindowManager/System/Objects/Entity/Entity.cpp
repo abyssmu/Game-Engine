@@ -56,8 +56,14 @@ int Entity::GetNumMeshes()
 	return m_model->GetNumMeshes();
 }
 
+//Set physics on or off
+void Entity::SetPhysics(bool onOff)
+{
+	physicsOnOff = onOff;
+}
+
 //Get model information
 AllModelInfo* Entity::GetModelInfo(int i)
 {
-	return m_model->GetModelInfo(GetPosition(), i);
+	return m_model->GetModelInfo(GetPosition(), GetRotation(), i);
 }

@@ -20,6 +20,7 @@ System::System()
 	m_screenWidth = 0;
 	m_mouseActive = 0;
 	m_mouseGo = 0;
+	m_modelName = "Sphere";
 }
 
 //Default copy constructor
@@ -173,9 +174,57 @@ void System::ResetKeys()
 	m_input->ResetKeys();
 }
 
+//Update entity model
+void System::UpdateModel(std::string modelName)
+{
+	m_modelName = modelName;
+
+	UpdateEntity();
+}
+
 /////////////////////////////////////////////////////////
 //Private
 /////////////////////////////////////////////////////////
+
+//Create full model filename string
+void System::CreateFilenameString(std::string& filename)
+{
+	std::string post = ".dae";
+	std::string pre = "./Models/";
+
+	filename = pre + m_modelName + post;
+}
+
+//Check new model position
+void System::CheckPosition()
+{
+	switch (m_modelName[0])
+	{
+		//Cube
+	case 'C':
+		//Set position
+		m_entities->SetPosition(MathLib::Vectors::Vector3D(0.0, 0.0, 2.0));
+		return;
+
+		//Human male
+	case 'H':
+		//Set position
+		m_entities->SetPosition(MathLib::Vectors::Vector3D(0.0, 0.0, 5.0));
+
+		//Set rotation
+		m_entities->SetRotation(MathLib::Vectors::Vector3D(0.0, MathLib::PI, 0.0));
+		return;
+
+		//Monkey
+	case 'M':
+		//Set position
+		m_entities->SetPosition(MathLib::Vectors::Vector3D(0.0, 0.0, 2.0));
+
+		//Set rotation
+		m_entities->SetRotation(MathLib::Vectors::Vector3D(-MathLib::PI / 2, MathLib::PI, 0.0));
+		return;
+	}
+}
 
 //Check window resolution changes
 bool System::CheckResizeWindow()
@@ -223,7 +272,7 @@ bool System::Frame()
 //Initialize camera
 bool System::InitializeCamera()
 {
-	MathLib::Vectors::Vector3D position(0.0, 0.0, -10.0);
+	MathLib::Vectors::Vector3D position(0.0, 0.0, -3.0);
 	MathLib::Vectors::Vector3D rotation(0.0, 0.0, 0.0);
 
 	//Create and initialize camera
@@ -244,18 +293,23 @@ bool System::InitializeCamera()
 //Initialize entities
 bool System::InitializeEntity()
 {
+	//Create full model filename string
+	std::string filename = "";
+
+	CreateFilenameString(filename);
+
 	//Create and initialize entities
 	m_entities = new Entity;
 	if (!m_entities)
 	{
 		return false;
 	}
-
-	MathLib::Vectors::Vector3D position(5.0, 0.0, 10.0);
+	
+	MathLib::Vectors::Vector3D position(0.0, 0.0, 0.0);
 	MathLib::Vectors::Vector3D rotation(0.0, 0.0, 0.0);
 	
 	if (!m_entities->Initialize(m_graphics->GetDevice(),
-		position, rotation, (char*)"./Models/human.dae"))
+		position, rotation, (char*)filename.c_str()))
 	{
 		return false;
 	}
@@ -346,4 +400,22 @@ void System::UpdateCamera(MathLib::Vectors::Vector3D force,
 	//Set camera current view matrix
 	m_camera->UpdatePosRot(force, torque);
 	m_camera->Render();
+}
+
+//Update entity model
+void System::UpdateEntity()
+{
+	//Shutdown entity
+	if (m_entities)
+	{
+		m_entities->Shutdown();
+		delete m_entities;
+		m_entities = 0;
+	}
+
+	//Initialize entities
+	InitializeEntity();
+
+	//Check new model position
+	CheckPosition();
 }
