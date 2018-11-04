@@ -22,11 +22,6 @@
     <ClCompile Include="Main\Main.cpp" />
     <ClCompile Include="Main\WindowManager\System\Camera\Camera.cpp" />
     <ClCompile Include="Main\WindowManager\System\Color\Color.cpp" />
-    <ClCompile Include="Main\WindowManager\System\Entity\Entity.cpp" />
-    <ClCompile Include="Main\WindowManager\System\Entity\Model\AssimpLoader\AssimpLoader.cpp" />
-    <ClCompile Include="Main\WindowManager\System\Entity\Model\Mesh\Mesh.cpp" />
-    <ClCompile Include="Main\WindowManager\System\Entity\Model\Model.cpp" />
-    <ClCompile Include="Main\WindowManager\System\Entity\Physics\Physics.cpp" />
     <ClCompile Include="Main\WindowManager\System\Graphics\ColorShader\ColorShader.cpp" />
     <ClCompile Include="Main\WindowManager\System\Graphics\DirectX\DirectX11.cpp" />
     <ClCompile Include="Main\WindowManager\System\Graphics\Graphics.cpp" />
@@ -36,18 +31,18 @@
     <ClCompile Include="Main\WindowManager\System\Math\Quaternions.cpp" />
     <ClCompile Include="Main\WindowManager\System\Math\RNG\RNG.cpp" />
     <ClCompile Include="Main\WindowManager\System\Math\Vectors.cpp" />
+    <ClCompile Include="Main\WindowManager\System\Objects\Entity\Entity.cpp" />
+    <ClCompile Include="Main\WindowManager\System\Objects\Entity\Model\AssimpLoader\AssimpLoader.cpp" />
+    <ClCompile Include="Main\WindowManager\System\Objects\Entity\Model\Mesh\Mesh.cpp" />
+    <ClCompile Include="Main\WindowManager\System\Objects\Entity\Model\Model.cpp" />
+    <ClCompile Include="Main\WindowManager\System\Objects\Entity\Physics\Physics.cpp" />
     <ClCompile Include="Main\WindowManager\System\System.cpp" />
     <ClCompile Include="Main\WindowManager\WindowManager.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Main\WindowManager\MenuResource.h" />
     <ClInclude Include="Main\WindowManager\System\Camera\Camera.h" />
     <ClInclude Include="Main\WindowManager\System\Color\Color.h" />
-    <ClInclude Include="Main\WindowManager\System\Entity\Entity.h" />
-    <ClInclude Include="Main\WindowManager\System\Entity\Model\AssimpLoader\AssimpLoader.h" />
-    <ClInclude Include="Main\WindowManager\System\Entity\Model\Mesh\Mesh.h" />
-    <ClInclude Include="Main\WindowManager\System\Entity\Model\Model.h" />
-    <ClInclude Include="Main\WindowManager\System\Entity\Model\ModelInfo.h" />
-    <ClInclude Include="Main\WindowManager\System\Entity\Physics\Physics.h" />
     <ClInclude Include="Main\WindowManager\System\Graphics\ColorShader\ColorShader.h" />
     <ClInclude Include="Main\WindowManager\System\Graphics\DirectX\DirectX11.h" />
     <ClInclude Include="Main\WindowManager\System\Graphics\Graphics.h" />
@@ -55,6 +50,12 @@
     <ClInclude Include="Main\WindowManager\System\Input\Keys.h" />
     <ClInclude Include="Main\WindowManager\System\Math\MathLib.h" />
     <ClInclude Include="Main\WindowManager\System\Math\RNG\RNG.h" />
+    <ClInclude Include="Main\WindowManager\System\Objects\Entity\Entity.h" />
+    <ClInclude Include="Main\WindowManager\System\Objects\Entity\Model\AssimpLoader\AssimpLoader.h" />
+    <ClInclude Include="Main\WindowManager\System\Objects\Entity\Model\Mesh\Mesh.h" />
+    <ClInclude Include="Main\WindowManager\System\Objects\Entity\Model\Model.h" />
+    <ClInclude Include="Main\WindowManager\System\Objects\Entity\Model\ModelInfo.h" />
+    <ClInclude Include="Main\WindowManager\System\Objects\Entity\Physics\Physics.h" />
     <ClInclude Include="Main\WindowManager\System\System.h" />
     <ClInclude Include="Main\WindowManager\WindowManager.h" />
   </ItemGroup>
@@ -67,6 +68,9 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </FxCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Main\WindowManager\MenuResource.rc" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
@@ -120,12 +124,12 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>$(ProjectDir)\Main\WindowManager\System\Entity\Model\AssimpLoader\Directories\include;$(IncludePath)</IncludePath>
-    <LibraryPath>$(ProjectDir)\Main\WindowManager\System\Entity\Model\AssimpLoader\Directories\lib64;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(ProjectDir)\Main\WindowManager\System\Objects\Entity\Model\AssimpLoader\Directories\include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(ProjectDir)\Main\WindowManager\System\Objects\Entity\Model\AssimpLoader\Directories\lib64;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <IncludePath>$(ProjectDir)\Main\WindowManager\System\Entity\Model\AssimpLoader\Directories\include;$(IncludePath)</IncludePath>
-    <LibraryPath>$(ProjectDir)\Main\WindowManager\System\Entity\Model\AssimpLoader\Directories\lib64;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(ProjectDir)\Main\WindowManager\System\Objects\Entity\Model\AssimpLoader\Directories\include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(ProjectDir)\Main\WindowManager\System\Objects\Entity\Model\AssimpLoader\Directories\lib64;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>

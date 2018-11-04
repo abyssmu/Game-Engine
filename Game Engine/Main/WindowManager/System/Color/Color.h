@@ -16,87 +16,49 @@ namespace Colors
 {
 	struct ColorVec
 	{
-		double r, g, b, a;
+		double r = 0.0, g = 0.0;
+		double b = 0.0, a = 0.0;
 	};
 
-	///////Color Vector
 	class Color
 	{
-	public:
-		//Default constructor
-		Color();
-		
-		//Copy constructor
-		Color(const Color& other);
+	public:		
+		Color(
+			const Color& other);
+		Color(
+			double r,
+			double g,
+			double b,
+			double a);
 
-		//Unit constructor
-		Color(double r, double g, double b, double a);
-
-		//Default destructor
-		~Color();
-
-		////////Math Operations
 		//Brighten or dim color by amt
-		void Brightness(double amt);
+		void Brightness(
+			double amt);
+		void Add(
+			Color B);
+		bool Compare(
+			Color B);
+		void Divide(
+			Color B);
+		void Equal(
+			Color B);
+		void Multiply(
+			Color B);
+		void Subtract(
+			Color B);
 
-		////////Math Functions
-		//Add colors
-		//A(this) + B
-		void Add(Color B);
-
-		//Compare colors
-		//A(this) == B
-		bool Compare(Color B);
-
-		//Divide colors
-		//A(this) / B
-		void Divide(Color B);
-
-		//Equalize colors
-		//A(this) = B
-		void Equal(Color B);
-
-		//Multiply colors
-		//A(this) * B
-		void Multiply(Color B);
-
-		//Subtract colors
-		//A(this) - B
-		void Subtract(Color B);
-
-		////////Utility Functions
 		//Check color values for greater than 1 or less than 0
 		void checkValues();
-
-		////////Main Variables
-		ColorVec color;
+		ColorVec color = { 0.0, 0.0, 0.0, 0.0 };
 	};
 
-	////////Color Constants
-	//Return black
 	Color Black();
-
-	//Return blue
 	Color Blue();
-
-	//Return cyan
 	Color Cyan();
-
-	//Return green
 	Color Green();
-
-	//Return grey
 	Color Grey();
-
-	//Return magenta
 	Color Magenta();
-
-	//Return red
 	Color Red();
-
-	//Return white
 	Color White();
-
-	//Return yellow
 	Color Yellow();
 }

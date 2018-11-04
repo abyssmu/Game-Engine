@@ -7,57 +7,24 @@ An enumeration is used to store the keys as known alphabet characters.
 
 #pragma once
 
-//Includes
-#include <Windows.h>
+#include "../Math/MathLib.h"
 
-//Class Includes
-#include "..\Math\MathLib.h"
+#include <Windows.h>
 
 class Input
 {
 public:
-	//Default constructor
-	Input();
-	
-	//Default copy constructor
-	Input(const Input& other);
-
-	//Default destructor
-	~Input();
-
-	////////Main Functions
-	//Initialize all key states
 	void Initialize();
-
-	////////Utility Functions
-	//Query current key state
 	bool IsKeyDown(int key);
-
-	//Capture down state of key
 	void KeyDown(int key);
-	
-	//Capture up state of key
 	void KeyUp(int key);
-
-	//Capture character keys
 	void ProcessCharacter(MathLib::Vectors::Vector3D& force);
-
-	//Capture movement keys
 	void ProcessMovement(MathLib::Vectors::Vector3D& force);
-
-	//Capture mouse input
 	void ProcessMouse(MathLib::Vectors::Vector3D& torque, bool& go);
-	
-	//Capture quit key
 	bool ProcessQuit();
-
-	//Reset key states
 	void ResetKeys();
 
 private:
-	////////Main Functions
-
-	////////Main Variables
-	bool m_keys[256];
-	POINT mouseP, prevMouseP;
+	bool m_keys[256] = { 0 };
+	POINT mouseP = { 0, 0 }, prevMouseP = { 0, 0 };
 };

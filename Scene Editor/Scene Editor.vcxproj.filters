@@ -16,21 +16,6 @@
     <Filter Include="Main\WindowManager\System\Color">
       <UniqueIdentifier>{84780acf-5f99-47b7-85b7-6c22abe4bb71}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Main\WindowManager\System\Entity">
-      <UniqueIdentifier>{8d5bc236-36fc-4992-aca5-94109bf74e16}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Main\WindowManager\System\Entity\Model">
-      <UniqueIdentifier>{b74df433-2f07-44f4-bf5f-c6c446a4fb68}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Main\WindowManager\System\Entity\Model\AssimpLoader">
-      <UniqueIdentifier>{a3a1fe28-cb15-4cdb-9aa2-9988f21d2e18}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Main\WindowManager\System\Entity\Model\Mesh">
-      <UniqueIdentifier>{278854bb-d6a2-41d5-99a5-ef45d8140e32}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Main\WindowManager\System\Entity\Physics">
-      <UniqueIdentifier>{2705c8ec-c912-4b4d-a77a-42bc00b52ed8}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Main\WindowManager\System\Graphics">
       <UniqueIdentifier>{a919200d-7ad4-406b-98f3-a1f776876ddd}</UniqueIdentifier>
     </Filter>
@@ -49,6 +34,57 @@
     <Filter Include="Main\WindowManager\System\Math\RNG">
       <UniqueIdentifier>{9d609ded-6bed-4b5e-b8f9-0097e610f05c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Main\WindowManager\System\Objects">
+      <UniqueIdentifier>{5608cf98-81cb-41e5-8af7-6d8148ffa13a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Main\WindowManager\System\Objects\Entity">
+      <UniqueIdentifier>{02142593-ea99-453b-87e8-beef09c6d4c9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Main\WindowManager\System\Objects\Entity\Model">
+      <UniqueIdentifier>{9cc0a88b-f8b9-4c36-be95-caeb724b8ca9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Main\WindowManager\System\Objects\Entity\Model\AssimpLoader">
+      <UniqueIdentifier>{b2361b46-288b-4910-991f-6142b5f32a6a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Main\WindowManager\System\Objects\Entity\Model\Mesh">
+      <UniqueIdentifier>{4929c9d6-67db-4dba-ab08-e62c96af6cfd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Main\WindowManager\System\Objects\Entity\Physics">
+      <UniqueIdentifier>{3dbe651f-4eca-4f6c-b60e-c230401cf9b1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Main\WindowManager\System\Objects\Kinetics">
+      <UniqueIdentifier>{82090e33-ba5a-4e46-8269-89d88032fdfd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Main\WindowManager\System\Objects\Kinetics\Character">
+      <UniqueIdentifier>{c5e7cc21-9058-44bb-9d2f-2b9b0272eaf9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Main\WindowManager\System\Objects\Kinetics\Kinetic">
+      <UniqueIdentifier>{cdfa09ed-0123-44fa-a504-c1c125ed6f2a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Main\WindowManager\System\Objects\Statics">
+      <UniqueIdentifier>{02e14c0c-301d-4945-88a4-5077a515d099}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Main\WindowManager\System\Objects\Statics\Building">
+      <UniqueIdentifier>{e423bb20-8c3b-48e4-a898-344d6c376fb0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Main\WindowManager\System\Objects\Statics\Foliage">
+      <UniqueIdentifier>{fd619511-f71d-4094-a4aa-4d7514bdb6f5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Main\WindowManager\System\Objects\Statics\Landscape">
+      <UniqueIdentifier>{2558db11-fe06-42ba-8c8d-5730cf9399c9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Main\WindowManager\System\Objects\Statics\Light">
+      <UniqueIdentifier>{182bbfa6-2904-4a34-97e9-b9346deb3a49}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Main\WindowManager\System\Objects\Statics\Liquid">
+      <UniqueIdentifier>{d0c62a79-a09f-4ff3-9cce-b64299ac8b92}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Main\WindowManager\System\Objects\Statics\Skybox">
+      <UniqueIdentifier>{ac80435d-f1bf-4719-8815-73d2688e6e93}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Main\WindowManager\System\Objects\Statics\Static">
+      <UniqueIdentifier>{b368f1b0-2732-4589-809a-167286aa4588}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main\Main.cpp">
@@ -65,21 +101,6 @@
     </ClCompile>
     <ClCompile Include="Main\WindowManager\System\Color\Color.cpp">
       <Filter>Main\WindowManager\System\Color</Filter>
-    </ClCompile>
-    <ClCompile Include="Main\WindowManager\System\Entity\Entity.cpp">
-      <Filter>Main\WindowManager\System\Entity</Filter>
-    </ClCompile>
-    <ClCompile Include="Main\WindowManager\System\Entity\Model\Model.cpp">
-      <Filter>Main\WindowManager\System\Entity\Model</Filter>
-    </ClCompile>
-    <ClCompile Include="Main\WindowManager\System\Entity\Model\AssimpLoader\AssimpLoader.cpp">
-      <Filter>Main\WindowManager\System\Entity\Model\AssimpLoader</Filter>
-    </ClCompile>
-    <ClCompile Include="Main\WindowManager\System\Entity\Model\Mesh\Mesh.cpp">
-      <Filter>Main\WindowManager\System\Entity\Model\Mesh</Filter>
-    </ClCompile>
-    <ClCompile Include="Main\WindowManager\System\Entity\Physics\Physics.cpp">
-      <Filter>Main\WindowManager\System\Entity\Physics</Filter>
     </ClCompile>
     <ClCompile Include="Main\WindowManager\System\Graphics\Graphics.cpp">
       <Filter>Main\WindowManager\System\Graphics</Filter>
@@ -108,6 +129,21 @@
     <ClCompile Include="Main\WindowManager\System\Math\RNG\RNG.cpp">
       <Filter>Main\WindowManager\System\Math\RNG</Filter>
     </ClCompile>
+    <ClCompile Include="Main\WindowManager\System\Objects\Entity\Model\AssimpLoader\AssimpLoader.cpp">
+      <Filter>Main\WindowManager\System\Objects\Entity\Model\AssimpLoader</Filter>
+    </ClCompile>
+    <ClCompile Include="Main\WindowManager\System\Objects\Entity\Model\Mesh\Mesh.cpp">
+      <Filter>Main\WindowManager\System\Objects\Entity\Model\Mesh</Filter>
+    </ClCompile>
+    <ClCompile Include="Main\WindowManager\System\Objects\Entity\Model\Model.cpp">
+      <Filter>Main\WindowManager\System\Objects\Entity\Model</Filter>
+    </ClCompile>
+    <ClCompile Include="Main\WindowManager\System\Objects\Entity\Entity.cpp">
+      <Filter>Main\WindowManager\System\Objects\Entity</Filter>
+    </ClCompile>
+    <ClCompile Include="Main\WindowManager\System\Objects\Entity\Physics\Physics.cpp">
+      <Filter>Main\WindowManager\System\Objects\Entity\Physics</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Main\WindowManager\WindowManager.h">
@@ -121,24 +157,6 @@
     </ClInclude>
     <ClInclude Include="Main\WindowManager\System\Color\Color.h">
       <Filter>Main\WindowManager\System\Color</Filter>
-    </ClInclude>
-    <ClInclude Include="Main\WindowManager\System\Entity\Entity.h">
-      <Filter>Main\WindowManager\System\Entity</Filter>
-    </ClInclude>
-    <ClInclude Include="Main\WindowManager\System\Entity\Model\Model.h">
-      <Filter>Main\WindowManager\System\Entity\Model</Filter>
-    </ClInclude>
-    <ClInclude Include="Main\WindowManager\System\Entity\Model\ModelInfo.h">
-      <Filter>Main\WindowManager\System\Entity\Model</Filter>
-    </ClInclude>
-    <ClInclude Include="Main\WindowManager\System\Entity\Model\AssimpLoader\AssimpLoader.h">
-      <Filter>Main\WindowManager\System\Entity\Model\AssimpLoader</Filter>
-    </ClInclude>
-    <ClInclude Include="Main\WindowManager\System\Entity\Model\Mesh\Mesh.h">
-      <Filter>Main\WindowManager\System\Entity\Model\Mesh</Filter>
-    </ClInclude>
-    <ClInclude Include="Main\WindowManager\System\Entity\Physics\Physics.h">
-      <Filter>Main\WindowManager\System\Entity\Physics</Filter>
     </ClInclude>
     <ClInclude Include="Main\WindowManager\System\Graphics\Graphics.h">
       <Filter>Main\WindowManager\System\Graphics</Filter>
@@ -161,6 +179,27 @@
     <ClInclude Include="Main\WindowManager\System\Math\RNG\RNG.h">
       <Filter>Main\WindowManager\System\Math\RNG</Filter>
     </ClInclude>
+    <ClInclude Include="Main\WindowManager\System\Objects\Entity\Model\AssimpLoader\AssimpLoader.h">
+      <Filter>Main\WindowManager\System\Objects\Entity\Model\AssimpLoader</Filter>
+    </ClInclude>
+    <ClInclude Include="Main\WindowManager\System\Objects\Entity\Model\Mesh\Mesh.h">
+      <Filter>Main\WindowManager\System\Objects\Entity\Model\Mesh</Filter>
+    </ClInclude>
+    <ClInclude Include="Main\WindowManager\System\Objects\Entity\Model\Model.h">
+      <Filter>Main\WindowManager\System\Objects\Entity\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="Main\WindowManager\System\Objects\Entity\Model\ModelInfo.h">
+      <Filter>Main\WindowManager\System\Objects\Entity\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="Main\WindowManager\System\Objects\Entity\Entity.h">
+      <Filter>Main\WindowManager\System\Objects\Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="Main\WindowManager\System\Objects\Entity\Physics\Physics.h">
+      <Filter>Main\WindowManager\System\Objects\Entity\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="Main\WindowManager\MenuResource.h">
+      <Filter>Main\WindowManager</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Main\WindowManager\System\Graphics\ColorShader\ColorShader_ps.hlsl">
@@ -169,5 +208,10 @@
     <FxCompile Include="Main\WindowManager\System\Graphics\ColorShader\ColorShader_vs.hlsl">
       <Filter>Main\WindowManager\System\Graphics\ColorShader</Filter>
     </FxCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Main\WindowManager\MenuResource.rc">
+      <Filter>Main\WindowManager</Filter>
+    </ResourceCompile>
   </ItemGroup>
 </Project>

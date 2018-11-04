@@ -5,38 +5,21 @@ calculates the view matrix with DirectX functions.
 
 #pragma once
 
-//Includes
-#include <DirectXMath.h>
-
-//Class Includes
 #include "..\Objects\Entity\Entity.h"
+
+#include <DirectXMath.h>
 
 class Camera : public Entity
 {
 public:
-	//Default constructor
-	Camera();
+	bool Initialize(
+		MathLib::Vectors::Vector3D position,
+		MathLib::Vectors::Vector3D rotation);
 
-	//Default copy constructor
-	Camera(const Camera& other);
-
-	//Default destructor
-	~Camera();
-
-	////////Main Functions
-	//Initialize camera settings
-	bool Initialize(MathLib::Vectors::Vector3D position,
-					MathLib::Vectors::Vector3D rotation);
-
-	//Render camera
-	//Calculate view matrix
+	//Render camera by calculating view matrix
 	void Render();
-
-	////////Class Functions
-	//Get view matrix
 	DirectX::XMMATRIX GetViewMatrix();
 
 private:
-	////////Main Variables
-	DirectX::XMMATRIX m_viewMatrix;
+	DirectX::XMMATRIX m_viewMatrix = DirectX::XMMatrixIdentity();
 };

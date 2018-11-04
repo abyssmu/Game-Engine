@@ -1,20 +1,8 @@
 #include "Camera.h"
 
-//Default constructor
-Camera::Camera()
-{}
-
-//Default copy constructor
-Camera::Camera(const Camera& other)
-{}
-
-//Default destructor
-Camera::~Camera()
-{}
-
-//Initialize camera settings
-bool Camera::Initialize(MathLib::Vectors::Vector3D position,
-						MathLib::Vectors::Vector3D rotation)
+bool Camera::Initialize(
+	MathLib::Vectors::Vector3D position,
+	MathLib::Vectors::Vector3D rotation)
 {
 	SetPosition(position);
 	SetRotation(rotation);
@@ -22,32 +10,20 @@ bool Camera::Initialize(MathLib::Vectors::Vector3D position,
 	return true;
 }
 
-//Render camera
-//Calculate view matrix
+//Render camera by calculating view matrix
 void Camera::Render()
-{
-	DirectX::XMVECTOR up, position, lookAt;
-	DirectX::XMMATRIX rotationMatrix;
-	
-	double yaw, pitch, roll;
-
-	//Set up vector
-	up = DirectX::XMVectorSet(0.0, 1.0, 0.0, 1.0);
-
-	//Set look at default
-	lookAt = DirectX::XMVectorSet(0.0, 0.0, 1.0, 1.0);
-
-	//Set position
-	position = DirectX::XMVectorSet((float)GetPosition().x, (float)GetPosition().y,
+{	
+	auto up = DirectX::XMVectorSet(0.0, 1.0, 0.0, 1.0);
+	auto lookAt = DirectX::XMVectorSet(0.0, 0.0, 1.0, 1.0);
+	auto position = DirectX::XMVectorSet((float)GetPosition().x, (float)GetPosition().y,
 		(float)GetPosition().z, 1.0f);
 
-	//Set rotation
-	pitch = GetRotation().x * 0.0174532925;
-	yaw = GetRotation().y * 0.0174532925;
-	roll = GetRotation().z * 0.0174532925;
+	//Calculate rotation
+	auto pitch = GetRotation().x * 0.0174532925;
+	auto yaw = GetRotation().y * 0.0174532925;
+	auto roll = GetRotation().z * 0.0174532925;
 
-	//Create rotation matrix
-	rotationMatrix = DirectX::XMMatrixRotationRollPitchYaw((float)pitch,
+	auto rotationMatrix = DirectX::XMMatrixRotationRollPitchYaw((float)pitch,
 		(float)yaw, (float)roll);
 
 	//Transform look at and up by rotation
@@ -60,11 +36,9 @@ void Camera::Render()
 	position = DirectX::XMVectorAdd(position,
 		DirectX::XMVectorSet(0.0f, 0.0f, 0.0f, 1.0f));
 
-	//Create view matrix
 	m_viewMatrix = DirectX::XMMatrixLookAtLH(position, lookAt, up);
 }
 
-//Get view matrix
 DirectX::XMMATRIX Camera::GetViewMatrix()
 {
 	return m_viewMatrix;
