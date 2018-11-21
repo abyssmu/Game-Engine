@@ -82,7 +82,6 @@ Routine:
 Develop single feature from to do list
 Code check for improvements (Depth first has been easiest)
 	Algorithms
-	Comment every function
 	Promote what can be to a seperate function to keep functions small (try for < 100 lines)
 	Edit class comments as needed
 	Make sure every class function declaration has variable names to aid in identifying incoming variables
