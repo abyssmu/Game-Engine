@@ -17,38 +17,73 @@ It is used to initialize and maintain communications with DirectX
 class DirectX11
 {
 public:
-	bool Initialize(int screenHeight, int screenWidth, bool vsync,
-		HWND hwnd, double screenDepth, double screenNear);
-	bool Resize(int& screenHeight, int& screenWidth, HWND hwnd, double screenDepth,
-				double screenNear);
+	bool Initialize(
+		int& screenHeight,
+		int& screenWidth,
+		bool vsync,
+		HWND& hwnd,
+		double screenDepth,
+		double screenNear);
+	bool Resize(
+		int& screenHeight,
+		int& screenWidth,
+		HWND& hwnd,
+		double screenDepth,
+		double screenNear);
 	void Shutdown();
 
-	void BeginScene(Colors::Color bgcolor);
+	void BeginScene(
+		Colors::Color& bgcolor);
 	void EndScene();
 	DirectX::XMMATRIX GetOrthoMatrix();
 	DirectX::XMMATRIX GetProjectionMatrix();
-	void GetVideoCardInfo(char* cardName, int& memory);
+	void GetVideoCardInfo(
+		char* cardName,
+		int& memory);
 	DirectX::XMMATRIX GetWorldMatrix();
 
 	ID3D11Device* GetDevice();
 	ID3D11DeviceContext* GetDeviceContext();
 
 private:
-	bool CreateAdapterDesc(int screenHeight, int screenWidth,
-						unsigned int& numerator, unsigned int& denominator);
-	bool CreateDepthBuffer(int screenHeight, int screenWidth);
+	bool CreateAdapterDesc(
+		int& screenHeight,
+		int& screenWidth,
+		unsigned int& numerator,
+		unsigned int& denominator);
+	bool CreateDepthBuffer(
+		int& screenHeight,
+		int& screenWidth);
 	bool CreateDepthStencilState();
 	bool CreateDepthStencilView();
-	bool CreateMatrices(int screenHeight, int screenWidth, double fieldOfView,
-						double screenAspect, double screenDepth, double screenNear);
+	bool CreateMatrices(
+		int& screenHeight,
+		int& screenWidth,
+		double& fieldOfView,
+		double& screenAspect,
+		double& screenDepth,
+		double& screenNear);
 	bool CreateRasterDesc();
-	bool CreateSwapChain(int screenHeight, int screenWidth,	unsigned int numerator,
-						unsigned int denominator, HWND hwnd);
-	bool CreateViewport(int screenHeight, int screenWidth, double& fieldOfView,
-						double& screenAspect);
-	bool InitializeDirectX(int screenHeight, int screenWidth, HWND hwnd);
-	bool InitializeMatrices(int screenHeight, int screenWidth, double screenDepth,
-							double screenNear);
+	bool CreateSwapChain(
+		int& screenHeight,
+		int& screenWidth,
+		unsigned int& numerator,
+		unsigned int& denominator,
+		HWND& hwnd);
+	bool CreateViewport(
+		int& screenHeight,
+		int& screenWidth,
+		double& fieldOfView,
+		double& screenAspect);
+	bool InitializeDirectX(
+		int& screenHeight,
+		int& screenWidth,
+		HWND& hwnd);
+	bool InitializeMatrices(
+		int& screenHeight,
+		int& screenWidth,
+		double& screenDepth,
+		double& screenNear);
 	bool RecreateRenderTarget();
 
 	char m_videoCardDescription[128] = { 0 };

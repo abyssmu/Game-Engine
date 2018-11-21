@@ -12,6 +12,7 @@ It contains the game loop and manages communication between cores.
 #include "Objects\Entity\Entity.h"
 #include "Graphics\Graphics.h"
 #include "Input\Input.h"
+#include "Objects/Light/Directional/Directional.h"
 
 #include <Windows.h>
 #include <stdio.h>
@@ -22,12 +23,11 @@ class System
 {
 public:
 	bool Initialize(
-		int screenHeight,
-		int screenWidth,
-		HWND hwnd);
+		int& screenHeight,
+		int& screenWidth,
+		HWND& hwnd);
 	void Shutdown();
-	void Run(
-		bool& minimized);
+	void Run();
 
 	void KeyDown(
 		unsigned int key);
@@ -36,6 +36,8 @@ public:
 	void MouseActive(
 		bool active);
 	void ResetKeys();
+	void SetMinimized(
+		bool& min);
 	void UpdateModel(
 		std::string modelName);
 
@@ -49,24 +51,26 @@ private:
 	bool InitializeEntity();
 	bool InitializeGraphics();
 	bool InitializeInput();
+	bool InitializeLight();
 	bool ProcessGraphics();
 	bool ProcessInput(
 		MathLib::Vectors::Vector3D& force, 
 		MathLib::Vectors::Vector3D& forceC,
 		MathLib::Vectors::Vector3D& torque);
 	void UpdateCamera(
-		MathLib::Vectors::Vector3D force,
-		MathLib::Vectors::Vector3D torque);
+		MathLib::Vectors::Vector3D& force,
+		MathLib::Vectors::Vector3D& torque);
 	void UpdateEntity();
 
 	HWND m_hWnd = HWND(0);
 
 	Camera* m_camera = 0;
+	Directional* m_directionalLight = 0;
 	Entity* m_entities = 0;
 	Graphics* m_graphics = 0;
 	Input* m_input = 0;
 	
 	int m_screenWidth = 0, m_screenHeight = 0;
-	bool m_mouseActive = false, m_mouseGo = false;
+	bool m_mouseActive = false, m_mouseGo = false, m_minimized = false;
 	std::string m_modelName = "Sphere";
 };

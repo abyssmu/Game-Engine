@@ -27,6 +27,7 @@ public:
 
 	AllModelInfo* GetModelInfo(
 		MathLib::Vectors::Vector3D position,
+		MathLib::Vectors::Vector3D rotation,
 		int i);
 
 private:

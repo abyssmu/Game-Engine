@@ -15,12 +15,19 @@ class Input
 {
 public:
 	void Initialize();
-	bool IsKeyDown(int key);
-	void KeyDown(int key);
-	void KeyUp(int key);
-	void ProcessCharacter(MathLib::Vectors::Vector3D& force);
-	void ProcessMovement(MathLib::Vectors::Vector3D& force);
-	void ProcessMouse(MathLib::Vectors::Vector3D& torque, bool& go);
+	bool IsKeyDown(
+		int& key);
+	void KeyDown(
+		int key);
+	void KeyUp(
+		int key);
+	void ProcessCharacter(
+		MathLib::Vectors::Vector3D& force);
+	void ProcessMovement(
+		MathLib::Vectors::Vector3D& force);
+	void ProcessMouse(
+		MathLib::Vectors::Vector3D& torque,
+		bool& go);
 	bool ProcessQuit();
 	void ResetKeys();
 

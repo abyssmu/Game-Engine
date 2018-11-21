@@ -33,19 +33,19 @@ namespace Colors
 
 		//Brighten or dim color by amt
 		void Brightness(
-			double amt);
+			double& amt);
 		void Add(
-			Color B);
+			Color& B);
 		bool Compare(
-			Color B);
+			Color& B);
 		void Divide(
-			Color B);
+			Color& B);
 		void Equal(
-			Color B);
+			Color& B);
 		void Multiply(
-			Color B);
+			Color& B);
 		void Subtract(
-			Color B);
+			Color& B);
 
 		//Check color values for greater than 1 or less than 0
 		void checkValues();

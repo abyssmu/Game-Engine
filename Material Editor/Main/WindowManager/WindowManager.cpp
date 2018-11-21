@@ -1,7 +1,5 @@
 #include "WindowManager.h"
 
-bool MINIMIZED = false;
-
 bool WindowManager::Initialize(
 	int screenHeight,
 	int screenWidth)
@@ -40,7 +38,7 @@ void WindowManager::Shutdown()
 
 void WindowManager::Run()
 {
-	m_system->Run(MINIMIZED);
+	m_system->Run();
 }
 
 bool WindowManager::CheckResizeWindow()
@@ -63,16 +61,31 @@ bool WindowManager::CheckResizeWindow()
 	return true;
 }
 
+bool WindowManager::CheckSystem()
+{
+	if (m_system)
+	{
+		return true;
+	}
+
+	return false;
+}
+
+HWND WindowManager::GetMain()
+{
+	return m_mainWindow;
+}
+
 HWND WindowManager::GetWorld()
 {
 	return m_worldWindow;
 }
 
 LRESULT CALLBACK WindowManager::MainMessageHandler(
-	HWND hwnd,
-	UINT umsg,
-	WPARAM wparam,
-	LPARAM lparam)
+	HWND& hwnd,
+	UINT& umsg,
+	WPARAM& wparam,
+	LPARAM& lparam)
 {
 	if (m_system)
 	{
@@ -82,8 +95,94 @@ LRESULT CALLBACK WindowManager::MainMessageHandler(
 
 	switch (umsg)
 	{
-	case 0:
-		return DefWindowProc(hwnd, umsg, wparam, lparam);
+	case WM_ACTIVATE:
+		switch LOWORD(wparam)
+		{
+		case WA_ACTIVE:
+			return 0;
+
+		case WA_CLICKACTIVE:
+
+			SendMessage(hwnd, WM_NCACTIVATE, TRUE, NULL);
+
+			return 0;
+
+		case WA_INACTIVE:
+			if ((HWND)lparam != hwnd)
+			{
+				SendMessage(hwnd, WM_NCACTIVATE, TRUE, NULL);
+
+				return 0;
+			};
+		}
+
+	case WM_CLOSE:
+		PostQuitMessage(0);
+
+		return 0;
+
+	case WM_COMMAND:
+	{
+		int iD = LOWORD(wparam);
+
+		switch (iD)
+		{
+			//File menu actions
+		case IDF_OPEN:
+			OpenFile();
+
+			return 0;
+
+		case IDF_EXIT:
+			PostQuitMessage(0);
+
+			return 0;
+
+			//Material menu actions
+
+			//Model menu cations
+		case IDMOD_CUBE:
+			m_system->UpdateModel("Cube");
+
+			return 0;
+
+		case IDMOD_HUMANMALE:
+			m_system->UpdateModel("HumanMale");
+
+			return 0;
+
+		case IDMOD_MONKEY:
+			m_system->UpdateModel("Monkey");
+
+			return 0;
+
+		case IDMOD_SPHERE:
+			m_system->UpdateModel("Sphere");
+
+			return 0;
+
+		default:
+			break;
+		}
+	}
+
+	case WM_SIZE:
+		if ((wparam == SIZE_MINIMIZED) && m_system && !m_minimized)
+		{
+			m_minimized = true;
+			m_system->SetMinimized(m_minimized);
+
+			return 0;
+		}
+		else if ((wparam == 0) && m_system && m_minimized)
+		{
+			m_minimized = false;
+			m_system->SetMinimized(m_minimized);
+
+			return 0;
+		}
+
+		return 0;
 
 	default:
 		return DefWindowProc(hwnd, umsg, wparam, lparam);
@@ -91,10 +190,10 @@ LRESULT CALLBACK WindowManager::MainMessageHandler(
 }
 
 LRESULT CALLBACK WindowManager::WorldMessageHandler(
-	HWND hwnd,
-	UINT umsg,
-	WPARAM wparam,
-	LPARAM lparam)
+	HWND& hwnd,
+	UINT& umsg,
+	WPARAM& wparam,
+	LPARAM& lparam)
 {
 	if (m_system)
 	{
@@ -105,20 +204,17 @@ LRESULT CALLBACK WindowManager::WorldMessageHandler(
 	{
 	case WM_KEYDOWN:
 		m_system->KeyDown((unsigned int)wparam);
+
 		return 0;
 
 	case WM_KEYUP:
 		m_system->KeyUp((unsigned int)wparam);
+
 		return 0;
 
 	default:
 		return DefWindowProc(hwnd, umsg, wparam, lparam);
 	}
-}
-
-bool WindowManager::PassGo()
-{
-	return go;
 }
 
 void WindowManager::SizeWorld()
@@ -134,10 +230,57 @@ void WindowManager::SizeWorld()
 	MoveWindow(m_worldWindow, rc.left, rc.top, m_worldWidth, m_worldHeight, false);
 }
 
-void WindowManager::UpdateModel(
-	std::string modelName)
+std::string WindowManager::ConvertFilename(
+	std::wstring& path)
 {
-	m_system->UpdateModel(modelName);
+	auto pathLength = (int)path.length() + 1;
+	auto size = WideCharToMultiByte(CP_ACP, 0, path.c_str(), pathLength, 0, 0, 0, 0);
+
+	auto result = std::string(size, '\0');
+
+	WideCharToMultiByte(CP_ACP, 0, path.c_str(), pathLength, &result[0], size, 0, 0);
+
+	return result;
+}
+
+std::string WindowManager::ExtractFilename(
+	std::wstring& path)
+{
+	auto p = ConvertFilename(path);
+
+	auto i = 0;
+	auto h = ' ';
+
+	while (h != '.')
+	{
+		h = p[i];
+
+		++i;
+	}
+
+	while (h != '\\')
+	{
+		h = p[i];
+
+		--i;
+	}
+
+	++i;
+	auto result = std::string("");
+
+	while (h != '.')
+	{
+		h = p[i];
+
+		if ((h != '.') && (h != '\\'))
+		{
+			result.push_back(h);
+		}
+
+		++i;
+	}
+
+	return result;
 }
 
 bool WindowManager::InitializeInner()
@@ -230,80 +373,11 @@ bool WindowManager::InitializeWorld()
 	return true;
 }
 
-void WindowManager::ShutdownWindow()
-{
-	DestroyWindow(m_worldWindow);
-	m_worldWindow = 0;
-
-	DestroyWindow(m_mainWindow);
-	m_mainWindow = 0;
-
-	m_system->Shutdown();
-
-	UnregisterClass((LPCSTR)m_applicationName, m_hInstance);
-	m_hInstance = 0;
-
-	ApplicationHandle = 0;
-}
-
-std::string ConvertFilename(
-	std::wstring path)
-{
-	auto pathLength = (int)path.length() + 1;
-	auto size = WideCharToMultiByte(CP_ACP, 0, path.c_str(), pathLength, 0, 0, 0, 0);
-
-	auto result = std::string(size, '\0');
-
-	WideCharToMultiByte(CP_ACP, 0, path.c_str(), pathLength, &result[0], size, 0, 0);
-
-	return result;
-}
-
-std::string ExtractFilename(
-	std::wstring path)
-{
-	auto p = ConvertFilename(path);
-
-	auto i = 0;
-	auto h = ' ';
-
-	while (h != '.')
-	{
-		h = p[i];
-
-		++i;
-	}
-
-	while (h != '\\')
-	{
-		h = p[i];
-
-		--i;
-	}
-
-	++i;
-	auto result = std::string("");
-
-	while (h != '.')
-	{
-		h = p[i];
-
-		if ((h != '.') && (h != '\\'))
-		{
-			result.push_back(h);
-		}
-
-		++i;
-	}
-
-	return result;
-}
-
-void OpenFile(HWND hwnd)
+void WindowManager::OpenFile()
 {
 	auto filename = std::string("");
 	auto hr = CoInitializeEx(0, COINIT_APARTMENTTHREADED |
-									COINIT_DISABLE_OLE1DDE);
+		COINIT_DISABLE_OLE1DDE);
 
 	if (SUCCEEDED(hr))
 	{
@@ -346,7 +420,23 @@ void OpenFile(HWND hwnd)
 		CoUninitialize();
 	}
 
-	ApplicationHandle->UpdateModel((char*)filename.c_str());
+	m_system->UpdateModel((char*)filename.c_str());
+}
+
+void WindowManager::ShutdownWindow()
+{
+	DestroyWindow(m_worldWindow);
+	m_worldWindow = 0;
+
+	DestroyWindow(m_mainWindow);
+	m_mainWindow = 0;
+
+	m_system->Shutdown();
+
+	UnregisterClass((LPCSTR)m_applicationName, m_hInstance);
+	m_hInstance = 0;
+
+	ApplicationHandle = 0;
 }
 
 LRESULT CALLBACK WndProc(
@@ -357,87 +447,13 @@ LRESULT CALLBACK WndProc(
 {
 	switch (umessage)
 	{
-	case WM_ACTIVATE:
-		switch LOWORD(wparam)
-		{
-		case WA_ACTIVE:
-			return 0;
-
-		case WA_CLICKACTIVE:
-
-			SendMessage(hwnd, WM_NCACTIVATE, TRUE, NULL);
-
-			return 0;
-
-		case WA_INACTIVE:
-			if ((HWND)lparam != hwnd)
-			{
-				SendMessage(hwnd, WM_NCACTIVATE, TRUE, NULL);
-				return 0;
-			};
-		}
-
-	case WM_CLOSE:
-		PostQuitMessage(0);
-		return 0;
-
 	case WM_DESTROY:
 		PostQuitMessage(0);
+
 		return 0;
-
-	case WM_SIZE:
-		if (wparam = SIZE_MINIMIZED)
-		{
-			MINIMIZED = true;
-		}
-
-		if (wparam = SIZE_MAXIMIZED)
-		{
-			MINIMIZED = false;
-		}
-		return 0;
-
-	case WM_COMMAND:
-	{	
-		int iD = LOWORD(wparam);
-
-		switch (iD)
-		{
-			//File menu actions
-		case IDF_OPEN:
-			OpenFile(hwnd);
-			return 0;
-
-		case IDF_EXIT:
-			PostQuitMessage(0);
-			return 0;
-
-			//Material menu actions
-			
-			//Model menu cations
-		case IDMOD_CUBE:
-			ApplicationHandle->UpdateModel("Cube");
-			return 0;
-
-		case IDMOD_HUMANMALE:
-			ApplicationHandle->UpdateModel("HumanMale");
-			return 0;
-
-		case IDMOD_MONKEY:
-			ApplicationHandle->UpdateModel("Monkey");
-			return 0;
-
-		case IDMOD_SPHERE:
-			ApplicationHandle->UpdateModel("Sphere");
-			return 0;
-
-		default:
-			break;
-		}
-	}
 
 	default:
-		if ((!ApplicationHandle->CheckResizeWindow()) && (!ApplicationHandle->PassGo()))
+		if (!ApplicationHandle->CheckResizeWindow())
 		{
 			ApplicationHandle->SizeWorld();
 		}

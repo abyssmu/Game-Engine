@@ -25,26 +25,30 @@ public:
 	void Run();
 
 	bool CheckResizeWindow();
+	bool CheckSystem();
+	HWND GetMain();
 	HWND GetWorld();
 	LRESULT CALLBACK MainMessageHandler(
-		HWND hwnd,
-		UINT umsg,
-		WPARAM wparam,
-		LPARAM lparam);
+		HWND& hwnd,
+		UINT& umsg,
+		WPARAM& wparam,
+		LPARAM& lparam);
 	LRESULT CALLBACK WorldMessageHandler(
-		HWND hwnd,
-		UINT umsg,
-		WPARAM wparam,
-		LPARAM lparam);
-	bool PassGo();
+		HWND& hwnd,
+		UINT& umsg,
+		WPARAM& wparam,
+		LPARAM& lparam);
 	void SizeWorld();
-	void UpdateModel(
-		std::string modelName);
 
 private:
+	std::string ConvertFilename(
+		std::wstring& path);
+	std::string ExtractFilename(
+		std::wstring& path);
 	bool InitializeInner();
 	bool InitializeMain();
 	bool InitializeWorld();
+	void OpenFile();
 	void ShutdownWindow();
 
 	LPCSTR m_applicationName = 0;
@@ -53,7 +57,7 @@ private:
 
 	System* m_system = 0;
 
-	bool go = false;
+	bool m_minimized = false;
 	int m_screenHeight = 0, m_screenWidth = 0;
 	int m_worldHeight = 0, m_worldWidth = 0;
 };

@@ -24,10 +24,10 @@ public:
 	void SetVertexCount(
 		unsigned int numVerts);
 	void SetVertices(
-		std::vector<VertexColor*> verts);
+		std::vector<Vertex*> verts);
 
 	SubModelInfo* GetModelInfo();
-	std::vector<VertexColor*>& GetVertices();
+	std::vector<Vertex*>& GetVertices();
 
 private:
 	bool InitializeBuffers(
@@ -44,6 +44,6 @@ private:
 	unsigned long* m_indices = 0;
 
 	ID3D11Buffer* m_vertexBuffer = 0, * m_indexBuffer = 0;
-	std::vector<VertexColor*> m_vertices = { 0 };
+	std::vector<Vertex*> m_vertices = { 0 };
 	SubModelInfo* m_modelInfo = 0;
 };

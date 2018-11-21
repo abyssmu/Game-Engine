@@ -25,8 +25,9 @@ struct AllModelInfo
 };
 
 //Vertex information container
-struct VertexColor
+struct Vertex
 {
-	float position[3] = { 0, 0, 0 };
 	float color[4] = { 0, 0, 0, 0 };
+	float normal[3] = { 0, 0, 0 };
+	float position[3] = { 0, 0, 0 };
 };

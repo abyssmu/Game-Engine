@@ -115,18 +115,18 @@ namespace MathLib
 		MatrixSquare Identity_4D();
 
 		MatrixSquare EulerX(
-			double r);
+			double& r);
 		MatrixSquare EulerY(
-			double r);
+			double& r);
 		MatrixSquare EulerZ(
-			double r);
+			double& r);
 
 		MatrixParent* Dot(
 			MatrixParent* A,
 			MatrixParent* B);
 		void Scale(
 			MatrixParent* M,
-			double amt);
+			double& amt);
 		void Add(
 			MatrixParent* A,
 			MatrixParent* B);
@@ -173,7 +173,6 @@ namespace MathLib
 			Vector2D(
 				double x,
 				double y);
-			~Vector2D();
 
 		private:
 			void GetUnits(

@@ -9,22 +9,26 @@ void Input::Initialize()
 	}
 }
 
-bool Input::IsKeyDown(int key)
+bool Input::IsKeyDown(
+	int& key)
 {
 	return m_keys[key];
 }
 
-void Input::KeyDown(int key)
+void Input::KeyDown(
+	int key)
 {
 	m_keys[key] = true;
 }
 
-void Input::KeyUp(int key)
+void Input::KeyUp(
+	int key)
 {
 	m_keys[key] = false;
 }
 
-void Input::ProcessCharacter(MathLib::Vectors::Vector3D& force)
+void Input::ProcessCharacter(
+	MathLib::Vectors::Vector3D& force)
 {
 	auto speed = 0.2;
 
@@ -51,7 +55,8 @@ void Input::ProcessCharacter(MathLib::Vectors::Vector3D& force)
 	}
 }
 
-void Input::ProcessMovement(MathLib::Vectors::Vector3D& force)
+void Input::ProcessMovement(
+	MathLib::Vectors::Vector3D& force)
 {
 	auto speed = 0.2;
 
@@ -86,7 +91,9 @@ void Input::ProcessMovement(MathLib::Vectors::Vector3D& force)
 	}
 }
 
-void Input::ProcessMouse(MathLib::Vectors::Vector3D& torque, bool& go)
+void Input::ProcessMouse(
+	MathLib::Vectors::Vector3D& torque,
+	bool& go)
 {
 	if (((GetKeyState(Key::Left_Mouse) & 0x100) != 0) && !go)
 	{

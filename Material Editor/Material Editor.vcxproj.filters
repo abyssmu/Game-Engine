@@ -25,9 +25,6 @@
     <Filter Include="Main\WindowManager\System\Math">
       <UniqueIdentifier>{7e6a00b2-e72f-45fd-adcb-1c3ae6a3c5b9}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Main\WindowManager\System\Graphics\ColorShader">
-      <UniqueIdentifier>{5dc0a150-3b78-4e3e-8ac8-1c79c9bc6390}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Main\WindowManager\System\Graphics\DirectX">
       <UniqueIdentifier>{2e02a758-92f0-4df0-a36b-92a7d4a19722}</UniqueIdentifier>
     </Filter>
@@ -76,14 +73,26 @@
     <Filter Include="Main\WindowManager\System\Objects\Statics\Landscape">
       <UniqueIdentifier>{242f6cc7-616f-48ad-a47c-d82f36e7987a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Main\WindowManager\System\Objects\Statics\Light">
-      <UniqueIdentifier>{c09253d6-a21f-4789-a47d-8bf96948d878}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Main\WindowManager\System\Objects\Statics\Skybox">
       <UniqueIdentifier>{914db121-9b0d-4797-8d1c-1891c5a77b92}</UniqueIdentifier>
     </Filter>
     <Filter Include="Main\WindowManager\System\Objects\Statics\Liquid">
       <UniqueIdentifier>{509c2679-7d02-45e3-bf86-72c1887e375f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Main\WindowManager\System\Objects\Light">
+      <UniqueIdentifier>{c09253d6-a21f-4789-a47d-8bf96948d878}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Main\WindowManager\System\Objects\Light\Directional">
+      <UniqueIdentifier>{b4fc6a9c-ec51-460c-a8f4-48abdad85532}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Main\WindowManager\System\Objects\Light\Spot">
+      <UniqueIdentifier>{8e8ea687-6f45-4eb9-bad9-619ffd99ee68}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Main\WindowManager\System\Objects\Light\Point">
+      <UniqueIdentifier>{b843761c-62c4-480b-910d-b147db7f6171}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Main\WindowManager\System\Graphics\MaterialShader">
+      <UniqueIdentifier>{5dc0a150-3b78-4e3e-8ac8-1c79c9bc6390}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -101,9 +110,6 @@
     </ClCompile>
     <ClCompile Include="Main\WindowManager\System\Color\Color.cpp">
       <Filter>Main\WindowManager\System\Color</Filter>
-    </ClCompile>
-    <ClCompile Include="Main\WindowManager\System\Graphics\ColorShader\ColorShader.cpp">
-      <Filter>Main\WindowManager\System\Graphics\ColorShader</Filter>
     </ClCompile>
     <ClCompile Include="Main\WindowManager\System\Graphics\DirectX\DirectX11.cpp">
       <Filter>Main\WindowManager\System\Graphics\DirectX</Filter>
@@ -144,6 +150,21 @@
     <ClCompile Include="Main\WindowManager\System\Objects\Entity\Entity.cpp">
       <Filter>Main\WindowManager\System\Objects\Entity</Filter>
     </ClCompile>
+    <ClCompile Include="Main\WindowManager\System\Objects\Light\Light.cpp">
+      <Filter>Main\WindowManager\System\Objects\Light</Filter>
+    </ClCompile>
+    <ClCompile Include="Main\WindowManager\System\Objects\Light\Spot\Spot.cpp">
+      <Filter>Main\WindowManager\System\Objects\Light\Spot</Filter>
+    </ClCompile>
+    <ClCompile Include="Main\WindowManager\System\Objects\Light\Point\Point.cpp">
+      <Filter>Main\WindowManager\System\Objects\Light\Point</Filter>
+    </ClCompile>
+    <ClCompile Include="Main\WindowManager\System\Objects\Light\Directional\Directional.cpp">
+      <Filter>Main\WindowManager\System\Objects\Light\Directional</Filter>
+    </ClCompile>
+    <ClCompile Include="Main\WindowManager\System\Graphics\MaterialShader\MaterialShader.cpp">
+      <Filter>Main\WindowManager\System\Graphics\MaterialShader</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Main\WindowManager\WindowManager.h">
@@ -160,9 +181,6 @@
     </ClInclude>
     <ClInclude Include="Main\WindowManager\System\Graphics\Graphics.h">
       <Filter>Main\WindowManager\System\Graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="Main\WindowManager\System\Graphics\ColorShader\ColorShader.h">
-      <Filter>Main\WindowManager\System\Graphics\ColorShader</Filter>
     </ClInclude>
     <ClInclude Include="Main\WindowManager\System\Graphics\DirectX\DirectX11.h">
       <Filter>Main\WindowManager\System\Graphics\DirectX</Filter>
@@ -200,18 +218,33 @@
     <ClInclude Include="Main\WindowManager\System\Objects\Entity\Entity.h">
       <Filter>Main\WindowManager\System\Objects\Entity</Filter>
     </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <FxCompile Include="Main\WindowManager\System\Graphics\ColorShader\ColorShader_ps.hlsl">
-      <Filter>Main\WindowManager\System\Graphics\ColorShader</Filter>
-    </FxCompile>
-    <FxCompile Include="Main\WindowManager\System\Graphics\ColorShader\ColorShader_vs.hlsl">
-      <Filter>Main\WindowManager\System\Graphics\ColorShader</Filter>
-    </FxCompile>
+    <ClInclude Include="Main\WindowManager\System\Objects\Light\Light.h">
+      <Filter>Main\WindowManager\System\Objects\Light</Filter>
+    </ClInclude>
+    <ClInclude Include="Main\WindowManager\System\Objects\Light\Spot\Spot.h">
+      <Filter>Main\WindowManager\System\Objects\Light\Spot</Filter>
+    </ClInclude>
+    <ClInclude Include="Main\WindowManager\System\Objects\Light\Point\Point.h">
+      <Filter>Main\WindowManager\System\Objects\Light\Point</Filter>
+    </ClInclude>
+    <ClInclude Include="Main\WindowManager\System\Objects\Light\Directional\Directional.h">
+      <Filter>Main\WindowManager\System\Objects\Light\Directional</Filter>
+    </ClInclude>
+    <ClInclude Include="Main\WindowManager\System\Graphics\MaterialShader\MaterialShader.h">
+      <Filter>Main\WindowManager\System\Graphics\MaterialShader</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Main\WindowManager\MenuResource.rc">
       <Filter>Main\WindowManager</Filter>
     </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="Main\WindowManager\System\Graphics\MaterialShader\MaterialShader_ps.hlsl">
+      <Filter>Main\WindowManager\System\Graphics\MaterialShader</Filter>
+    </FxCompile>
+    <FxCompile Include="Main\WindowManager\System\Graphics\MaterialShader\MaterialShader_vs.hlsl">
+      <Filter>Main\WindowManager\System\Graphics\MaterialShader</Filter>
+    </FxCompile>
   </ItemGroup>
 </Project>

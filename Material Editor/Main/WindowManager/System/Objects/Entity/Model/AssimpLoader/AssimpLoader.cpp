@@ -64,18 +64,23 @@ bool AssimpLoader::LoadVertices(
 	aiMesh* mesh)
 {
 	auto verts = mesh->mNumVertices;
-	auto vertices = std::vector<VertexColor*>();
+	auto vertices = std::vector<Vertex*>();
 
 	vertices.reserve(verts);
 	for (auto vertIdx = 0u; vertIdx < verts; ++vertIdx)
 	{
 		auto vert = mesh->mVertices[vertIdx];
+		auto norm = mesh->mNormals[vertIdx];
 
-		auto hold = new VertexColor;
+		auto hold = new Vertex;
 		hold->color[0] = 0.5;
 		hold->color[1] = 0.5;
 		hold->color[2] = 0.5;
 		hold->color[3] = 1.0;
+
+		hold->normal[0] = norm.x;
+		hold->normal[1] = norm.y;
+		hold->normal[2] = norm.z;
 
 		hold->position[0] = vert.x;
 		hold->position[1] = vert.y;

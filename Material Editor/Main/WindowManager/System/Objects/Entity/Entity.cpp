@@ -41,5 +41,5 @@ int Entity::GetNumMeshes()
 AllModelInfo* Entity::GetModelInfo(
 	int i)
 {
-	return m_model->GetModelInfo(GetPosition(), i);
+	return m_model->GetModelInfo(GetPosition(), GetRotation(), i);
 }

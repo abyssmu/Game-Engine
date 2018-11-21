@@ -209,7 +209,7 @@ MathLib::Matrices::MatrixParent* MathLib::Matrices::Dot(
 
 void MathLib::Matrices::Scale(
 	Matrices::MatrixParent* M,
-	double amt)
+	double& amt)
 {
 	for (auto y = 0; y < M->GetDim()[0]; ++y)
 	{
@@ -456,7 +456,7 @@ MathLib::Matrices::MatrixSquare MathLib::Matrices::Identity_4D()
 }
 
 MathLib::Matrices::MatrixSquare MathLib::Matrices::EulerX(
-	double r)
+	double& r)
 {
 	//Rotation matrix for roll
 	// 1    0    0    0
@@ -478,7 +478,7 @@ MathLib::Matrices::MatrixSquare MathLib::Matrices::EulerX(
 }
 
 MathLib::Matrices::MatrixSquare MathLib::Matrices::EulerY(
-	double r)
+	double& r)
 {
 	//Rotation matrix for pitch
 	//cos   0   sin   0
@@ -500,7 +500,7 @@ MathLib::Matrices::MatrixSquare MathLib::Matrices::EulerY(
 }
 
 MathLib::Matrices::MatrixSquare MathLib::Matrices::EulerZ(
-	double r)
+	double& r)
 {
 	//Rotation matrix for yaw
 	//cos -sin   0    0

@@ -5,9 +5,9 @@
 #include <fstream>
 
 bool System::Initialize(
-	int screenHeight,
-	int screenWidth,
-	HWND hwnd)
+	int& screenHeight,
+	int& screenWidth,
+	HWND& hwnd)
 {
 	m_hWnd = hwnd;
 
@@ -30,6 +30,11 @@ bool System::Initialize(
 	}
 
 	if (!InitializeInput())
+	{
+		return false;
+	}
+
+	if (!InitializeLight())
 	{
 		return false;
 	}
@@ -60,8 +65,7 @@ void System::Shutdown()
 	}
 }
 
-void System::Run(
-	bool& minimized)
+void System::Run()
 {
 	auto msg = MSG();
 
@@ -82,7 +86,7 @@ void System::Run(
 		{
 			done = true;
 		}
-		else if (!minimized)
+		else if (!m_minimized)
 		{
 			if (CheckResizeWindow())
 			{
@@ -132,6 +136,12 @@ void System::ResetKeys()
 	m_input->ResetKeys();
 }
 
+void System::SetMinimized(
+	bool& min)
+{
+	m_minimized = min;
+}
+
 void System::UpdateModel(
 	std::string modelName)
 {
@@ -166,6 +176,9 @@ void System::CheckPosition()
 		m_entities->SetPosition(MathLib::Vectors::Vector3D(0.0, 0.0, 2.0));
 		m_entities->SetRotation(MathLib::Vectors::Vector3D(-MathLib::PI / 2, MathLib::PI, 0.0));
 		return;
+		
+	case 'S':
+		m_entities->SetRotation(MathLib::Vectors::Vector3D(MathLib::PI / 2, 0.0, 0.0));
 	}
 }
 
@@ -236,7 +249,7 @@ bool System::InitializeEntity()
 	}
 	
 	auto position = MathLib::Vectors::Vector3D(0.0, 0.0, 0.0);
-	auto rotation = MathLib::Vectors::Vector3D(0.0, 0.0, 0.0);
+	auto rotation = MathLib::Vectors::Vector3D(MathLib::PI / 2, 0.0, 0.0);
 	
 	if (!m_entities->Initialize(m_graphics->GetDevice(),
 		position, rotation, (char*)filename.c_str()))
@@ -274,6 +287,24 @@ bool System::InitializeInput()
 	return true;
 }
 
+bool System::InitializeLight()
+{
+	m_directionalLight = new Directional;
+	if (!m_directionalLight)
+	{
+		return false;
+	}
+
+	m_directionalLight->SetAmbientColor(Colors::Color(0.5, 0.5, 0.5, 1.0));
+	m_directionalLight->SetDiffuseColor(Colors::White());
+	m_directionalLight->SetDirection(MathLib::Vectors::Vector3D(0.0, 0.0, 1.0));
+	m_directionalLight->SetPosition(MathLib::Vectors::Vector3D(0.0, 0.0, 0.0));
+	m_directionalLight->SetSpecularColor(Colors::White());
+	m_directionalLight->SetSpecularPower(64.0);
+
+	return true;
+}
+
 bool System::ProcessGraphics()
 {
 	auto bgcolor = Colors::Black();
@@ -281,7 +312,7 @@ bool System::ProcessGraphics()
 	for (auto i = 0; i < m_entities->GetNumMeshes(); ++i)
 	{
 		if (!m_graphics->Frame(bgcolor, m_camera->GetViewMatrix(),
-			m_entities->GetModelInfo(i)))
+			m_camera->GetPosition(), m_directionalLight, m_entities->GetModelInfo(i)))
 		{
 			return false;
 		}
@@ -314,8 +345,8 @@ bool System::ProcessInput(
 }
 
 void System::UpdateCamera(
-	MathLib::Vectors::Vector3D force,
-	MathLib::Vectors::Vector3D torque)
+	MathLib::Vectors::Vector3D& force,
+	MathLib::Vectors::Vector3D& torque)
 {
 	m_camera->UpdatePosRot(force, torque);
 	m_camera->Render();

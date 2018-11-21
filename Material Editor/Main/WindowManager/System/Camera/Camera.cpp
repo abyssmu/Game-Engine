@@ -1,8 +1,8 @@
 #include "Camera.h"
 
 bool Camera::Initialize(
-	MathLib::Vectors::Vector3D position,
-	MathLib::Vectors::Vector3D rotation)
+	MathLib::Vectors::Vector3D& position,
+	MathLib::Vectors::Vector3D& rotation)
 {
 	SetPosition(position);
 	SetRotation(rotation);

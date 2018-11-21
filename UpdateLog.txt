@@ -1,10 +1,7 @@
 To do list:
-Create a child and parent window for scene editor
 Add scene management
-Redesign Entity class to be abstract, add it as a child to the scene manager, and modify entity children accordingly
 Add "custom" scene file (.beep) loader (placeholder extension name - might leave it)
 Add quaternions
-Add lights and normals to mesh
 Add textures and uvs to mesh
 Add higher physics
 Add basic 3D shapes for simple object collisions
@@ -13,7 +10,7 @@ Add animations
 
 Completed list:
 
-1. Created shell project for GitHub.
+1. Created shell project for GitHub
 
 2. Added System manager
 2. Added Graphics manager
@@ -71,6 +68,15 @@ Completed list:
 10. Added solutions for game engine features
 
 11. Added all files to game engine features' solutions
+
+12. Fixed bug causing crashing when minimizing window
+12. Fixed bug causing title bar to grey out when switching to world window
+12. Refactored code to new code style.
+12. Restructured entity class to support more objects
+
+13. Added normal support
+13. Added lights
+13. Update all possible functional declarations/definitions to pass-by-value
 
 Routine:
 Develop single feature from to do list

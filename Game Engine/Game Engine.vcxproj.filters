@@ -73,9 +73,6 @@
     <Filter Include="Main\WindowManager\System\Objects\Statics\Landscape">
       <UniqueIdentifier>{924710e0-3ed6-4f25-a84a-fe9bf8432ee0}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Main\WindowManager\System\Objects\Statics\Light">
-      <UniqueIdentifier>{a7a453d4-8c2f-4daf-9380-c3f0faca33e0}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Main\WindowManager\System\Objects\Statics\Liquid">
       <UniqueIdentifier>{2291fb53-9852-4065-a0b7-d33274bead70}</UniqueIdentifier>
     </Filter>
@@ -84,6 +81,9 @@
     </Filter>
     <Filter Include="Main\WindowManager\System\Objects\Statics\Static">
       <UniqueIdentifier>{e21f56ac-2169-42ef-a193-49cb8ca2c857}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Main\WindowManager\System\Objects\Light">
+      <UniqueIdentifier>{a7a453d4-8c2f-4daf-9380-c3f0faca33e0}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

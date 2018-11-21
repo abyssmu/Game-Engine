@@ -1,10 +1,10 @@
 #include "DirectX11.h"
 
 bool DirectX11::Initialize(
-	int screenHeight,
-	int screenWidth,
+	int& screenHeight,
+	int& screenWidth,
 	bool vsync,
-	HWND hwnd,
+	HWND& hwnd,
 	double screenDepth,
 	double screenNear)
 {
@@ -26,7 +26,7 @@ bool DirectX11::Initialize(
 bool DirectX11::Resize(
 	int& screenHeight,
 	int& screenWidth,
-	HWND hwnd,
+	HWND& hwnd,
 	double screenDepth,
 	double screenNear)
 {
@@ -123,7 +123,7 @@ void DirectX11::Shutdown()
 }
 
 void DirectX11::BeginScene(
-	Colors::Color bgcolor)
+	Colors::Color& bgcolor)
 {
 	float bg[4] = {
 		(float)bgcolor.color.r,
@@ -185,8 +185,8 @@ ID3D11DeviceContext* DirectX11::GetDeviceContext()
 }
 
 bool DirectX11::CreateAdapterDesc(
-	int screenHeight,
-	int screenWidth,
+	int& screenHeight,
+	int& screenWidth,
 	unsigned int& numerator,
 	unsigned int& denominator)
 {
@@ -277,8 +277,8 @@ bool DirectX11::CreateAdapterDesc(
 }
 
 bool DirectX11::CreateDepthBuffer(
-	int screenHeight,
-	int screenWidth)
+	int& screenHeight,
+	int& screenWidth)
 {
 	auto depthBufferDesc = D3D11_TEXTURE2D_DESC();
 
@@ -363,12 +363,12 @@ bool DirectX11::CreateDepthStencilView()
 }
 
 bool DirectX11::CreateMatrices(
-	int screenHeight,
-	int screenWidth,
-	double fieldOfView,
-	double screenAspect,
-	double screenDepth,
-	double screenNear)
+	int& screenHeight,
+	int& screenWidth,
+	double& fieldOfView,
+	double& screenAspect,
+	double& screenDepth,
+	double& screenNear)
 {
 	m_projectionMatrix = DirectX::XMMatrixPerspectiveFovLH((float)fieldOfView, (float)screenAspect,
 		(float)screenNear, (float)screenDepth);
@@ -408,11 +408,11 @@ bool DirectX11::CreateRasterDesc()
 }
 
 bool DirectX11::CreateSwapChain(
-	int screenHeight,
-	int screenWidth,
-	unsigned int numerator,
-	unsigned int denominator,
-	HWND hwnd)
+	int& screenHeight,
+	int& screenWidth,
+	unsigned int& numerator,
+	unsigned int& denominator,
+	HWND& hwnd)
 {
 	auto swapChainDesc = DXGI_SWAP_CHAIN_DESC();
 
@@ -481,8 +481,8 @@ bool DirectX11::CreateSwapChain(
 }
 
 bool DirectX11::CreateViewport(
-	int screenHeight,
-	int screenWidth,
+	int& screenHeight,
+	int& screenWidth,
 	double& fieldOfView,
 	double& screenAspect)
 {
@@ -511,9 +511,9 @@ bool DirectX11::CreateViewport(
 }
 
 bool DirectX11::InitializeDirectX(
-	int screenHeight,
-	int screenWidth,
-	HWND hwnd)
+	int& screenHeight,
+	int& screenWidth,
+	HWND& hwnd)
 {
 	auto denominator = 0u, numerator = 0u;
 
@@ -556,10 +556,10 @@ bool DirectX11::InitializeDirectX(
 }
 
 bool DirectX11::InitializeMatrices(
-	int screenHeight,
-	int screenWidth,
-	double screenDepth,
-	double screenNear)
+	int& screenHeight,
+	int& screenWidth,
+	double& screenDepth,
+	double& screenNear)
 {
 	auto fieldOfView = 1.0, screenAspect = 1.0;
 

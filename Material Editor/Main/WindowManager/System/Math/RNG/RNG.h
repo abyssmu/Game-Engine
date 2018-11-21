@@ -11,11 +11,11 @@ distribution, random double values using exponential distribution,
 namespace RNG
 {
 	int Range(
-		int A,
-		int B);
+		int& A,
+		int& B);
 	double RangeD(
-		double A,
-		double B);
+		double& A,
+		double& B);
 	int Value();
 	double ValueD();
 	double ZeroToOne();

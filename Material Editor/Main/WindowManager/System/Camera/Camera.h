@@ -13,8 +13,8 @@ class Camera : public Entity
 {
 public:
 	bool Initialize(
-		MathLib::Vectors::Vector3D position,
-		MathLib::Vectors::Vector3D rotation);
+		MathLib::Vectors::Vector3D& position,
+		MathLib::Vectors::Vector3D& rotation);
 
 	//Render camera by calculating view matrix
 	void Render();

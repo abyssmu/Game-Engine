@@ -1,9 +1,9 @@
 #include "Graphics.h"
 
 bool Graphics::Initialize(
-	int screenHeight,
-	int screenWidth,
-	HWND hwnd)
+	int& screenHeight,
+	int& screenWidth,
+	HWND& hwnd)
 {
 	InitializeDirectX(screenHeight, screenWidth, hwnd);
 	InitializeShaders(hwnd);
@@ -14,7 +14,7 @@ bool Graphics::Initialize(
 bool Graphics::ResetDX(
 	int& screenHeight,
 	int& screenWidth,
-	HWND hwnd)
+	HWND& hwnd)
 {
 	if (!m_dX11->Resize(screenHeight, screenWidth, hwnd,
 						SCREEN_DEPTH, SCREEN_NEAR))
@@ -27,11 +27,11 @@ bool Graphics::ResetDX(
 
 void Graphics::Shutdown()
 {
-	if (m_colorShader)
+	if (m_materialShader)
 	{
-		m_colorShader->Shutdown();
-		delete m_colorShader;
-		m_colorShader = 0;
+		m_materialShader->Shutdown();
+		delete m_materialShader;
+		m_materialShader = 0;
 	}
 
 	if (m_dX11)
@@ -43,11 +43,13 @@ void Graphics::Shutdown()
 }
 
 bool Graphics::Frame(
-	Colors::Color bgcolor,
+	Colors::Color& bgcolor,
 	DirectX::XMMATRIX viewMatrix,
+	MathLib::Vectors::Vector3D cameraPosition, 
+	Directional* directionalLight,
 	AllModelInfo* modelInfo)
 {
-	if (!Render(bgcolor, viewMatrix, modelInfo))
+	if (!Render(bgcolor, viewMatrix, cameraPosition, directionalLight, modelInfo))
 	{
 		return false;
 	}
@@ -78,9 +80,9 @@ DirectX::XMMATRIX Graphics::CalculateWorld(
 }
 
 bool Graphics::InitializeDirectX(
-	int screenHeight,
-	int screenWidth,
-	HWND hwnd)
+	int& screenHeight,
+	int& screenWidth,
+	HWND& hwnd)
 {
 	m_dX11 = new DirectX11;
 	if (!m_dX11)
@@ -99,15 +101,15 @@ bool Graphics::InitializeDirectX(
 }
 
 bool Graphics::InitializeShaders(
-	HWND hwnd)
+	HWND& hwnd)
 {
-	m_colorShader = new ColorShader;
-	if (!m_colorShader)
+	m_materialShader = new MaterialShader;
+	if (!m_materialShader)
 	{
 		return false;
 	}
 
-	if (!m_colorShader->Initialize(m_dX11->GetDevice(), hwnd))
+	if (!m_materialShader->Initialize(m_dX11->GetDevice(), hwnd))
 	{
 		MessageBox(hwnd, "Could not initialize color shader.", "Error",
 			MB_OK);
@@ -118,13 +120,15 @@ bool Graphics::InitializeShaders(
 }
 
 bool Graphics::Render(
-	Colors::Color bgcolor,
-	DirectX::XMMATRIX viewMatrix,
+	Colors::Color& bgcolor,
+	DirectX::XMMATRIX& viewMatrix,
+	MathLib::Vectors::Vector3D& cameraPosition, 
+	Directional* directionalLight,
 	AllModelInfo* modelInfo)
 {
 	m_dX11->BeginScene(bgcolor);
 
-	RenderModel(modelInfo, viewMatrix);
+	RenderModel(modelInfo, cameraPosition, directionalLight, viewMatrix);
 
 	m_dX11->EndScene();
 
@@ -133,13 +137,25 @@ bool Graphics::Render(
 
 bool Graphics::RenderModel(
 	AllModelInfo* modelInfo,
-	DirectX::XMMATRIX viewMatrix)
+	MathLib::Vectors::Vector3D& cameraPosition,
+	Directional* directionalLight,
+	DirectX::XMMATRIX& viewMatrix)
 {
 	auto world = CalculateWorld(modelInfo);
+	auto ambient = directionalLight->GetAmbientColor().color;
+	auto diffuse = directionalLight->GetDiffuseColor().color;
+	auto direction = directionalLight->GetDirection();
+	auto specularC = directionalLight->GetSpecularColor().color;
 
-	if (!m_colorShader->Render(m_dX11->GetDeviceContext(),
+	if (!m_materialShader->Render(m_dX11->GetDeviceContext(),
 		modelInfo->subModelInfo->indexCount, world,
-		viewMatrix, m_dX11->GetProjectionMatrix()))
+		viewMatrix, m_dX11->GetProjectionMatrix(),
+		DirectX::XMFLOAT3((float)direction.x, (float)direction.y, (float)direction.z),
+		DirectX::XMFLOAT4((float)ambient.r, (float)ambient.g, (float)ambient.b, (float)ambient.a),
+		DirectX::XMFLOAT4((float)diffuse.r, (float)diffuse.g, (float)diffuse.b, (float)diffuse.a),
+		DirectX::XMFLOAT3((float)cameraPosition.x, (float)cameraPosition.y, (float)cameraPosition.z),
+		DirectX::XMFLOAT4((float)specularC.r, (float)specularC.g, (float)specularC.b, (float)specularC.a),
+		directionalLight->GetSpecularPower()))
 	{
 		return false;
 	}

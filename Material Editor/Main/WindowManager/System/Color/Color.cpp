@@ -22,7 +22,7 @@ Colors::Color::Color(
 }
 
 void Colors::Color::Brightness(
-	double amt)
+	double& amt)
 {
 	color.r *= amt;
 	color.g *= amt;
@@ -30,7 +30,7 @@ void Colors::Color::Brightness(
 }
 
 void Colors::Color::Add(
-	Color B)
+	Color& B)
 {
 	color.r += B.color.r;
 	color.g += B.color.g;
@@ -38,7 +38,7 @@ void Colors::Color::Add(
 }
 
 bool Colors::Color::Compare(
-	Color B)
+	Color& B)
 {
 	if (color.r != B.color.r)
 	{
@@ -64,7 +64,7 @@ bool Colors::Color::Compare(
 }
 
 void Colors::Color::Divide(
-	Color B)
+	Color& B)
 {
 	color.r /= B.color.r;
 	color.g /= B.color.g;
@@ -72,7 +72,7 @@ void Colors::Color::Divide(
 }
 
 void Colors::Color::Equal(
-	Color B)
+	Color& B)
 {
 	color.r = B.color.r;
 	color.g = B.color.g;
@@ -81,7 +81,7 @@ void Colors::Color::Equal(
 }
 
 void Colors::Color::Multiply(
-	Color B)
+	Color& B)
 {
 	color.r *= B.color.r;
 	color.g *= B.color.g;
@@ -89,7 +89,7 @@ void Colors::Color::Multiply(
 }
 
 void Colors::Color::Subtract(
-	Color B)
+	Color& B)
 {
 	color.r -= B.color.r;
 	color.g -= B.color.g;

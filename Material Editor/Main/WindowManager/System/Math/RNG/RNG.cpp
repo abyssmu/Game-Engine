@@ -1,15 +1,15 @@
 #include "RNG.h"
 
 int RNG::Range(
-	int A,
-	int B)
+	int& A,
+	int& B)
 {
 	return Value() % B + A;
 }
 
 double RNG::RangeD(
-	double A,
-	double B)
+	double& A,
+	double& B)
 {
 	auto random = ValueD();
 	auto temp = random;

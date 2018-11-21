@@ -129,9 +129,9 @@
     <ClCompile Include="Main\Main.cpp" />
     <ClCompile Include="Main\WindowManager\System\Camera\Camera.cpp" />
     <ClCompile Include="Main\WindowManager\System\Color\Color.cpp" />
-    <ClCompile Include="Main\WindowManager\System\Graphics\ColorShader\ColorShader.cpp" />
     <ClCompile Include="Main\WindowManager\System\Graphics\DirectX\DirectX11.cpp" />
     <ClCompile Include="Main\WindowManager\System\Graphics\Graphics.cpp" />
+    <ClCompile Include="Main\WindowManager\System\Graphics\MaterialShader\MaterialShader.cpp" />
     <ClCompile Include="Main\WindowManager\System\Input\Input.cpp" />
     <ClCompile Include="Main\WindowManager\System\Math\MathOperations.cpp" />
     <ClCompile Include="Main\WindowManager\System\Math\Matrices.cpp" />
@@ -143,6 +143,10 @@
     <ClCompile Include="Main\WindowManager\System\Objects\Entity\Model\Mesh\Mesh.cpp" />
     <ClCompile Include="Main\WindowManager\System\Objects\Entity\Model\Model.cpp" />
     <ClCompile Include="Main\WindowManager\System\Objects\Entity\Physics\Physics.cpp" />
+    <ClCompile Include="Main\WindowManager\System\Objects\Light\Directional\Directional.cpp" />
+    <ClCompile Include="Main\WindowManager\System\Objects\Light\Light.cpp" />
+    <ClCompile Include="Main\WindowManager\System\Objects\Light\Point\Point.cpp" />
+    <ClCompile Include="Main\WindowManager\System\Objects\Light\Spot\Spot.cpp" />
     <ClCompile Include="Main\WindowManager\System\System.cpp" />
     <ClCompile Include="Main\WindowManager\WindowManager.cpp" />
   </ItemGroup>
@@ -150,9 +154,9 @@
     <ClInclude Include="Main\WindowManager\MenuResource.h" />
     <ClInclude Include="Main\WindowManager\System\Camera\Camera.h" />
     <ClInclude Include="Main\WindowManager\System\Color\Color.h" />
-    <ClInclude Include="Main\WindowManager\System\Graphics\ColorShader\ColorShader.h" />
     <ClInclude Include="Main\WindowManager\System\Graphics\DirectX\DirectX11.h" />
     <ClInclude Include="Main\WindowManager\System\Graphics\Graphics.h" />
+    <ClInclude Include="Main\WindowManager\System\Graphics\MaterialShader\MaterialShader.h" />
     <ClInclude Include="Main\WindowManager\System\Input\Input.h" />
     <ClInclude Include="Main\WindowManager\System\Input\Keys.h" />
     <ClInclude Include="Main\WindowManager\System\Math\MathLib.h" />
@@ -163,21 +167,25 @@
     <ClInclude Include="Main\WindowManager\System\Objects\Entity\Model\Model.h" />
     <ClInclude Include="Main\WindowManager\System\Objects\Entity\Model\ModelInfo.h" />
     <ClInclude Include="Main\WindowManager\System\Objects\Entity\Physics\Physics.h" />
+    <ClInclude Include="Main\WindowManager\System\Objects\Light\Directional\Directional.h" />
+    <ClInclude Include="Main\WindowManager\System\Objects\Light\Light.h" />
+    <ClInclude Include="Main\WindowManager\System\Objects\Light\Point\Point.h" />
+    <ClInclude Include="Main\WindowManager\System\Objects\Light\Spot\Spot.h" />
     <ClInclude Include="Main\WindowManager\System\System.h" />
     <ClInclude Include="Main\WindowManager\WindowManager.h" />
   </ItemGroup>
   <ItemGroup>
-    <FxCompile Include="Main\WindowManager\System\Graphics\ColorShader\ColorShader_ps.hlsl">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
-    </FxCompile>
-    <FxCompile Include="Main\WindowManager\System\Graphics\ColorShader\ColorShader_vs.hlsl">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
-    </FxCompile>
+    <ResourceCompile Include="Main\WindowManager\MenuResource.rc" />
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="Main\WindowManager\MenuResource.rc" />
+    <FxCompile Include="Main\WindowManager\System\Graphics\MaterialShader\MaterialShader_ps.hlsl">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </FxCompile>
+    <FxCompile Include="Main\WindowManager\System\Graphics\MaterialShader\MaterialShader_vs.hlsl">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </FxCompile>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

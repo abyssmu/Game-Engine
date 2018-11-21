@@ -5,8 +5,9 @@ Graphics class is a manager for the graphics core. It holds the DirectX class an
 #pragma once
 
 #include "../Color/Color.h"
-#include "ColorShader\ColorShader.h"
+#include "../Objects/Light/Directional/Directional.h"
 #include "DirectX\DirectX11.h"
+#include "MaterialShader\MaterialShader.h"
 
 #include "../Objects/Entity/Model/ModelInfo.h"
 
@@ -20,17 +21,19 @@ class Graphics
 {
 public:
 	bool Initialize(
-		int screenHeight,
-		int screenWidth,
-		HWND hwnd);
+		int& screenHeight,
+		int& screenWidth,
+		HWND& hwnd);
 	bool ResetDX(
 		int& screenHeight,
 		int& screenWidth,
-		HWND hwnd);
+		HWND& hwnd);
 	void Shutdown();
 	bool Frame(
-		Colors::Color bgcolor,
+		Colors::Color& bgcolor,
 		DirectX::XMMATRIX viewMatrix,
+		MathLib::Vectors::Vector3D cameraPosition,
+		Directional* directionalLight,
 		AllModelInfo* modelInfo);
 
 	ID3D11Device* GetDevice();
@@ -39,19 +42,23 @@ private:
 	DirectX::XMMATRIX CalculateWorld(
 		AllModelInfo* modelInfo);
 	bool InitializeDirectX(
-		int screenHeight,
-		int screenWidth,
-		HWND hwnd);
+		int& screenHeight,
+		int& screenWidth,
+		HWND& hwnd);
 	bool InitializeShaders(
-		HWND hwnd);
+		HWND& hwnd);
 	bool Render(
-		Colors::Color bgcolor,
-		DirectX::XMMATRIX viewMatrix,
+		Colors::Color& bgcolor,
+		DirectX::XMMATRIX& viewMatrix,
+		MathLib::Vectors::Vector3D& cameraPosition,
+		Directional* directionalLight,
 		AllModelInfo* modelInfo);
 	bool RenderModel(
 		AllModelInfo* modelInfo,
-		DirectX::XMMATRIX viewMatrix);
+		MathLib::Vectors::Vector3D& cameraPosition,
+		Directional* directionalLight,
+		DirectX::XMMATRIX& viewMatrix);
 
 	DirectX11* m_dX11 = 0;
-	ColorShader* m_colorShader = 0;
+	MaterialShader* m_materialShader = 0;
 };
