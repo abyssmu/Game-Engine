@@ -109,13 +109,13 @@ void System::Run()
 }
 
 void System::KeyDown(
-	unsigned int key)
+	unsigned int& key)
 {
 	m_input->KeyDown(key);
 }
 
 void System::KeyUp(
-	unsigned int key)
+	unsigned int& key)
 {
 	m_input->KeyUp(key);
 }
@@ -123,7 +123,7 @@ void System::KeyUp(
 void System::MouseActive(
 	bool active)
 {
-	if (!active)
+	if (active)
 	{
 		m_mouseGo = true;
 	}
@@ -143,7 +143,7 @@ void System::SetMinimized(
 }
 
 void System::UpdateModel(
-	std::string modelName)
+	std::string& modelName)
 {
 	m_modelName = modelName;
 

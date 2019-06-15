@@ -36,7 +36,7 @@ private:
 		char* filename);
 	void ReleaseModel(
 		int i);
-	int m_numMeshes;
+	int m_numMeshes = 0;
 
 	AllModelInfo* m_allModelInfo = 0;
 	std::vector<Mesh*> m_meshes;

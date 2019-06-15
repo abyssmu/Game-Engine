@@ -30,16 +30,16 @@ public:
 	void Run();
 
 	void KeyDown(
-		unsigned int key);
+		unsigned int& key);
 	void KeyUp(
-		unsigned int key);
+		unsigned int& key);
 	void MouseActive(
 		bool active);
 	void ResetKeys();
 	void SetMinimized(
 		bool& min);
 	void UpdateModel(
-		std::string modelName);
+		std::string& modelName);
 
 private:
 	void CreateFilenameString

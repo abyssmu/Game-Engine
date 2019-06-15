@@ -27,44 +27,64 @@ public:
 	bool CheckResizeWindow();
 	bool CheckSystem();
 	HWND GetMain();
+	bool GetMinimized();
 	HWND GetWorld();
-	LRESULT CALLBACK MainMessageHandler(
-		HWND& hwnd,
-		UINT& umsg,
-		WPARAM& wparam,
-		LPARAM& lparam);
-	LRESULT CALLBACK WorldMessageHandler(
-		HWND& hwnd,
-		UINT& umsg,
-		WPARAM& wparam,
-		LPARAM& lparam);
+	void KeyDown(
+		unsigned int key);
+	void KeyUp(
+		unsigned int key);
+	void OpenFile();
+	void SetMinimized(
+		bool& min);
+	void SetMouseState(
+		bool state);
+	void SizeControls();
 	void SizeWorld();
+	void UpdateModel(
+		std::string model);
 
 private:
 	std::string ConvertFilename(
 		std::wstring& path);
 	std::string ExtractFilename(
 		std::wstring& path);
+	bool InitializeControlsContainer();
 	bool InitializeInner();
+	bool InitializeLightText();
 	bool InitializeMain();
+	bool InitializeTrackbar();
 	bool InitializeWorld();
-	void OpenFile();
 	void ShutdownWindow();
 
 	LPCSTR m_applicationName = 0;
 	HINSTANCE m_hInstance = 0;
-	HWND m_mainWindow = HWND(0), m_worldWindow = HWND(0);
+
+	HWND m_mainWindow = 0, m_controlsContainer = 0, m_worldWindow = 0;
+	HWND m_trackbar = 0, m_trackbarText = 0;
+	HWND m_lightTextX = 0, m_lightTextY = 0, m_lightTextZ = 0;
+	HWND m_lightInputX = 0, m_lightInputY = 0, m_lightInputZ = 0;
 
 	System* m_system = 0;
 
-	bool m_minimized = false;
+	bool m_minimized = false, m_mouseState = true;
 	int m_screenHeight = 0, m_screenWidth = 0;
 	int m_worldHeight = 0, m_worldWidth = 0;
+	double m_worldPerc = 0.8;
 };
 
-static LRESULT CALLBACK WndProc(
+extern LRESULT CALLBACK ControlsMessageHandler(
 	HWND hwnd,
 	UINT umsg,
 	WPARAM wparam,
 	LPARAM lparam);
-static WindowManager* ApplicationHandle = 0;
+extern LRESULT CALLBACK MainMessageHandler(
+	HWND hwnd,
+	UINT umsg,
+	WPARAM wparam,
+	LPARAM lparam);
+extern LRESULT CALLBACK WorldMessageHandler(
+	HWND hwnd,
+	UINT umsg,
+	WPARAM wparam,
+	LPARAM lparam);
+extern WindowManager* ApplicationHandle;

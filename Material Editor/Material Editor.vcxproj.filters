@@ -165,6 +165,9 @@
     <ClCompile Include="Main\WindowManager\System\Graphics\MaterialShader\MaterialShader.cpp">
       <Filter>Main\WindowManager\System\Graphics\MaterialShader</Filter>
     </ClCompile>
+    <ClCompile Include="Main\WindowManager\MessageHandler.cpp">
+      <Filter>Main\WindowManager</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Main\WindowManager\WindowManager.h">

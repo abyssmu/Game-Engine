@@ -101,11 +101,11 @@ void Input::ProcessMouse(
 
 		if (mouseP.x != prevMouseP.x)
 		{
-			torque.y += (mouseP.x - prevMouseP.x) * speed;
+			torque.y += (double(mouseP.x) - double(prevMouseP.x)) * speed;
 		}
 		if (mouseP.y != prevMouseP.y)
 		{
-			torque.x += (mouseP.y - prevMouseP.y) * speed;
+			torque.x += (double(mouseP.y) - double(prevMouseP.y)) * speed;
 		}
 	}
 

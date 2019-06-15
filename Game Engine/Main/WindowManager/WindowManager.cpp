@@ -386,12 +386,12 @@ LRESULT CALLBACK WndProc(
 		return 0;
 
 	case WM_SIZE:
-		if (wparam = SIZE_MINIMIZED)
+		if (wparam == SIZE_MINIMIZED)
 		{
 			MINIMIZED = true;
 		}
 
-		if (wparam = SIZE_MAXIMIZED)
+		if (wparam == SIZE_MAXIMIZED)
 		{
 			MINIMIZED = false;
 		}
