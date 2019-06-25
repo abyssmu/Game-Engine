@@ -28,16 +28,30 @@ public:
 		HWND& hwnd);
 	void Shutdown();
 	void Run();
-
-	void KeyDown(
-		unsigned int& key);
-	void KeyUp(
-		unsigned int& key);
-	void MouseActive(
-		bool active);
+	void Keyboard(
+		RAWKEYBOARD& kB);
+	void Mouse(
+		RAWMOUSE& m);
 	void ResetKeys();
+	void SetLightAmbient(
+		double r,
+		double g,
+		double b);
+	void SetLightDiffuse(
+		double r,
+		double g,
+		double b);
+	void SetLightDirection(
+		double x,
+		double y,
+		double z);
 	void SetMinimized(
 		bool& min);
+	void SetSpecular(
+		double r,
+		double g,
+		double b,
+		double p);
 	void UpdateModel(
 		std::string& modelName);
 

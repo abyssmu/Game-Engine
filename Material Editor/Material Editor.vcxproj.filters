@@ -168,6 +168,9 @@
     <ClCompile Include="Main\WindowManager\MessageHandler.cpp">
       <Filter>Main\WindowManager</Filter>
     </ClCompile>
+    <ClCompile Include="Main\WindowManager\WindowHelper.cpp">
+      <Filter>Main\WindowManager</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Main\WindowManager\WindowManager.h">
@@ -236,6 +239,10 @@
     <ClInclude Include="Main\WindowManager\System\Graphics\MaterialShader\MaterialShader.h">
       <Filter>Main\WindowManager\System\Graphics\MaterialShader</Filter>
     </ClInclude>
+    <ClInclude Include="Main\WindowManager\resource.h" />
+    <ClInclude Include="Main\WindowManager\WindowHelper.h">
+      <Filter>Main\WindowManager</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Main\WindowManager\MenuResource.rc">
@@ -249,5 +256,8 @@
     <FxCompile Include="Main\WindowManager\System\Graphics\MaterialShader\MaterialShader_vs.hlsl">
       <Filter>Main\WindowManager\System\Graphics\MaterialShader</Filter>
     </FxCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Main\WindowManager\Psi.ico" />
   </ItemGroup>
 </Project>

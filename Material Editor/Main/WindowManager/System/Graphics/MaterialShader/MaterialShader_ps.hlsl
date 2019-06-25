@@ -34,7 +34,7 @@ float4 main(PixelInputType input) : SV_TARGET
 
 		float3 reflection = normalize(((2 * lightIntensity) * input.normal) - lightDir);
 
-		specular = pow(saturate(dot(reflection, input.viewDirection)), specularPower);
+		specular = pow(saturate(dot(reflection, input.viewDirection)), specularPower) * specularColor;
 	}
 
 	endColor = endColor * input.color;

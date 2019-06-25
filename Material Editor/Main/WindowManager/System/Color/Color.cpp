@@ -21,12 +21,15 @@ Colors::Color::Color(
 	color.a = a;
 }
 
-void Colors::Color::Brightness(
+Colors::Color Colors::Color::Brightness(
 	double& amt)
 {
 	color.r *= amt;
 	color.g *= amt;
 	color.b *= amt;
+	color.a *= amt;
+
+	return *this;
 }
 
 void Colors::Color::Add(

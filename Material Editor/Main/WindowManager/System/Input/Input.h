@@ -9,6 +9,7 @@ An enumeration is used to store the keys as known alphabet characters.
 
 #include "../Math/MathLib.h"
 
+#include <unordered_map>
 #include <Windows.h>
 
 class Input
@@ -17,21 +18,21 @@ public:
 	void Initialize();
 	bool IsKeyDown(
 		int& key);
-	void KeyDown(
-		int key);
-	void KeyUp(
-		int key);
+	void Keyboard(
+		RAWKEYBOARD& kB);
+	void Mouse(
+		RAWMOUSE& m);
 	void ProcessCharacter(
 		MathLib::Vectors::Vector3D& force);
 	void ProcessMovement(
 		MathLib::Vectors::Vector3D& force);
 	void ProcessMouse(
-		MathLib::Vectors::Vector3D& torque,
-		bool& go);
+		MathLib::Vectors::Vector3D& torque);
 	bool ProcessQuit();
 	void ResetKeys();
 
 private:
-	bool m_keys[256] = { 0 };
 	POINT mouseP = { 0, 0 }, prevMouseP = { 0, 0 };
+
+	std::unordered_map<int, bool> m_keys;
 };

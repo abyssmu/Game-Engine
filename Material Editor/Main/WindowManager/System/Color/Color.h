@@ -32,7 +32,7 @@ namespace Colors
 			double a);
 
 		//Brighten or dim color by amt
-		void Brightness(
+		Color Brightness(
 			double& amt);
 		void Add(
 			Color& B);

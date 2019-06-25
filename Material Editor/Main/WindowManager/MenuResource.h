@@ -25,7 +25,17 @@ Defines menu system in main window
 #define IDMAT_WOOD 8009
 
 //Model actions
-#define IDMOD_CUBE 9001
-#define IDMOD_HUMANMALE 9002
-#define IDMOD_MONKEY 9003
-#define IDMOD_SPHERE 9004
+#define IDMOD_BEDROOM 9001
+#define IDMOD_BIRD 9002
+#define IDMOD_CUBE 9003
+#define IDMOD_DRAGON 9004
+#define IDMOD_HUMANMALE 9005
+#define IDMOD_MONKEY 9006
+#define IDMOD_SKULL 9007
+#define IDMOD_SOFA 9008
+#define IDMOD_SPHERE 9009
+#define IDMOD_TREE 9010
+
+//Menu types
+#define IDCON_LIGHT 10001
+#define IDCON_MATERIAL 10002

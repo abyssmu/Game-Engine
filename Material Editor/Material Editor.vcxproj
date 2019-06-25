@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -149,10 +149,12 @@
     <ClCompile Include="Main\WindowManager\System\Objects\Light\Point\Point.cpp" />
     <ClCompile Include="Main\WindowManager\System\Objects\Light\Spot\Spot.cpp" />
     <ClCompile Include="Main\WindowManager\System\System.cpp" />
+    <ClCompile Include="Main\WindowManager\WindowHelper.cpp" />
     <ClCompile Include="Main\WindowManager\WindowManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Main\WindowManager\MenuResource.h" />
+    <ClInclude Include="Main\WindowManager\resource.h" />
     <ClInclude Include="Main\WindowManager\System\Camera\Camera.h" />
     <ClInclude Include="Main\WindowManager\System\Color\Color.h" />
     <ClInclude Include="Main\WindowManager\System\Graphics\DirectX\DirectX11.h" />
@@ -173,6 +175,7 @@
     <ClInclude Include="Main\WindowManager\System\Objects\Light\Point\Point.h" />
     <ClInclude Include="Main\WindowManager\System\Objects\Light\Spot\Spot.h" />
     <ClInclude Include="Main\WindowManager\System\System.h" />
+    <ClInclude Include="Main\WindowManager\WindowHelper.h" />
     <ClInclude Include="Main\WindowManager\WindowManager.h" />
   </ItemGroup>
   <ItemGroup>
@@ -187,6 +190,9 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </FxCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Main\WindowManager\Psi.ico" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -18,7 +18,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 		return false;
 	}
 
-	if (manager->Initialize(600, 800))
+	if (manager->Initialize(720, 1080))
 	{
 		manager->Run();
 	}

@@ -3,28 +3,53 @@
 
 void Input::Initialize()
 {
+	
 	for (auto i = 0; i < 256; ++i)
 	{
-		m_keys[i] = false;
+		if (m_keys.empty())
+		{
+			m_keys.insert({ i, false });
+		}
+		else
+		{
+			m_keys[i] = false;
+		}
 	}
 }
 
 bool Input::IsKeyDown(
 	int& key)
 {
+	if (m_keys.find(key) == m_keys.end())
+	{
+		return false;
+	}
+
 	return m_keys[key];
 }
 
-void Input::KeyDown(
-	int key)
+void Input::Keyboard(
+	RAWKEYBOARD& kB)
 {
-	m_keys[key] = true;
+	UINT flags = kB.Flags;
+	UINT scanCode = kB.MakeCode;
+
+	const bool up = (flags & RI_KEY_BREAK) != 0;
+
+	if (!up)
+	{
+		m_keys[scanCode] = true;
+	}
+	else
+	{
+		m_keys[scanCode] = false;
+	}
 }
 
-void Input::KeyUp(
-	int key)
+void Input::Mouse(
+	RAWMOUSE& m)
 {
-	m_keys[key] = false;
+	
 }
 
 void Input::ProcessCharacter(
@@ -33,13 +58,13 @@ void Input::ProcessCharacter(
 	auto speed = 0.2;
 
 	//Unit x movement
-	if (IsKeyDown(Key::Right_Arrow))
-	{
-		force.x += speed;
-	}
 	if (IsKeyDown(Key::Left_Arrow))
 	{
-		force.x -= speed;
+		force.y += speed;
+	}
+	if (IsKeyDown(Key::Right_Arrow))
+	{
+		force.y -= speed;
 	}
 
 	//Unit y movement
@@ -47,11 +72,11 @@ void Input::ProcessCharacter(
 	//Unit z movement
 	if (IsKeyDown(Key::Up_Arrow))
 	{
-		force.z += speed;
+		force.x -= speed;
 	}
 	if (IsKeyDown(Key::Down_Arrow))
 	{
-		force.z -= speed;
+		force.x += speed;
 	}
 }
 
@@ -71,7 +96,7 @@ void Input::ProcessMovement(
 	}
 
 	//Unit y movement
-	if (IsKeyDown(Key::R))
+	if (IsKeyDown(Key::Space))
 	{
 		force.y += speed;
 	}
@@ -92,10 +117,9 @@ void Input::ProcessMovement(
 }
 
 void Input::ProcessMouse(
-	MathLib::Vectors::Vector3D& torque,
-	bool& go)
+	MathLib::Vectors::Vector3D& torque)
 {
-	if (((GetKeyState(Key::Left_Mouse) & 0x100) != 0) && !go)
+	/*if (((GetKeyState(Key::Left_Mouse) & 0x100) != 0) && !go)
 	{
 		auto speed = 0.2;
 
@@ -107,9 +131,9 @@ void Input::ProcessMouse(
 		{
 			torque.x += (double(mouseP.y) - double(prevMouseP.y)) * speed;
 		}
-	}
+	}*/
 
-	if (go)
+	/*if (go)
 	{
 		go = false;
 
@@ -120,7 +144,7 @@ void Input::ProcessMouse(
 	{
 		prevMouseP = mouseP;
 		GetCursorPos(&mouseP);
-	}
+	}*/
 }
 
 bool Input::ProcessQuit()

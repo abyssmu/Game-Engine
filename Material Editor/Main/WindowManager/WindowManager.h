@@ -26,20 +26,40 @@ public:
 
 	bool CheckResizeWindow();
 	bool CheckSystem();
+	HINSTANCE GetHInstance();
 	HWND GetMain();
 	bool GetMinimized();
-	HWND GetWorld();
-	void KeyDown(
-		unsigned int key);
-	void KeyUp(
-		unsigned int key);
+	bool GetWorldActive();
+	void Keyboard(
+		RAWKEYBOARD& kB);
+	void Mouse(
+		RAWMOUSE& m);
 	void OpenFile();
+	void RegisterInput();
+	void Resize();
+	void ResetKeys();
+	void SetLightAmbient(
+		double r,
+		double g,
+		double b);
+	void SetLightDiffuse(
+		double r,
+		double g,
+		double b);
+	void SetLightDirection(
+		double x,
+		double y,
+		double z);
 	void SetMinimized(
 		bool& min);
-	void SetMouseState(
-		bool state);
-	void SizeControls();
-	void SizeWorld();
+	void SetSpecular(
+		double r,
+		double g,
+		double b,
+		double p);
+	void SetWorldActive(
+		int active);
+	void UnregisterInput();
 	void UpdateModel(
 		std::string model);
 
@@ -48,25 +68,20 @@ private:
 		std::wstring& path);
 	std::string ExtractFilename(
 		std::wstring& path);
-	bool InitializeControlsContainer();
-	bool InitializeInner();
-	bool InitializeLightText();
+	bool InitializeInputDevice();
 	bool InitializeMain();
-	bool InitializeTrackbar();
 	bool InitializeWorld();
 	void ShutdownWindow();
+	void SizeWorld();
 
 	LPCSTR m_applicationName = 0;
 	HINSTANCE m_hInstance = 0;
 
-	HWND m_mainWindow = 0, m_controlsContainer = 0, m_worldWindow = 0;
-	HWND m_trackbar = 0, m_trackbarText = 0;
-	HWND m_lightTextX = 0, m_lightTextY = 0, m_lightTextZ = 0;
-	HWND m_lightInputX = 0, m_lightInputY = 0, m_lightInputZ = 0;
+	HWND m_mainWindow = 0, m_worldWindow = 0;
 
 	System* m_system = 0;
 
-	bool m_minimized = false, m_mouseState = true;
+	bool m_minimized = false, m_worldActive = false;
 	int m_screenHeight = 0, m_screenWidth = 0;
 	int m_worldHeight = 0, m_worldWidth = 0;
 	double m_worldPerc = 0.8;
@@ -87,4 +102,5 @@ extern LRESULT CALLBACK WorldMessageHandler(
 	UINT umsg,
 	WPARAM wparam,
 	LPARAM lparam);
+
 extern WindowManager* ApplicationHandle;

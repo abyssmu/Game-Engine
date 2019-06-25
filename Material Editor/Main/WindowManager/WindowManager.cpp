@@ -14,7 +14,12 @@ bool WindowManager::Initialize(
 		return false;
 	}
 
-	if (!InitializeInner())
+	if (!InitializeWorld())
+	{
+		return false;
+	}
+
+	if (!InitializeInputDevice())
 	{
 		return false;
 	}
@@ -68,6 +73,11 @@ bool WindowManager::CheckSystem()
 	return bool(m_system);
 }
 
+HINSTANCE WindowManager::GetHInstance()
+{
+	return m_hInstance;
+}
+
 HWND WindowManager::GetMain()
 {
 	return m_mainWindow;
@@ -78,21 +88,21 @@ bool WindowManager::GetMinimized()
 	return m_minimized;
 }
 
-HWND WindowManager::GetWorld()
+bool WindowManager::GetWorldActive()
 {
-	return m_worldWindow;
+	return m_worldActive;
 }
 
-void WindowManager::KeyDown(
-	unsigned int key)
+void WindowManager::Keyboard(
+	RAWKEYBOARD& kB)
 {
-	m_system->KeyDown(key);
+	m_system->Keyboard(kB);
 }
 
-void WindowManager::KeyUp(
-	unsigned int key)
+void WindowManager::Mouse(
+	RAWMOUSE& m)
 {
-	m_system->KeyUp(key);
+	m_system->Mouse(m);
 }
 
 void WindowManager::OpenFile()
@@ -147,53 +157,85 @@ void WindowManager::OpenFile()
 	m_system->UpdateModel(model);
 }
 
+void WindowManager::RegisterInput()
+{
+	InitializeInputDevice();
+}
+
+void WindowManager::Resize()
+{
+	SizeWorld();
+}
+
+void WindowManager::ResetKeys()
+{
+	m_system->ResetKeys();
+}
+
+void WindowManager::SetLightAmbient(
+	double r,
+	double g,
+	double b)
+{
+	m_system->SetLightAmbient(r, g, b);
+}
+
+void WindowManager::SetLightDiffuse(
+	double r,
+	double g,
+	double b)
+{
+	m_system->SetLightDiffuse(r, g, b);
+}
+
+void WindowManager::SetLightDirection(
+	double x,
+	double y,
+	double z)
+{
+	m_system->SetLightDirection(x, y, z);
+}
+
 void WindowManager::SetMinimized(
 	bool& min)
 {
 	m_minimized = min;
+
+	m_system->SetMinimized(min);
 }
 
-void WindowManager::SetMouseState(
-	bool state)
+void WindowManager::SetSpecular(
+	double r,
+	double g,
+	double b,
+	double p)
 {
-	if (m_system)
-	{
-		m_system->MouseActive(state);
-
-		if (m_mouseState)
-		{
-			m_system->ResetKeys();
-		}
-	}
+	m_system->SetSpecular(r, g, b, p);
 }
 
-void WindowManager::SizeControls()
+void WindowManager::SetWorldActive(
+	int active)
 {
-	auto rc = RECT();
-	GetClientRect(m_controlsContainer, &rc);
-
-	auto posY = int(20);
-	auto w = int(rc.right);
-
-	MoveWindow(m_trackbarText, 0, 0, w, 20, false);
-	MoveWindow(m_trackbar, 0, posY, w, 30, false);
-}
-
-void WindowManager::SizeWorld()
-{
-	auto rc = RECT();
-	GetClientRect(m_mainWindow, &rc);
-
-	m_worldHeight = int(rc.bottom);
-	m_worldWidth = int(rc.right * m_worldPerc);
-
-	MoveWindow(m_worldWindow, rc.left, rc.top, m_worldWidth, m_worldHeight, false);
+	m_worldActive = active;
 }
 
 void WindowManager::UpdateModel(
 	std::string model)
 {
 	m_system->UpdateModel(model);
+}
+
+void WindowManager::UnregisterInput()
+{
+	RAWINPUTDEVICE device;
+
+	//Keyboard
+	device.usUsage = 0x06;
+	device.usUsagePage = 0x01;
+	device.dwFlags = RIDEV_REMOVE;
+	device.hwndTarget = 0;
+
+	RegisterRawInputDevices(&device, 1, sizeof(device));
 }
 
 std::string WindowManager::ConvertFilename(
@@ -249,64 +291,17 @@ std::string WindowManager::ExtractFilename(
 	return result;
 }
 
-bool WindowManager::InitializeControlsContainer()
+bool WindowManager::InitializeInputDevice()
 {
-	auto wc = WNDCLASSEX();
+	RAWINPUTDEVICE device;
 
-	wc.style = CS_HREDRAW | CS_VREDRAW | CS_OWNDC;
-	wc.lpfnWndProc = WNDPROC(ControlsMessageHandler);
-	wc.cbClsExtra = 0;
-	wc.cbWndExtra = 0;
-	wc.hInstance = m_hInstance;
-	wc.hIcon = 0;
-	wc.hIconSm = 0;
-	wc.hCursor = LoadCursor(0, IDC_ARROW);
-	wc.hbrBackground = 0;
-	wc.lpszMenuName = 0;
-	wc.lpszClassName = 0;
-	wc.cbSize = sizeof(WNDCLASSEX);
-
-	RegisterClassEx(&wc);
-
-	m_controlsContainer = CreateWindowEx(WS_EX_APPWINDOW, m_applicationName, m_applicationName,
-		WS_POPUP | WS_CHILD | WS_VISIBLE,
-		0, 0, 0, 0, 0, 0, m_hInstance, 0);
-
-	if (!m_controlsContainer)
-	{
-		return false;
-	}
-
-	return true;
-}
-
-bool WindowManager::InitializeInner()
-{
-	if (!InitializeWorld())
-	{
-		return false;
-	}
-
-	if (!InitializeTrackbar())
-	{
-		return false;
-	}
-
-	if (!InitializeLightText())
-	{
-		return false;
-	}
-
-	SizeControls();
-
-	return true;
-}
-
-bool WindowManager::InitializeLightText()
-{
-	m_lightInputX = CreateWindow("EDIT", 0, WS_CHILD | WS_VISIBLE, 0, 0, 0, 0, m_mainWindow, 0, m_hInstance, 0);
-	m_lightInputY = CreateWindow("EDIT", 0, WS_CHILD | WS_VISIBLE, 0, 0, 0, 0, m_mainWindow, 0, m_hInstance, 0);
-	m_lightInputZ = CreateWindow("EDIT", 0, WS_CHILD | WS_VISIBLE, 0, 0, 0, 0, m_mainWindow, 0, m_hInstance, 0);
+	//Keyboard
+	device.usUsage = 0x06;
+	device.usUsagePage = 0x01;
+	device.dwFlags = RIDEV_NOLEGACY;
+	device.hwndTarget = m_worldWindow;
+	
+	RegisterRawInputDevices(&device, 1, sizeof(device));
 
 	return true;
 }
@@ -331,7 +326,7 @@ bool WindowManager::InitializeMain()
 	wc.hCursor = LoadCursor(0, IDC_ARROW);
 	wc.hbrBackground = (HBRUSH)GetStockObject(GRAY_BRUSH);
 	wc.lpszMenuName = MAKEINTRESOURCE(IDR_MAINMENU);
-	wc.lpszClassName = m_applicationName;
+	wc.lpszClassName = "Main";
 	wc.cbSize = sizeof(WNDCLASSEX);
 
 	RegisterClassEx(&wc);
@@ -339,7 +334,7 @@ bool WindowManager::InitializeMain()
 	auto posX = (GetSystemMetrics(SM_CXSCREEN) - m_screenWidth) / 2;
 	auto posY = (GetSystemMetrics(SM_CYSCREEN) - m_screenHeight) / 2;
 
-	m_mainWindow = CreateWindowEx(WS_EX_APPWINDOW, m_applicationName, m_applicationName,
+	m_mainWindow = CreateWindowEx(WS_EX_APPWINDOW, "Main", m_applicationName,
 		WS_CLIPSIBLINGS | WS_CLIPCHILDREN | WS_POPUP | WS_OVERLAPPEDWINDOW | WS_VISIBLE,
 		posX, posY, m_screenWidth, m_screenHeight, 0, 0, m_hInstance, 0);
 
@@ -347,20 +342,6 @@ bool WindowManager::InitializeMain()
 	{
 		return false;
 	}
-
-	return true;
-}
-
-bool WindowManager::InitializeTrackbar()
-{
-	m_trackbar = CreateWindowEx(0, TRACKBAR_CLASS, "",
-		WS_CHILD | WS_VISIBLE | TBS_NOTICKS,
-		0, 0, 0, 0, m_controlsContainer, 0, m_hInstance, 0);
-
-	SendMessage(m_trackbar, TBM_SETRANGE, WPARAM(TRUE), LPARAM(MAKELONG(0, 100)));
-	SendMessage(m_trackbar, TBM_SETPAGESIZE, 0, LPARAM(4));
-	SendMessage(m_trackbar, TBM_SETSEL, WPARAM(FALSE), LPARAM(MAKELONG(0, 1)));
-	SendMessage(m_trackbar, TBM_SETPOS, WPARAM(TRUE), LPARAM(0));
 
 	return true;
 }
@@ -379,14 +360,14 @@ bool WindowManager::InitializeWorld()
 	wc.hCursor = LoadCursor(0, IDC_ARROW);
 	wc.hbrBackground = 0;
 	wc.lpszMenuName = 0;
-	wc.lpszClassName = 0;
+	wc.lpszClassName = "World";
 	wc.cbSize = sizeof(WNDCLASSEX);
 
 	RegisterClassEx(&wc);
 
-	m_worldWindow = CreateWindowEx(WS_EX_APPWINDOW, m_applicationName, m_applicationName,
+	m_worldWindow = CreateWindowEx(WS_EX_APPWINDOW, "World", m_applicationName,
 		WS_POPUP | WS_CHILD | WS_VISIBLE,
-		0, 0, 0, 0, 0, 0, m_hInstance, 0);
+		0, 0, 0, 0, m_mainWindow, 0, m_hInstance, 0);
 
 	if (!m_worldWindow)
 	{
@@ -395,7 +376,6 @@ bool WindowManager::InitializeWorld()
 
 	SetParent(m_worldWindow, m_mainWindow);
 	SizeWorld();
-	SetMenu(m_worldWindow, 0);
 
 	return true;
 }
@@ -408,4 +388,15 @@ void WindowManager::ShutdownWindow()
 	m_hInstance = 0;
 
 	ApplicationHandle = 0;
+}
+
+void WindowManager::SizeWorld()
+{
+	auto rc = RECT();
+	GetClientRect(m_mainWindow, &rc);
+
+	m_worldHeight = int(rc.bottom);
+	m_worldWidth = int(rc.right * m_worldPerc);
+
+	MoveWindow(m_worldWindow, rc.left, rc.top, m_worldWidth, m_worldHeight, false);
 }
