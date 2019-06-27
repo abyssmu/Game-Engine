@@ -239,7 +239,6 @@
     <ClInclude Include="Main\WindowManager\System\Graphics\MaterialShader\MaterialShader.h">
       <Filter>Main\WindowManager\System\Graphics\MaterialShader</Filter>
     </ClInclude>
-    <ClInclude Include="Main\WindowManager\resource.h" />
     <ClInclude Include="Main\WindowManager\WindowHelper.h">
       <Filter>Main\WindowManager</Filter>
     </ClInclude>

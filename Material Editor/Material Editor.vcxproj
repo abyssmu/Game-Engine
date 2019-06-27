@@ -154,7 +154,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Main\WindowManager\MenuResource.h" />
-    <ClInclude Include="Main\WindowManager\resource.h" />
     <ClInclude Include="Main\WindowManager\System\Camera\Camera.h" />
     <ClInclude Include="Main\WindowManager\System\Color\Color.h" />
     <ClInclude Include="Main\WindowManager\System\Graphics\DirectX\DirectX11.h" />
