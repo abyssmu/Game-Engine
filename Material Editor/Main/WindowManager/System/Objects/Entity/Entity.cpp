@@ -33,13 +33,18 @@ void Entity::Shutdown()
 	}
 }
 
+AllModelInfo* Entity::GetModelInfo(
+	int i)
+{
+	return m_model->GetModelInfo(GetPosition(), GetRotation(), i);
+}
+
 int Entity::GetNumMeshes()
 {
 	return m_model->GetNumMeshes();
 }
 
-AllModelInfo* Entity::GetModelInfo(
-	int i)
+ID3D11ShaderResourceView* Entity::GetTexture()
 {
-	return m_model->GetModelInfo(GetPosition(), GetRotation(), i);
+	return m_model->GetTexture();
 }

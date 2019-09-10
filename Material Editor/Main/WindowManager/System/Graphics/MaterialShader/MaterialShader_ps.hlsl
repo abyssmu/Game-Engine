@@ -18,6 +18,7 @@ struct PixelInputType
 	float3 normal : NORMAL;
 	float4 position : SV_POSITION;
 	float3 viewDirection : TEXCOORD0;
+	float4 textureCoord : TEXCOORD1;
 };
 
 float4 main(PixelInputType input) : SV_TARGET

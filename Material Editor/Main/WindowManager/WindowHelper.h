@@ -1,3 +1,7 @@
+/*
+WindowHelper class is meant to encapsulate the functions for creating and editing WinAPI windows.
+*/
+
 #pragma once
 
 #include <Windows.h>

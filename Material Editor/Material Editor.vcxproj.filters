@@ -94,6 +94,12 @@
     <Filter Include="Main\WindowManager\System\Graphics\MaterialShader">
       <UniqueIdentifier>{5dc0a150-3b78-4e3e-8ac8-1c79c9bc6390}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Main\WindowManager\System\Objects\Entity\Model\Texture">
+      <UniqueIdentifier>{8606a07d-4a95-48da-8832-188231179e30}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Main\WindowManager\System\Graphics\TextureShader">
+      <UniqueIdentifier>{c905d699-77e0-466e-a075-24ea5a2f004f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main\Main.cpp">
@@ -171,6 +177,12 @@
     <ClCompile Include="Main\WindowManager\WindowHelper.cpp">
       <Filter>Main\WindowManager</Filter>
     </ClCompile>
+    <ClCompile Include="Main\WindowManager\System\Objects\Entity\Model\Texture\Texture.cpp">
+      <Filter>Main\WindowManager\System\Objects\Entity\Model\Texture</Filter>
+    </ClCompile>
+    <ClCompile Include="Main\WindowManager\System\Graphics\TextureShader\TextureShader.cpp">
+      <Filter>Main\WindowManager\System\Graphics\TextureShader</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Main\WindowManager\WindowManager.h">
@@ -242,6 +254,12 @@
     <ClInclude Include="Main\WindowManager\WindowHelper.h">
       <Filter>Main\WindowManager</Filter>
     </ClInclude>
+    <ClInclude Include="Main\WindowManager\System\Objects\Entity\Model\Texture\Texture.h">
+      <Filter>Main\WindowManager\System\Objects\Entity\Model\Texture</Filter>
+    </ClInclude>
+    <ClInclude Include="Main\WindowManager\System\Graphics\TextureShader\TextureShader.h">
+      <Filter>Main\WindowManager\System\Graphics\TextureShader</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Main\WindowManager\MenuResource.rc">
@@ -254,6 +272,12 @@
     </FxCompile>
     <FxCompile Include="Main\WindowManager\System\Graphics\MaterialShader\MaterialShader_vs.hlsl">
       <Filter>Main\WindowManager\System\Graphics\MaterialShader</Filter>
+    </FxCompile>
+    <FxCompile Include="Main\WindowManager\System\Graphics\TextureShader\TextureShader_ps.hlsl">
+      <Filter>Main\WindowManager\System\Graphics\TextureShader</Filter>
+    </FxCompile>
+    <FxCompile Include="Main\WindowManager\System\Graphics\TextureShader\TextureShader_vs.hlsl">
+      <Filter>Main\WindowManager\System\Graphics\TextureShader</Filter>
     </FxCompile>
   </ItemGroup>
   <ItemGroup>

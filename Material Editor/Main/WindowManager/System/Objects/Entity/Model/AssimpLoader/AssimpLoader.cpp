@@ -71,6 +71,7 @@ bool AssimpLoader::LoadVertices(
 	{
 		auto vert = mesh->mVertices[vertIdx];
 		auto norm = mesh->mNormals[vertIdx];
+		auto uv = mesh->mTextureCoords[0][vertIdx];
 
 		auto hold = new Vertex;
 		hold->color[0] = 0.5;
@@ -85,6 +86,9 @@ bool AssimpLoader::LoadVertices(
 		hold->position[0] = vert.x;
 		hold->position[1] = vert.y;
 		hold->position[2] = vert.z;
+
+		hold->uv[0] = uv.x;
+		hold->uv[1] = uv.y;
 
 		vertices.push_back(hold);
 	}

@@ -7,6 +7,7 @@ Assimp library via the assimp class. It also creates and returns the model info 
 
 #include "AssimpLoader\AssimpLoader.h"
 #include "Mesh\Mesh.h"
+#include "Texture\Texture.h"
 
 #include "ModelInfo.h"
 
@@ -23,15 +24,18 @@ public:
 		char* filename);
 	void Shutdown();
 
-	int GetNumMeshes();
-
 	AllModelInfo* GetModelInfo(
 		MathLib::Vectors::Vector3D position,
 		MathLib::Vectors::Vector3D rotation,
 		int i);
+	int GetNumMeshes();
+	ID3D11ShaderResourceView* GetTexture();
 
 private:
 	bool LoadModel(
+		ID3D11Device* device,
+		char* filename);
+	bool LoadTexture(
 		ID3D11Device* device,
 		char* filename);
 	void ReleaseModel(
@@ -40,4 +44,5 @@ private:
 
 	AllModelInfo* m_allModelInfo = 0;
 	std::vector<Mesh*> m_meshes;
+	Texture* m_texture = 0;
 };

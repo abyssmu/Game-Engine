@@ -1,5 +1,5 @@
 /*
-Color shader class is used to compiler HLSL code into a DirectX11 shader.
+Material shader class is used to compiler HLSL code into a DirectX11 shader.
 The class compiles both pixel and vertex shaders currently. Once compiled, it is used to
 transfer information to the shader for rendering.
 */

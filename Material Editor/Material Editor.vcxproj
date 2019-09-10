@@ -70,8 +70,8 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>$(ProjectDir)\Main\WindowManager\System\Objects\Entity\Model\AssimpLoader\Directories\include;$(IncludePath)</IncludePath>
-    <LibraryPath>$(ProjectDir)\Main\WindowManager\System\Objects\Entity\Model\AssimpLoader\Directories\lib64;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(ProjectDir)\Main\WindowManager\System\Objects\Entity\Model\AssimpLoader\Directories\include;$(ProjectDir)\Common\;$(IncludePath)</IncludePath>
+    <LibraryPath>$(ProjectDir)\Main\WindowManager\System\Objects\Entity\Model\AssimpLoader\Directories\lib64;$(ProjectDir)\Common\DirectXTex-master\DirectXTex\Bin\Desktop_2019\x64\Debug\;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <IncludePath>$(ProjectDir)\Main\WindowManager\System\Objects\Entity\Model\AssimpLoader\Directories\include;$(IncludePath)</IncludePath>
@@ -85,7 +85,7 @@
       <ConformanceMode>true</ConformanceMode>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>assimp.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>assimp.lib;DirectXTex.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -133,6 +133,7 @@
     <ClCompile Include="Main\WindowManager\System\Graphics\DirectX\DirectX11.cpp" />
     <ClCompile Include="Main\WindowManager\System\Graphics\Graphics.cpp" />
     <ClCompile Include="Main\WindowManager\System\Graphics\MaterialShader\MaterialShader.cpp" />
+    <ClCompile Include="Main\WindowManager\System\Graphics\TextureShader\TextureShader.cpp" />
     <ClCompile Include="Main\WindowManager\System\Input\Input.cpp" />
     <ClCompile Include="Main\WindowManager\System\Math\MathOperations.cpp" />
     <ClCompile Include="Main\WindowManager\System\Math\Matrices.cpp" />
@@ -143,6 +144,7 @@
     <ClCompile Include="Main\WindowManager\System\Objects\Entity\Model\AssimpLoader\AssimpLoader.cpp" />
     <ClCompile Include="Main\WindowManager\System\Objects\Entity\Model\Mesh\Mesh.cpp" />
     <ClCompile Include="Main\WindowManager\System\Objects\Entity\Model\Model.cpp" />
+    <ClCompile Include="Main\WindowManager\System\Objects\Entity\Model\Texture\Texture.cpp" />
     <ClCompile Include="Main\WindowManager\System\Objects\Entity\Physics\Physics.cpp" />
     <ClCompile Include="Main\WindowManager\System\Objects\Light\Directional\Directional.cpp" />
     <ClCompile Include="Main\WindowManager\System\Objects\Light\Light.cpp" />
@@ -159,6 +161,7 @@
     <ClInclude Include="Main\WindowManager\System\Graphics\DirectX\DirectX11.h" />
     <ClInclude Include="Main\WindowManager\System\Graphics\Graphics.h" />
     <ClInclude Include="Main\WindowManager\System\Graphics\MaterialShader\MaterialShader.h" />
+    <ClInclude Include="Main\WindowManager\System\Graphics\TextureShader\TextureShader.h" />
     <ClInclude Include="Main\WindowManager\System\Input\Input.h" />
     <ClInclude Include="Main\WindowManager\System\Input\Keys.h" />
     <ClInclude Include="Main\WindowManager\System\Math\MathLib.h" />
@@ -168,6 +171,7 @@
     <ClInclude Include="Main\WindowManager\System\Objects\Entity\Model\Mesh\Mesh.h" />
     <ClInclude Include="Main\WindowManager\System\Objects\Entity\Model\Model.h" />
     <ClInclude Include="Main\WindowManager\System\Objects\Entity\Model\ModelInfo.h" />
+    <ClInclude Include="Main\WindowManager\System\Objects\Entity\Model\Texture\Texture.h" />
     <ClInclude Include="Main\WindowManager\System\Objects\Entity\Physics\Physics.h" />
     <ClInclude Include="Main\WindowManager\System\Objects\Light\Directional\Directional.h" />
     <ClInclude Include="Main\WindowManager\System\Objects\Light\Light.h" />
@@ -188,6 +192,12 @@
     <FxCompile Include="Main\WindowManager\System\Graphics\MaterialShader\MaterialShader_vs.hlsl">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </FxCompile>
+    <FxCompile Include="Main\WindowManager\System\Graphics\TextureShader\TextureShader_ps.hlsl">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </FxCompile>
+    <FxCompile Include="Main\WindowManager\System\Graphics\TextureShader\TextureShader_vs.hlsl">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
     </FxCompile>
   </ItemGroup>
   <ItemGroup>

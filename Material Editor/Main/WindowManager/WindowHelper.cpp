@@ -426,7 +426,7 @@ HWND CreateStatic(
 {
 	auto style = WS_CHILD | WS_VISIBLE | SS_CENTER;
 
-	HWND stat = CreateWindow("STATIC", text, style, 0, 0, 0, 0, parent, 0, ApplicationHandle->GetHInstance(), 0);
+	auto stat = CreateWindow("STATIC", text, style, 0, 0, 0, 0, parent, 0, ApplicationHandle->GetHInstance(), 0);
 
 	return stat;
 }
@@ -437,7 +437,7 @@ HWND CreateTrackbar(
 	int start,
 	HWND parent)
 {
-	HWND trackbar = CreateWindowEx(0, TRACKBAR_CLASS, "",
+	auto trackbar = CreateWindowEx(0, TRACKBAR_CLASS, "",
 		WS_CHILD | WS_VISIBLE | TBS_NOTICKS,
 		0, 0, 0, 0, parent, 0, ApplicationHandle->GetHInstance(), 0);
 

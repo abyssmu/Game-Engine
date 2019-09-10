@@ -7,7 +7,7 @@ Directional light that operates as ambient outdoor lighting.
 //Class Includes
 #include "../Light.h"
 
-class Directional : public Light, public Entity
+class Directional : public Light
 {
 public:
 	MathLib::Vectors::Vector3D GetDirection();

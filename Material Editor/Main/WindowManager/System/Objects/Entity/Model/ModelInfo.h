@@ -30,4 +30,5 @@ struct Vertex
 	float color[4] = { 0, 0, 0, 0 };
 	float normal[3] = { 0, 0, 0 };
 	float position[3] = { 0, 0, 0 };
+	float uv[2] = { 0, 0 };
 };

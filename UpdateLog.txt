@@ -78,6 +78,12 @@ Completed list:
 13. Added lights
 13. Update all possible functional declarations/definitions to pass-by-value
 
+14. Added small WinAPI wrapper and helper functions
+14. Added light editing controls to menu in Material Editor
+
+15. Removed files from game engine features' solutions to remove bloated file size
+15. Added texture class
+
 Routine:
 Develop single feature from to do list
 Code check for improvements (Depth first has been easiest)

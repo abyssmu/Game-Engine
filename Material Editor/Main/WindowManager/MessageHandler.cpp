@@ -29,11 +29,6 @@ LRESULT CALLBACK ControlsMessageHandler(
 	WPARAM wparam,
 	LPARAM lparam)
 {
-	LPWORD val;
-	double pos;
-
-	HBRUSH bkgrd = NULL;
-
 	switch (umsg)
 	{
 	case WM_ACTIVATE:
@@ -389,7 +384,7 @@ LRESULT CALLBACK WorldMessageHandler(
 
 void HandleAmbient(LPARAM lparam)
 {
-	DWORD pos;
+	LRESULT pos;
 
 	if ((HWND)lparam == ambientInputR)
 	{
@@ -419,7 +414,7 @@ void HandleAmbient(LPARAM lparam)
 
 void HandleDiffuse(LPARAM lparam)
 {
-	DWORD pos;
+	LRESULT pos;
 
 	if ((HWND)lparam == diffuseInputR)
 	{
@@ -449,7 +444,7 @@ void HandleDiffuse(LPARAM lparam)
 
 void HandleDirection(LPARAM lparam)
 {
-	DWORD pos;
+	LRESULT pos;
 
 	if ((HWND)lparam == directionInputX)
 	{
@@ -479,7 +474,7 @@ void HandleDirection(LPARAM lparam)
 
 void HandleSpecular(LPARAM lparam)
 {
-	DWORD pos;
+	LRESULT pos;
 	
 	if ((HWND)lparam == specularPowerInput)
 	{

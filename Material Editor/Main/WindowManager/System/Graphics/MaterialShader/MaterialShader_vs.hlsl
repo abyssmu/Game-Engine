@@ -22,6 +22,7 @@ struct VertexInputType
 	float4 color : COLOR;
 	float3 normal : NORMAL;
 	float4 position : POSITION;
+	float4 textureCoord : TEXCOORD0;
 };
 
 struct PixelInputType
@@ -30,6 +31,7 @@ struct PixelInputType
 	float3 normal : NORMAL;
 	float4 position : SV_POSITION;
 	float3 viewDirection : TEXCOORD0;
+	float4 textureCoord : TEXCOORD1;
 };
 
 PixelInputType main(VertexInputType input)
@@ -52,6 +54,8 @@ PixelInputType main(VertexInputType input)
 
 	output.viewDirection = cameraPosition.xyz - worldPosition.xyz;
 	output.viewDirection = normalize(output.viewDirection);
+
+	output.textureCoord = input.textureCoord;
 
 	return output;
 }

@@ -111,7 +111,7 @@ bool Graphics::InitializeShaders(
 
 	if (!m_materialShader->Initialize(m_dX11->GetDevice(), hwnd))
 	{
-		MessageBox(hwnd, "Could not initialize color shader.", "Error",
+		MessageBox(hwnd, "Could not initialize material shader.", "Error",
 			MB_OK);
 		return false;
 	}

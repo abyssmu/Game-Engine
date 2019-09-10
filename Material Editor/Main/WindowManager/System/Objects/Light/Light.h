@@ -8,7 +8,7 @@ Defines the parent light class used to hold basics for all lights.
 #include "../../Color/Color.h"
 #include "../Entity/Entity.h"
 
-class Light
+class Light : public Entity
 {
 public:
 	Colors::Color GetAmbientColor();

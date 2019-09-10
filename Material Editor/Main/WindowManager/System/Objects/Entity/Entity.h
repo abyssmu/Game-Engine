@@ -18,9 +18,10 @@ public:
 		char* filename);
 	void Shutdown();
 
-	int GetNumMeshes();
 	AllModelInfo* GetModelInfo(
 		int i);
+	int GetNumMeshes();
+	ID3D11ShaderResourceView* GetTexture();
 
 private:
 	Model* m_model = 0;
