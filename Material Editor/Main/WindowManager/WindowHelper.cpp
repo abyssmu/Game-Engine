@@ -411,7 +411,7 @@ HWND CreateContainer(
 
 	if (!win)
 	{
-		return false;
+		return 0;
 	}
 
 	SetParent(win, parent);
