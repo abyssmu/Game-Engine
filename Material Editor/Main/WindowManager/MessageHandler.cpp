@@ -29,14 +29,11 @@ LRESULT CALLBACK ControlsMessageHandler(
 	WPARAM wparam,
 	LPARAM lparam)
 {
-<<<<<<< Updated upstream
-=======
 	LPWORD val;
 	double pos;
 
 	HBRUSH bkgrd = 0;
 
->>>>>>> Stashed changes
 	switch (umsg)
 	{
 	case WM_ACTIVATE:

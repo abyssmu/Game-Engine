@@ -1,8 +1,8 @@
 /*
-Custom built game engine by Sean (Alex) Robinson.
+Custom built game engine by Sean (Alex) Womack.
 
 Most everything in here is custom built. The excpetions are the Assimp library and the DirectX library.
-Their corresponding classes are custom and used as an interface.
+Their corresponding classes are custom and used as an interface/wrapper.
 
 See UpdateLog.txt for completed and future updates along with routine list.
 */
@@ -12,20 +12,20 @@ See UpdateLog.txt for completed and future updates along with routine list.
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 	PSTR pScmdline, int iCmdshow)
 {
-	WindowManager* manager = new WindowManager;
-	if (!manager)
+	WindowManager* winManager = new WindowManager;
+	if (!winManager)
 	{
 		return false;
 	}
 
-	if (manager->Initialize(720, 1080))
+	if (winManager->Initialize(720, 1080))
 	{
-		manager->Run();
+		winManager->Run();
 	}
 
-	manager->Shutdown();
-	delete manager;
-	manager = 0;
+	winManager->Shutdown();
+	delete winManager;
+	winManager = 0;
 
 	return 0;
 }
